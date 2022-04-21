@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E23B0AFB-D90D-4234-BF20-B4AB1CD7A9C1}</ProjectGuid>
+    <ProjectGuid>{CFD2AD04-5527-40DA-AFAE-0AE6C441CE4E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Jusin_5_1945</RootNamespace>
+    <RootNamespace>Default</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -145,13 +145,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Jusin_5_1945.h" />
+    <ClInclude Include="Default.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Jusin_5_1945.cpp" />
+    <ClCompile Include="Default.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -160,10 +160,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Jusin_5_1945.rc" />
+    <ResourceCompile Include="Default.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Jusin_5_1945.ico" />
+    <Image Include="Default.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
