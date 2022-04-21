@@ -21,8 +21,10 @@ void CPlayer::Initialize(void)
 	m_fSpeed = 10.f;
 }
 
-void CPlayer::Update(void)
+int CPlayer::Update(void)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
 	// 연산을 진행
 	Key_Input();
 
@@ -30,6 +32,12 @@ void CPlayer::Update(void)
 
 	// 모든 연산이 끝난 뒤에 최종적인 좌표를 완성
 	Update_Rect();
+
+	return OBJ_NOEVENT;
+}
+
+void CPlayer::Late_Update(void)
+{
 }
 
 void CPlayer::Render(HDC hDC)
@@ -46,14 +54,43 @@ void CPlayer::Key_Input(void)
 {
 	// GetKeyState
 	if (GetAsyncKeyState(VK_LEFT))
+	{
+		if (GetAsyncKeyState(VK_DOWN))
+		{
+			m_tInfo.fX -= m_fSpeed / sqrtf(2.f);
+			m_tInfo.fY += m_fSpeed / sqrtf(2.f);
+		}
+		else if(GetAsyncKeyState(VK_UP))
+		{
+			m_tInfo.fX -= m_fSpeed / sqrtf(2.f);
+			m_tInfo.fY -= m_fSpeed / sqrtf(2.f);
+		}
+		else
+
 		m_tInfo.fX -= m_fSpeed;
+	}
+	else if (GetAsyncKeyState(VK_RIGHT))
+	{
+		if (GetAsyncKeyState(VK_DOWN))
+		{
+			m_tInfo.fX += m_fSpeed / sqrtf(2.f);
+			m_tInfo.fY += m_fSpeed / sqrtf(2.f);
+		}
+		else if (GetAsyncKeyState(VK_UP))
+		{
+			m_tInfo.fX += m_fSpeed / sqrtf(2.f);
+			m_tInfo.fY -= m_fSpeed / sqrtf(2.f);
+		}
+		else
+			m_tInfo.fX += m_fSpeed;
 
-	if (GetAsyncKeyState(VK_RIGHT))
-		m_tInfo.fX += m_fSpeed;
-
-	if (GetAsyncKeyState(VK_UP))
+	}
+	else if (GetAsyncKeyState(VK_UP))
 		m_tInfo.fY -= m_fSpeed;
 
-	if (GetAsyncKeyState(VK_DOWN))
+	else if (GetAsyncKeyState(VK_DOWN))
 		m_tInfo.fY += m_fSpeed;
+
+
+	//총알 만드는 코드
 }

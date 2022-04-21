@@ -25,6 +25,12 @@
     <Filter Include="01.Obj\00.Player">
       <UniqueIdentifier>{7ee9c19c-7701-45b8-bf29-98864a1001f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98.Design">
+      <UniqueIdentifier>{92f6567f-8f82-4a9c-8c03-b6fe07e1bbb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Design\AbstractFactory">
+      <UniqueIdentifier>{407ba3f1-e164-427c-a0b0-597e925f1b3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -65,6 +71,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>01.Obj\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>98.Design\AbstractFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
