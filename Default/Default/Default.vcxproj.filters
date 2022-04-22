@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -30,6 +26,16 @@
     </Filter>
     <Filter Include="98.Design\AbstractFactory">
       <UniqueIdentifier>{407ba3f1-e164-427c-a0b0-597e925f1b3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="01.Obj\01_Bullet">
+      <UniqueIdentifier>{0d55917e-3cf5-4dc2-8ebf-137066972d25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\02_Monster">
+      <UniqueIdentifier>{4fd25c03-e27a-4571-8eb0-8fc789efa2aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,8 +78,17 @@
     <ClInclude Include="AbstractFactory.h">
       <Filter>98.Design\AbstractFactory</Filter>
     </ClInclude>
+    <ClInclude Include="Barrier.h">
+      <Filter>01.Obj\00.Player</Filter>
+    </ClInclude>
     <ClInclude Include="Jusin_1945조.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>01.Obj\01_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>01.Obj\02_Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +106,15 @@
     </ClCompile>
     <ClCompile Include="Jusin_1945조.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>01.Obj\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>01.Obj\01_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>01.Obj\02_Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -78,6 +78,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			if (dwOldTime + 10 < GetTickCount())
 			{
 				pMainGame->Update();
+				pMainGame->Late_Update();
 				pMainGame->Render();
 
 				dwOldTime = GetTickCount();
