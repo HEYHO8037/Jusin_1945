@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "Default.h"
+#include "Jusin_1945조.h"
 #include "MainGame.h"
 
 #define MAX_LOADSTRING 100
@@ -137,7 +137,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	// 출력창의 최종 크기 = 원래 창 사이즈 + 기본 윈도우 창 설정 값 + 메뉴바 크기 고려 여부
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+	HWND hWnd = CreateWindowW(szWindowClass, L"name", WS_OVERLAPPEDWINDOW,
 		400, 0,  // 출력하고자 하는 창의 left와 top 좌표
 		rc.right - rc.left,
 		rc.bottom - rc.top, // 생성하고자 하는 창의 가로, 세로 사이즈

@@ -45,9 +45,6 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Default.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Include.h">
       <Filter>99.Header</Filter>
     </ClInclude>
@@ -75,12 +72,12 @@
     <ClInclude Include="AbstractFactory.h">
       <Filter>98.Design\AbstractFactory</Filter>
     </ClInclude>
+    <ClInclude Include="Jusin_1945조.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Default.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MainGame.cpp">
@@ -91,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>01.Obj\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Jusin_1945조.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
