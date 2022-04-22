@@ -31,6 +31,18 @@
     <Filter Include="98.Design\AbstractFactory">
       <UniqueIdentifier>{407ba3f1-e164-427c-a0b0-597e925f1b3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{923f8772-a885-443c-9e28-b123cf5d3161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\00.Cloud">
+      <UniqueIdentifier>{712b9a5a-5950-4bc6-8b53-3703af2b47a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\01.Life">
+      <UniqueIdentifier>{b9026e79-a72f-4820-ae6e-6b1a53ffc897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\02.Hp">
+      <UniqueIdentifier>{a3fcb0c6-eaab-478c-8a1d-510a2fdf84e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -75,6 +87,18 @@
     <ClInclude Include="Jusin_1945조.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Ui.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Cloud.h">
+      <Filter>UI\00.Cloud</Filter>
+    </ClInclude>
+    <ClInclude Include="Life.h">
+      <Filter>UI\01.Life</Filter>
+    </ClInclude>
+    <ClInclude Include="Hp.h">
+      <Filter>UI\02.Hp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -91,6 +115,18 @@
     </ClCompile>
     <ClCompile Include="Jusin_1945조.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Ui.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>UI\00.Cloud</Filter>
+    </ClCompile>
+    <ClCompile Include="Life.cpp">
+      <Filter>UI\01.Life</Filter>
+    </ClCompile>
+    <ClCompile Include="Hp.cpp">
+      <Filter>UI\02.Hp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
