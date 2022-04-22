@@ -11,3 +11,4 @@
 #define		OBJ_DEAD	1
 
 extern HWND			g_hWnd;
+#define Ori 23;
