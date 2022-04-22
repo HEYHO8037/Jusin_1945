@@ -138,7 +138,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
 	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-		400, 300,  // 출력하고자 하는 창의 left와 top 좌표
+		400, 0,  // 출력하고자 하는 창의 left와 top 좌표
 		rc.right - rc.left,
 		rc.bottom - rc.top, // 생성하고자 하는 창의 가로, 세로 사이즈
 		nullptr, nullptr, hInstance, nullptr);
