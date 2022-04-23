@@ -38,7 +38,6 @@ int CPlayer::Update(void)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
-	// ������ ����
 	Key_Input();
 
 	if (m_pBarrier)
@@ -54,7 +53,6 @@ int CPlayer::Update(void)
 		}
 	}
 
-	// ��� ������ ���� �ڿ� �������� ��ǥ�� �ϼ�
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -169,14 +167,12 @@ void CPlayer::Key_Input(void)
 		m_tInfo.fY += m_fSpeed;
 
 
-	//�Ѿ� ����� �ڵ�
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		m_pObjList->push_back(new CBullet(m_tInfo, false));
+		//m_pObjList->push_back(new CBullet(m_tInfo, false));
 	}
 
-	//������ ����(�ӽ�Ű ����)
 	if (GetAsyncKeyState('Z'))
 	{
 		InitBarrier();

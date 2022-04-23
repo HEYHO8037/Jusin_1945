@@ -21,27 +21,24 @@ CMainGame::~CMainGame()
 
 void CMainGame::Initialize(void)
 {
-	srand(unsigned(time(nullptr))); //��� �־������
+	srand(unsigned(time(nullptr)));
 
 	m_hDC = GetDC(g_hWnd);
 	
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-	if (!m_ObjList[OBJ_PLAYER].empty()) // �÷��̾� ��ǥ ���ͼ� ��ü �����ϱ�
+	if (!m_ObjList[OBJ_PLAYER].empty()) 
 	{
 		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate());
 	}
 
-	//boss���Ͱ� ������ monsterHp ����, monster�� ����
 	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
 	
-	//cloud �Ϸ�
 	for (int i = 0; i < 3; ++i)
 	{
 		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 +10)*(rand()% 12 +1)), float((-rand() % 30 + 1) * 15) - 10));
 	}
 
-	//life ����, �÷��̾��� hp�� ����
 	int iTemp = 0;
 	for (int i = 0; i < 3; ++i)
 	{
@@ -49,7 +46,7 @@ void CMainGame::Initialize(void)
 		iTemp += 70;
 	}
 	
-	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create()); // �ӽ� �׽�Ʈ(OBJ_list�� �迭 ��� ���� enum�� �߰��ص� �Ǵ��� ���� �÷��̾�� �׽�Ʈ)
+	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create()); 
 	/*TestItem = new CItem;
 	TestItem->Initialize();*/
 	CObj* player = m_ObjList[OBJ_PLAYER].front();
@@ -120,19 +117,15 @@ void CMainGame::Late_Update(void)
 
 void CMainGame::Render(void)
 {
-	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
-
-	for (int i = 0; i < UI_END; ++i)
-	{
-		for (auto & iter : m_UiList[i])
-			iter->Render(m_hDC);
-	}
-	HDC backHDC = CreateCompatibleDC(m_hDC);
 	HBITMAP backBitmap = NULL;
 	HBITMAP backBitmapStage = NULL;
-
+	HDC backHDC = CreateCompatibleDC(m_hDC);
 	backBitmap = CreateCompatibleBitmap(m_hDC, WINCX, WINCY);
 	backBitmapStage = (HBITMAP)SelectObject(backHDC, backBitmap);
+	//Rectangle(m_hDC, 0, 0, WINCX, WINCY);
+
+
+
 
 
 	Rectangle(backHDC, 0, 0, WINCX, WINCY);
@@ -142,7 +135,7 @@ void CMainGame::Render(void)
 	swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
 	TextOut(backHDC, 200, 200, szBuff, lstrlen(szBuff));
 
-	swprintf_s(szBuff, L"�Ѿ� : %d", m_ObjList[OBJ_BULLET].size());
+	swprintf_s(szBuff, L"??? : %d", m_ObjList[OBJ_BULLET].size());
 	TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
 
 
@@ -153,22 +146,27 @@ void CMainGame::Render(void)
 	}
 
 
-	//��Ʈ���
-	TCHAR	szBuff[32] = L"";
-	//1000�ڸ��� get_scroe
-	swprintf_s(szBuff, L"SCORE : %d", 1000);
-	TextOut(m_hDC, 600, 50, szBuff, lstrlen(szBuff));
+	TCHAR	szBuff1[32] = L"";
+	swprintf_s(szBuff1, L"SCORE : %d", 1000);
+	TextOut(backHDC, 600, 50, szBuff1, lstrlen(szBuff1));
 
 	TCHAR	szBuff2[32] = L"";
-	//30�ڸ��� ���� ���� ���� �ֱ�
 	swprintf_s(szBuff2, L"KILL : %d", 30);
-	TextOut(m_hDC, 650, 950, szBuff2, lstrlen(szBuff2));
+	TextOut(backHDC, 650, 950, szBuff2, lstrlen(szBuff2));
 
 	TCHAR	szBuff3[32] = L"";
 	//PLAYER level
 	swprintf_s(szBuff3, L"LEVEL %d", 1);
-	TextOut(m_hDC, 350, 950, szBuff3, lstrlen(szBuff3));
+	TextOut(backHDC, 350, 950, szBuff3, lstrlen(szBuff3));
 	//TestItem->Render(m_hDC);
+	
+
+	for (int i = 0; i < UI_END; ++i)
+	{
+		for (auto & iter : m_UiList[i])
+			iter->Render(backHDC);
+	}
+	
 	BitBlt(m_hDC, 0, 0, WINCX, WINCY, backHDC, 0, 0, SRCCOPY);
 	DeleteObject(SelectObject(backHDC, backBitmapStage));
 	DeleteDC(backHDC);

@@ -8,19 +8,18 @@
 
 class CMainGame
 {
-public:				// ������, �Ҹ���
+public:				
 	CMainGame();
 	~CMainGame();
 
-	// public, protected, private �Լ�
 public:
-	void	Initialize(void);		// �ʱ�ȭ �Լ�
-	void	Update(void);			// �� �����Ӹ��� ���ŵǴ� �����͸� ����� �Լ�
+	void	Initialize(void);		
+	void	Update(void);			
 	void	Late_Update(void);
-	void	Render(void);			// �� �����Ӹ��� ����ϴ� �Լ�
-	void	Release(void);			// �����Ҵ��� �����͸� �����ϴ� �Լ�
+	void	Render(void);			
+	void	Release(void);			
 
-									// public, protected, private ����
+								
 private:
 	HDC		m_hDC;
 	
