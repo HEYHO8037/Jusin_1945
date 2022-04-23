@@ -105,6 +105,14 @@
       <Filter>UI\02.Hp</Filter>
     <ClInclude Include="Item.h">
       <Filter>01.Obj\03.Item</Filter>
+    <ClInclude Include="Bullet.h">
+      <Filter>01.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>01.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>01.Obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +147,14 @@
       <Filter>UI\02.Hp</Filter>
     <ClCompile Include="Item.cpp">
       <Filter>01.Obj\03.Item</Filter>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>01.Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>01.Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>01.Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

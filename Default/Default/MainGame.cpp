@@ -5,6 +5,9 @@
 #include "PlayerHp.h"
 #include "MonsterHp.h"
 #include "Life.h"
+#include "Monster.h"
+#include "Plane.h"
+
 CMainGame::CMainGame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -49,6 +52,15 @@ void CMainGame::Initialize(void)
 	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create()); // �ӽ� �׽�Ʈ(OBJ_list�� �迭 ��� ���� enum�� �߰��ص� �Ǵ��� ���� �÷��̾�� �׽�Ʈ)
 	/*TestItem = new CItem;
 	TestItem->Initialize();*/
+	CObj* player = m_ObjList[OBJ_PLAYER].front();
+
+	CObj* boss = CAbstractFactory<CMonster>::Create();
+	dynamic_cast<CMonster*>(boss)->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
+	m_ObjList[OBJ_MONSTER].push_back(boss);
+
+	CObj* plane = CAbstractFactory<CPlane>::Create();
+	dynamic_cast<CMonster*>(plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
+	m_ObjList[OBJ_MONSTER].push_back(plane);
 }
 
 void CMainGame::Update(void)
@@ -114,11 +126,29 @@ void CMainGame::Render(void)
 		for (auto & iter : m_UiList[i])
 			iter->Render(m_hDC);
 	}
+	HDC backHDC = CreateCompatibleDC(m_hDC);
+	HBITMAP backBitmap = NULL;
+	HBITMAP backBitmapStage = NULL;
+
+	backBitmap = CreateCompatibleBitmap(m_hDC, WINCX, WINCY);
+	backBitmapStage = (HBITMAP)SelectObject(backHDC, backBitmap);
+
+
+	Rectangle(backHDC, 0, 0, WINCX, WINCY);
+	Rectangle(backHDC, 100, 100, WINCX - 100, WINCY - 100);
+
+	TCHAR szBuff[256] = L"";
+	swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
+	TextOut(backHDC, 200, 200, szBuff, lstrlen(szBuff));
+
+	swprintf_s(szBuff, L"�Ѿ� : %d", m_ObjList[OBJ_BULLET].size());
+	TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
+
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto & iter : m_ObjList[i])
-			iter->Render(m_hDC);
+			iter->Render(backHDC);
 	}
 
 
@@ -138,6 +168,9 @@ void CMainGame::Render(void)
 	swprintf_s(szBuff3, L"LEVEL %d", 1);
 	TextOut(m_hDC, 350, 950, szBuff3, lstrlen(szBuff3));
 	//TestItem->Render(m_hDC);
+	BitBlt(m_hDC, 0, 0, WINCX, WINCY, backHDC, 0, 0, SRCCOPY);
+	DeleteObject(SelectObject(backHDC, backBitmapStage));
+	DeleteDC(backHDC);
 }
 
 void CMainGame::Release(void)
