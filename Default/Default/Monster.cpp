@@ -24,7 +24,7 @@ void CMonster::Initialize() {
 
 	m_fSpeed = 5.f;
 
-	BehaviorStart();
+	m_bDisplayInfo = true;
 };
 
 int CMonster::Update() {
@@ -40,27 +40,18 @@ void CMonster::Late_Update() {
 };
 
 void CMonster::Render(HDC hDC) {
-	TCHAR szBuff[256] = L"";
-	swprintf_s(szBuff, L"Position : (%f, %f)", m_tInfo.fX, m_tInfo.fY);
-	TextOut(hDC, m_tRect.left, m_tRect.top - 20, szBuff, lstrlen(szBuff));
-
-	swprintf_s(szBuff, L"패턴 : %d", currentState);
-	TextOut(hDC, m_tRect.left, m_tRect.top - 40, szBuff, lstrlen(szBuff));
-
-	float distX = targetPosition.x - m_tInfo.fX;
-	float distY = targetPosition.y - m_tInfo.fY;
-
-	float distance = sqrtf(distX * distX + distY * distY);
-	swprintf_s(szBuff, L"거리 : %f", distance);
-	TextOut(hDC, m_tRect.left, m_tRect.top - 60, szBuff, lstrlen(szBuff));
-
+	DisplayInfo(hDC, currentState);
+	
 	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 };
 
 void CMonster::Release() {
 }
 
-void CMonster::BehaviorStart() {
+void CMonster::BehaviorStart(CObj* _targetObj, std::list<CObj*>* _pList) {
+	targetObj = _targetObj;
+	m_bulletList = _pList;
+
 	m_bAIStart = true;
 	behaviorState = Enter;
 }
@@ -203,4 +194,24 @@ void CMonster::Fire(float degree) {
 	BulletObj->SetDirection(cosf(degree * PI / 180.f), sinf(degree * PI / 180.f));
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY);
 	m_bulletList->push_back(newBullet);
+}
+
+void CMonster::DisplayInfo(HDC hDC, int _displayState) {
+	if (!m_bDisplayInfo)
+		return;
+
+	TCHAR szBuff[256] = L"";
+	swprintf_s(szBuff, L"Position : (%f, %f)", m_tInfo.fX, m_tInfo.fY);
+	TextOut(hDC, m_tRect.left, m_tRect.top - 20, szBuff, lstrlen(szBuff));
+
+	swprintf_s(szBuff, L"패턴 : %d", _displayState);
+	TextOut(hDC, m_tRect.left, m_tRect.top - 40, szBuff, lstrlen(szBuff));
+
+	float distX = targetPosition.x - m_tInfo.fX;
+	float distY = targetPosition.y - m_tInfo.fY;
+
+	float distance = sqrtf(distX * distX + distY * distY);
+	swprintf_s(szBuff, L"거리 : %f", distance);
+	TextOut(hDC, m_tRect.left, m_tRect.top - 60, szBuff, lstrlen(szBuff));
+
 }

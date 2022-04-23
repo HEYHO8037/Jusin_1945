@@ -19,20 +19,17 @@ void CPlane::Initialize() {
 
 	m_fSpeed = 5.f;
 
-	BehaviorStart();
+	m_bDisplayInfo = true;
 };
 
 void CPlane::Render(HDC hDC) {
+	DisplayInfo(hDC, currentState);
+
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 };
 
 void CPlane::Release() {
 };
-
-void CPlane::BehaviorStart() {
-	m_bAIStart = true;
-	behaviorState = Enter;
-}
 
 void CPlane::BehaviorEnter() {
 	switch (currentState) {

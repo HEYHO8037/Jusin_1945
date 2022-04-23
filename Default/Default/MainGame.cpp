@@ -22,14 +22,14 @@ void CMainGame::Initialize(void)
 
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
+	CObj* player = m_ObjList[OBJ_PLAYER].front();
+
 	CObj* boss = CAbstractFactory<CMonster>::Create();
-	dynamic_cast<CMonster*>(boss)->SetBulletList(&m_ObjList[OBJ_BULLET]);
-	dynamic_cast<CMonster*>(boss)->SetTarget(m_ObjList[OBJ_PLAYER].front());
+	dynamic_cast<CMonster*>(boss)->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
 	m_ObjList[OBJ_MONSTER].push_back(boss);
 
 	CObj* plane = CAbstractFactory<CPlane>::Create();
-	dynamic_cast<CPlane*>(plane)->SetBulletList(&m_ObjList[OBJ_BULLET]);
-	dynamic_cast<CPlane*>(plane)->SetTarget(m_ObjList[OBJ_PLAYER].front());
+	dynamic_cast<CMonster*>(plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
 	m_ObjList[OBJ_MONSTER].push_back(plane);
 }
 

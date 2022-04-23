@@ -17,7 +17,7 @@ public:
 	void SetBulletList(std::list<CObj*>* _pList) { m_bulletList = _pList; };
 	void SetTarget(CObj* _obj) { targetObj = _obj; };
 
-	virtual void BehaviorStart(); // AI시작
+	void BehaviorStart(CObj*, std::list<CObj*>*); // AI시작
 
 protected:
 	bool TargetMove(); // 설정한 위치로 이동(true시 이동 완료)
@@ -27,6 +27,8 @@ protected:
 	virtual void BehaviorEnter();
 	virtual void BehaviorExecute();
 	virtual void BehaviorExit();
+
+	void DisplayInfo(HDC, int);
 
 private:
 	enum State {
@@ -59,11 +61,11 @@ protected:
 	
 	CObj* targetObj; // 대상
 
-	
 	Behavior behaviorState;
 
 	std::list<CObj*>* m_bulletList;
 	
 	bool m_bAIStart;
+	bool m_bDisplayInfo;
 };
 
