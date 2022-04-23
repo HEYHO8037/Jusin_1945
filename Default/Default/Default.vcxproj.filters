@@ -40,7 +40,7 @@
     <Filter Include="UI\01.Life">
       <UniqueIdentifier>{b9026e79-a72f-4820-ae6e-6b1a53ffc897}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\02.Hp">
+    <Filter Include="01.Obj\05.Hp">
       <UniqueIdentifier>{a3fcb0c6-eaab-478c-8a1d-510a2fdf84e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -96,8 +96,11 @@
     <ClInclude Include="Life.h">
       <Filter>UI\01.Life</Filter>
     </ClInclude>
-    <ClInclude Include="Hp.h">
-      <Filter>UI\02.Hp</Filter>
+    <ClInclude Include="PlayerHp.h">
+      <Filter>01.Obj\05.Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterHp.h">
+      <Filter>01.Obj\05.Hp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,8 +128,11 @@
     <ClCompile Include="Life.cpp">
       <Filter>UI\01.Life</Filter>
     </ClCompile>
-    <ClCompile Include="Hp.cpp">
-      <Filter>UI\02.Hp</Filter>
+    <ClCompile Include="PlayerHp.cpp">
+      <Filter>01.Obj\05.Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterHp.cpp">
+      <Filter>01.Obj\05.Hp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

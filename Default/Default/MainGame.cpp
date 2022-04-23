@@ -2,6 +2,8 @@
 #include "MainGame.h"
 #include "AbstractFactory.h"
 #include "Cloud.h"
+#include "PlayerHp.h"
+#include "MonsterHp.h"
 
 CMainGame::CMainGame()
 {
@@ -16,13 +18,16 @@ CMainGame::~CMainGame()
 
 void CMainGame::Initialize(void)
 {
+	srand(unsigned(time(nullptr)));
+	
 	m_hDC = GetDC(g_hWnd);
 
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-	srand(unsigned(time(nullptr)));
-	
-	for (int i = 0; i < 3; ++i)
+	m_ObjList[OBJ_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::Create());
+	m_ObjList[OBJ_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::Create());
+	//备抚 积己肯丰 面倒贸府
+	for (int i = 0; i < (rand() % 4 + 1); ++i)
 	{
 		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::CreateUi(float((rand() % 50 +30)*(rand()% 12 +1)), float((-rand() % 30 + 1) * 15) - 10));
 	}
@@ -30,6 +35,7 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
+
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin();
@@ -85,17 +91,18 @@ void CMainGame::Render(void)
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 	Rectangle(m_hDC, 100, 100, WINCX - 100, WINCY - 100);
 
+	for (int i = 0; i < UI_END; ++i)
+	{
+		for (auto & iter : m_UiList[i])
+			iter->Render(m_hDC);
+	}
+
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto & iter : m_ObjList[i])
 			iter->Render(m_hDC);
 	}
 
-	for (int i = 0; i < UI_END; ++i)
-	{
-		for (auto & iter : m_UiList[i])
-			iter->Render(m_hDC);
-	}
 
 	TCHAR	szBuff[32] = L"";
 	swprintf_s(szBuff, L"SCORE : %d", 1000);
