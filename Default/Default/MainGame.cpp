@@ -2,6 +2,9 @@
 #include "MainGame.h"
 #include "AbstractFactory.h"
 
+#include "Monster.h"
+#include "Plane.h"
+
 CMainGame::CMainGame()
 {
 
@@ -19,6 +22,15 @@ void CMainGame::Initialize(void)
 
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
+	CObj* boss = CAbstractFactory<CMonster>::Create();
+	dynamic_cast<CMonster*>(boss)->SetBulletList(&m_ObjList[OBJ_BULLET]);
+	dynamic_cast<CMonster*>(boss)->SetTarget(m_ObjList[OBJ_PLAYER].front());
+	m_ObjList[OBJ_MONSTER].push_back(boss);
+
+	CObj* plane = CAbstractFactory<CPlane>::Create();
+	dynamic_cast<CPlane*>(plane)->SetBulletList(&m_ObjList[OBJ_BULLET]);
+	dynamic_cast<CPlane*>(plane)->SetTarget(m_ObjList[OBJ_PLAYER].front());
+	m_ObjList[OBJ_MONSTER].push_back(plane);
 }
 
 void CMainGame::Update(void)
@@ -43,7 +55,7 @@ void CMainGame::Update(void)
 
 void CMainGame::Late_Update(void)
 {
-	for (int i = 0; i < OBJ_DEAD; ++i)
+	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto & iter : m_ObjList[i])
 			iter->Late_Update();
@@ -52,14 +64,34 @@ void CMainGame::Late_Update(void)
 
 void CMainGame::Render(void)
 {
-	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
-	Rectangle(m_hDC, 100, 100, WINCX - 100, WINCY - 100);
+	HDC backHDC = CreateCompatibleDC(m_hDC);
+	HBITMAP backBitmap = NULL;
+	HBITMAP backBitmapStage = NULL;
 
-	for (int i = 0; i < OBJ_DEAD; ++i)
+	backBitmap = CreateCompatibleBitmap(m_hDC, WINCX, WINCY);
+	backBitmapStage = (HBITMAP)SelectObject(backHDC, backBitmap);
+
+
+	Rectangle(backHDC, 0, 0, WINCX, WINCY);
+	Rectangle(backHDC, 100, 100, WINCX - 100, WINCY - 100);
+
+	TCHAR szBuff[256] = L"";
+	swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
+	TextOut(backHDC, 200, 200, szBuff, lstrlen(szBuff));
+
+	swprintf_s(szBuff, L"ÃÑ¾Ë : %d", m_ObjList[OBJ_BULLET].size());
+	TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
+
+
+	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto & iter : m_ObjList[i])
-			iter->Render(m_hDC);
+			iter->Render(backHDC);
 	}
+
+	BitBlt(m_hDC, 0, 0, WINCX, WINCY, backHDC, 0, 0, SRCCOPY);
+	DeleteObject(SelectObject(backHDC, backBitmapStage));
+	DeleteDC(backHDC);
 }
 
 void CMainGame::Release(void)
