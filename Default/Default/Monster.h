@@ -17,11 +17,11 @@ public:
 	void SetBulletList(std::list<CObj*>* _pList) { m_bulletList = _pList; };
 	void SetTarget(CObj* _obj) { targetObj = _obj; };
 
-	void BehaviorStart(CObj*, std::list<CObj*>*); // AI����
+	void BehaviorStart(CObj*, std::list<CObj*>*); 
 
 protected:
-	bool TargetMove(); // ������ ��ġ�� �̵�(true�� �̵� �Ϸ�)
-	void Fire(float); // �Ѿ� �߻�
+	bool TargetMove(); 
+	void Fire(float); 
 
 	void BehaviorUpdate();
 	virtual void BehaviorEnter();
@@ -32,7 +32,7 @@ protected:
 
 private:
 	enum State {
-		Create, // ����
+		Create, 
 		Pattern1,
 		Pattern2,
 		Pattern3,
@@ -40,12 +40,6 @@ private:
 		Destroy
 	};
 
-	// Pattern1 3�������� �Ѿ� �߻�
-	// Pattern2 ���� �÷��̾� ������ ����
-	// Pattern3 ����ġ
-	// Pattern4 
-	// Leave ����(�Ʒ��� �� �̵���)
-	// Destroy ����
 	State currentState;
 
 
@@ -56,10 +50,10 @@ protected:
 		Exit
 	};
 
-	POINT originPosition; // ����ġ
-	POINT targetPosition; // �̵��� ��ġ
+	POINT originPosition;
+	POINT targetPosition;
 	
-	CObj* targetObj; // ���
+	CObj* targetObj;
 
 	Behavior behaviorState;
 
