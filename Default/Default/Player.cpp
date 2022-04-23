@@ -1,10 +1,21 @@
 #include "stdafx.h"
+#include "Barrier.h"
+#include "AssistantPlayer.h"
+#include "Bullet.h"
 #include "Player.h"
 #include "AbstractFactory.h"
 #include "PlayerHp.h"
 
 CPlayer::CPlayer()
+	: m_pBarrier(nullptr),
+	  m_iHP(100),
+	  m_iPowerUpItemCount(0),
+	  m_bIsBarrier(false)
 {
+	for (int i = 0; i < AST_END; ++i)
+	{
+		m_pAssistant[i] = nullptr;
+	}
 }
 
 CPlayer::~CPlayer()
@@ -27,11 +38,23 @@ int CPlayer::Update(void)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
-	// ¿¬»êÀ» ÁøÇà
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	Key_Input();
 
+	if (m_pBarrier)
+	{
+		m_pBarrier->Update();
+	}
 
-	// ¸ðµç ¿¬»êÀÌ ³¡³­ µÚ¿¡ ÃÖÁ¾ÀûÀÎ ÁÂÇ¥¸¦ ¿Ï¼º
+	if (m_pAssistant[AST_LEFT])
+	{
+		for (int i = 0; i < AST_END; ++i)
+		{
+			m_pAssistant[i]->Update();
+		}
+	}
+
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ï¼ï¿½
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -39,17 +62,70 @@ int CPlayer::Update(void)
 
 void CPlayer::Late_Update(void)
 {
+	if (m_pBarrier)
+	{
+		m_pBarrier->Late_Update();
+	}
+
+	CollisionWindow();
 }
 
 void CPlayer::Render(HDC hDC)
 {
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	if (m_pBarrier)
+	{
+		m_pBarrier->Render(hDC);
+	}
+
+	if (m_pAssistant[AST_LEFT])
+	{
+		for (int i = 0; i < AST_END; ++i)
+		{
+			m_pAssistant[i]->Render(hDC);
+		}
+	}
 }
 
 void CPlayer::Release(void)
 {
+	if (m_pAssistant[AST_LEFT])
+	{
+		for (int i = 0; i < AST_END; ++i)
+		{
+			delete m_pAssistant[i];
+			m_pAssistant[i] = nullptr;
+		}
+	}
 
+	if (m_pBarrier)
+	{
+		delete m_pBarrier;
+		m_pBarrier = nullptr;
+	}
 }
+
+void CPlayer::SetObjList(list<CObj*>* pObjList)
+{
+	m_pObjList = pObjList;
+}
+
+void CPlayer::SetGetBarrierItem()
+{
+	m_bIsBarrier = true;
+}
+
+void CPlayer::SetGetPowerItem()
+{
+	m_iPowerUpItemCount++;
+}
+
+CBarrier * CPlayer::GetBarrierClass()
+{
+	return m_pBarrier;
+}
+
 
 void CPlayer::Key_Input(void)
 {
@@ -93,5 +169,69 @@ void CPlayer::Key_Input(void)
 		m_tInfo.fY += m_fSpeed;
 
 
-	//ÃÑ¾Ë ¸¸µå´Â ÄÚµå
+	//ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
+
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		m_pObjList->push_back(new CBullet(m_tInfo, false));
+	}
+
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½Ó½ï¿½Å° ï¿½ï¿½ï¿½ï¿½)
+	if (GetAsyncKeyState('Z'))
+	{
+		InitBarrier();
+	}
+	if (GetAsyncKeyState('X'))
+	{
+		InitAssistantPlane();
+	}
+	
+}
+
+void CPlayer::CollisionWindow()
+{
+	if (m_tRect.left < 0)
+	{
+		m_tInfo.fX = m_tInfo.fCX / 2.f;
+		Update_Rect();
+	}
+	else if (m_tRect.right > WINCX)
+	{
+		m_tInfo.fX = WINCX - m_tInfo.fCX / 2.f;
+		Update_Rect();
+	}
+
+	if (m_tRect.top < 0)
+	{
+		m_tInfo.fY = m_tInfo.fCY / 2.f;
+		Update_Rect();
+	}
+	else if (m_tRect.bottom > WINCY)
+	{
+		m_tInfo.fY = WINCY - m_tInfo.fCY / 2.f;
+		Update_Rect();
+	}
+}
+
+void CPlayer::InitBarrier()
+{
+	if (!m_pBarrier)
+	{
+		m_pBarrier = new CBarrier();
+		m_pBarrier->Initialize();
+		m_pBarrier->SetPlayerInfo(&m_tInfo);
+	}
+}
+
+void CPlayer::InitAssistantPlane()
+{
+	m_pAssistant[0] = new CAssistantPlayer(AST_LEFT);
+	m_pAssistant[0]->Initialize();
+	m_pAssistant[0]->SetPlayerInfo(&m_tInfo);
+	m_pAssistant[0]->SetSpeed(m_fSpeed);
+
+	m_pAssistant[1] = new CAssistantPlayer(AST_RIGHT);
+	m_pAssistant[1]->Initialize();
+	m_pAssistant[1]->SetPlayerInfo(&m_tInfo);
+	m_pAssistant[1]->SetSpeed(m_fSpeed);
 }

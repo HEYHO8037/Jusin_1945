@@ -61,6 +61,7 @@ void CMainGame::Initialize(void)
 	CObj* plane = CAbstractFactory<CPlane>::Create();
 	dynamic_cast<CMonster*>(plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
 	m_ObjList[OBJ_MONSTER].push_back(plane);
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetObjList(&m_ObjList[OBJ_BULLET]);
 }
 
 void CMainGame::Update(void)
@@ -175,7 +176,6 @@ void CMainGame::Render(void)
 
 void CMainGame::Release(void)
 {
-
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter : m_ObjList[i])

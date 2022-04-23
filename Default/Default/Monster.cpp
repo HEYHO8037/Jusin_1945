@@ -109,7 +109,7 @@ void CMonster::BehaviorEnter() {
 	}
 
 	behaviorState = Execute;
-} // Çàµ¿ ½ÃÀÛ
+} // ï¿½àµ¿ ï¿½ï¿½ï¿½ï¿½
 
 void CMonster::BehaviorExecute() {
 	switch (currentState) {
@@ -117,7 +117,7 @@ void CMonster::BehaviorExecute() {
 		if (TargetMove()) {
 			behaviorState = Exit;
 			return;
-			// ¿øÇÏ´Â À§Ä¡±îÁö ÀÌµ¿
+			// ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		}
 		break;
 
@@ -129,7 +129,7 @@ void CMonster::BehaviorExecute() {
 		if (TargetMove()) {
 			behaviorState = Exit;
 			return;
-			// ¿øÇÏ´Â À§Ä¡±îÁö ÀÌµ¿
+			// ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		}
 		break;
 
@@ -137,7 +137,7 @@ void CMonster::BehaviorExecute() {
 		if (TargetMove()) {
 			behaviorState = Exit;
 			return;
-			// ¿øÇÏ´Â À§Ä¡±îÁö ÀÌµ¿
+			// ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		}
 		break;
 
@@ -146,7 +146,7 @@ void CMonster::BehaviorExecute() {
 		m_tInfo.fY += m_fSpeed;
 		break;
 	}
-} // Çàµ¿ Áß
+} // ï¿½àµ¿ ï¿½ï¿½
 
 void CMonster::BehaviorExit() {
 	switch (currentState) {
@@ -171,7 +171,7 @@ void CMonster::BehaviorExit() {
 	}
 
 	behaviorState = Enter;
-} // Çàµ¿ Á¾·á
+} // ï¿½àµ¿ ï¿½ï¿½ï¿½ï¿½
 
 bool CMonster::TargetMove() {
 	float distX = targetPosition.x - m_tInfo.fX;
@@ -204,14 +204,14 @@ void CMonster::DisplayInfo(HDC hDC, int _displayState) {
 	swprintf_s(szBuff, L"Position : (%f, %f)", m_tInfo.fX, m_tInfo.fY);
 	TextOut(hDC, m_tRect.left, m_tRect.top - 20, szBuff, lstrlen(szBuff));
 
-	swprintf_s(szBuff, L"ÆÐÅÏ : %d", _displayState);
+	swprintf_s(szBuff, L"ï¿½ï¿½ï¿½ï¿½ : %d", _displayState);
 	TextOut(hDC, m_tRect.left, m_tRect.top - 40, szBuff, lstrlen(szBuff));
 
 	float distX = targetPosition.x - m_tInfo.fX;
 	float distY = targetPosition.y - m_tInfo.fY;
 
 	float distance = sqrtf(distX * distX + distY * distY);
-	swprintf_s(szBuff, L"°Å¸® : %f", distance);
+	swprintf_s(szBuff, L"ï¿½Å¸ï¿½ : %f", distance);
 	TextOut(hDC, m_tRect.left, m_tRect.top - 60, szBuff, lstrlen(szBuff));
 
 }

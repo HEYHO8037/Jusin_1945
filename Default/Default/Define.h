@@ -4,6 +4,7 @@
 #define		WINCY		1024
 
 #define		PI			3.141592f
+#define		RADIAN		PI / 180
 
 #define		PURE		= 0
 

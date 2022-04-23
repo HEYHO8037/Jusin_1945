@@ -17,11 +17,11 @@ public:
 	void SetBulletList(std::list<CObj*>* _pList) { m_bulletList = _pList; };
 	void SetTarget(CObj* _obj) { targetObj = _obj; };
 
-	void BehaviorStart(CObj*, std::list<CObj*>*); // AI½ÃÀÛ
+	void BehaviorStart(CObj*, std::list<CObj*>*); // AIï¿½ï¿½ï¿½ï¿½
 
 protected:
-	bool TargetMove(); // ¼³Á¤ÇÑ À§Ä¡·Î ÀÌµ¿(true½Ã ÀÌµ¿ ¿Ï·á)
-	void Fire(float); // ÃÑ¾Ë ¹ß»ç
+	bool TargetMove(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½(trueï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Ï·ï¿½)
+	void Fire(float); // ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½
 
 	void BehaviorUpdate();
 	virtual void BehaviorEnter();
@@ -32,7 +32,7 @@ protected:
 
 private:
 	enum State {
-		Create, // »ý¼º
+		Create, // ï¿½ï¿½ï¿½ï¿½
 		Pattern1,
 		Pattern2,
 		Pattern3,
@@ -40,12 +40,12 @@ private:
 		Destroy
 	};
 
-	// Pattern1 3¹æÇâÀ¸·Î ÃÑ¾Ë ¹ß»ç
-	// Pattern2 ÇöÀç ÇÃ·¹ÀÌ¾î ÂÊÀ¸·Î µ¹Áø
-	// Pattern3 ¿øÀ§Ä¡
+	// Pattern1 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½
+	// Pattern2 ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// Pattern3 ï¿½ï¿½ï¿½ï¿½Ä¡
 	// Pattern4 
-	// Leave ÅðÀå(¾Æ·¡·Î Âß ÀÌµ¿ÇÔ)
-	// Destroy »èÁ¦
+	// Leave ï¿½ï¿½ï¿½ï¿½(ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½)
+	// Destroy ï¿½ï¿½ï¿½ï¿½
 	State currentState;
 
 
@@ -56,10 +56,10 @@ protected:
 		Exit
 	};
 
-	POINT originPosition; // ¿øÀ§Ä¡
-	POINT targetPosition; // ÀÌµ¿ÇÒ À§Ä¡
+	POINT originPosition; // ï¿½ï¿½ï¿½ï¿½Ä¡
+	POINT targetPosition; // ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 	
-	CObj* targetObj; // ´ë»ó
+	CObj* targetObj; // ï¿½ï¿½ï¿½
 
 	Behavior behaviorState;
 
