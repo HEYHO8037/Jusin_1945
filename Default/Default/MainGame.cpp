@@ -69,7 +69,7 @@ void CMainGame::Initialize(void)
 	//자살공격하는 비행기
 	//나중에 create 생성자 있는 버전으로 넣어주기
 	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
-	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
+	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, nullptr);
 	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
 
 }
@@ -77,7 +77,8 @@ void CMainGame::Initialize(void)
 void CMainGame::Update(void)
 {
 	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
-	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerPointer());
+	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
+
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{

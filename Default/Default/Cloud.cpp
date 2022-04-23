@@ -17,7 +17,7 @@ void CCloud::Initialize(void)
 	m_tInfo.fCX = 60.f;
 	m_tInfo.fCY = 40.f;
 	
-	m_fSpeed = 1.f;
+	m_fSpeed = 1.5f; // 추가 수정, 구름 속도 조절, 
 }
 
 int CCloud::Update(void)

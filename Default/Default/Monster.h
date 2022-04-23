@@ -19,6 +19,9 @@ public:
 
 	void BehaviorStart(CObj*, std::list<CObj*>*); 
 
+	//테스트용
+	void SetTargetInfo(CObj* _pObj) { targetPlayer = _pObj; };
+
 protected:
 	bool TargetMove(); 
 	void Fire(float); 
@@ -61,5 +64,8 @@ protected:
 	
 	bool m_bAIStart;
 	bool m_bDisplayInfo;
+
+	//테스트용
+	CObj* targetPlayer;
 };
 

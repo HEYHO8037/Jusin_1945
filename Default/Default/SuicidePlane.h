@@ -17,6 +17,8 @@ public :
 	void BehaviorExecute() override; //update 역할
 	void BehaviorExit() override; //소멸자 역할
 
+public :
+	void SetPlayerInfo(INFO* _pPlayerInfo) { m_pPlayerInfo = _pPlayerInfo; }
 private:
 	enum State
 	{
@@ -27,5 +29,7 @@ private:
 	};
 
 	State currentState;
+
+	INFO* m_pPlayerInfo;
 };
 
