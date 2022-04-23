@@ -70,7 +70,18 @@ void CPlayer::Late_Update(void)
 
 void CPlayer::Render(HDC hDC)
 {
+	HBRUSH brush;
+	HPEN pen;
+
+	pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
+	brush = CreateSolidBrush(RGB(0, 200, 200));
+	SelectObject(hDC, pen);
+	SelectObject(hDC, brush);
+
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	DeleteObject(pen);
+	DeleteObject(brush);
 
 	if (m_pBarrier)
 	{
@@ -175,13 +186,13 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		NormalFire();
+		ShotGunFire();
 
 		if (m_pAssistant[AST_LEFT])
 		{
 			for (int i = 0; i < AST_END; ++i)
 			{
-				m_pAssistant[i]->NormalFire();
+				m_pAssistant[i]->ShotGunFire();
 			}
 		}
 	}
@@ -203,6 +214,7 @@ void CPlayer::NormalFire()
 	CObj* newBullet = CAbstractFactory<CBullet>::Create();
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 }
@@ -213,6 +225,7 @@ void CPlayer::ShotGunFire()
 	CObj* newBullet = CAbstractFactory<CBullet>::Create();
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 
@@ -220,6 +233,7 @@ void CPlayer::ShotGunFire()
 	newBullet = CAbstractFactory<CBullet>::Create();
 	BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 
@@ -229,6 +243,7 @@ void CPlayer::ShotGunFire()
 	newBullet = CAbstractFactory<CBullet>::Create();
 	BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 }

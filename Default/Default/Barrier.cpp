@@ -40,7 +40,18 @@ void CBarrier::Late_Update(void)
 
 void CBarrier::Render(HDC hDC)
 {
+	HBRUSH brush;
+	HPEN pen;
+
+	pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
+	brush = CreateSolidBrush(RGB(200, 200, 200));
+	SelectObject(hDC, pen);
+	SelectObject(hDC, brush);
+
 	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	DeleteObject(pen);
+	DeleteObject(brush);
 }
 
 void CBarrier::Release(void)

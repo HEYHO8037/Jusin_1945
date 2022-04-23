@@ -6,6 +6,11 @@
 CBullet::CBullet() {
 }
 
+CBullet::CBullet(BULLET_TYPE eType)
+{
+	m_eBulletType = eType;
+}
+
 
 CBullet::~CBullet() {
 	Release();
@@ -57,4 +62,9 @@ void CBullet::Render(HDC hdc) {
 }
 
 void CBullet::Release() {
+}
+
+void CBullet::SetType(BULLET_TYPE eType)
+{
+	m_eBulletType = eType;
 }

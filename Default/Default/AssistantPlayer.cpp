@@ -53,7 +53,18 @@ void CAssistantPlayer::Late_Update(void)
 
 void CAssistantPlayer::Render(HDC hDC)
 {
+	HBRUSH brush;
+	HPEN pen;
+
+	pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
+	brush = CreateSolidBrush(RGB(200, 0, 200));
+	SelectObject(hDC, pen);
+	SelectObject(hDC, brush);
+
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	DeleteObject(pen);
+	DeleteObject(brush);
 }
 
 void CAssistantPlayer::Release(void)
@@ -93,6 +104,7 @@ void CAssistantPlayer::NormalFire()
 	CObj* newBullet = CAbstractFactory<CBullet>::Create();
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 }
@@ -103,6 +115,7 @@ void CAssistantPlayer::ShotGunFire()
 	CObj* newBullet = CAbstractFactory<CBullet>::Create();
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 
@@ -110,6 +123,7 @@ void CAssistantPlayer::ShotGunFire()
 	newBullet = CAbstractFactory<CBullet>::Create();
 	BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 
@@ -119,6 +133,7 @@ void CAssistantPlayer::ShotGunFire()
 	newBullet = CAbstractFactory<CBullet>::Create();
 	BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 }

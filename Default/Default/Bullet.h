@@ -12,9 +12,12 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
+public:
+	void SetType(BULLET_TYPE eType);
 	void SetDirection(float _x, float _y) { m_tDir.fX = _x, m_tDir.fY = _y; };
 
 private:
 	INFO m_tDir;
+	BULLET_TYPE m_eBulletType;
 };
 
