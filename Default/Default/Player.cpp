@@ -17,8 +17,8 @@ void CPlayer::Initialize(void)
 	m_tInfo.fX = 400.f;
 	m_tInfo.fY = 700.f;
 
-	m_tInfo.fCX = 100.f;
-	m_tInfo.fCY = 100.f;
+	m_tInfo.fCX = (float)PlayerSize;
+	m_tInfo.fCY = (float)PlayerSize;
 
 	m_fSpeed = 10.f;
 }

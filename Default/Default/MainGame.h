@@ -4,22 +4,23 @@
 
 #include "Player.h"
 #include "Ui.h"
+#include "Item.h"
 
 class CMainGame
 {
-public:				// »ý¼ºÀÚ, ¼Ò¸êÀÚ
+public:				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Ò¸ï¿½ï¿½ï¿½
 	CMainGame();
 	~CMainGame();
 
-	// public, protected, private ÇÔ¼ö
+	// public, protected, private ï¿½Ô¼ï¿½
 public:
-	void	Initialize(void);		// ÃÊ±âÈ­ ÇÔ¼ö
-	void	Update(void);			// ¸Å ÇÁ·¹ÀÓ¸¶´Ù °»½ÅµÇ´Â µ¥ÀÌÅÍ¸¦ ¸¸µå´Â ÇÔ¼ö
+	void	Initialize(void);		// ï¿½Ê±ï¿½È­ ï¿½Ô¼ï¿½
+	void	Update(void);			// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÅµÇ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 	void	Late_Update(void);
-	void	Render(void);			// ¸Å ÇÁ·¹ÀÓ¸¶´Ù Ãâ·ÂÇÏ´Â ÇÔ¼ö
-	void	Release(void);			// µ¿ÀûÇÒ´çÇÑ Æ÷ÀÎÅÍ¸¦ ÇØÁ¦ÇÏ´Â ÇÔ¼ö
+	void	Render(void);			// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
+	void	Release(void);			// ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 
-									// public, protected, private º¯¼ö
+									// public, protected, private ï¿½ï¿½ï¿½ï¿½
 private:
 	HDC		m_hDC;
 	
@@ -28,5 +29,6 @@ private:
 
 	TCHAR m_szFPS[64];
 	
+	CObj* TestItem;
 };
 

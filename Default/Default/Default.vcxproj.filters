@@ -42,6 +42,8 @@
     </Filter>
     <Filter Include="UI\02.Hp">
       <UniqueIdentifier>{a3fcb0c6-eaab-478c-8a1d-510a2fdf84e0}</UniqueIdentifier>
+    <Filter Include="01.Obj\03.Item">
+      <UniqueIdentifier>{2142b0a7-cb83-4ccf-83cb-74756944d78e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +103,8 @@
     </ClInclude>
     <ClInclude Include="MonsterHp.h">
       <Filter>UI\02.Hp</Filter>
+    <ClInclude Include="Item.h">
+      <Filter>01.Obj\03.Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +137,8 @@
     </ClCompile>
     <ClCompile Include="MonsterHp.cpp">
       <Filter>UI\02.Hp</Filter>
+    <ClCompile Include="Item.cpp">
+      <Filter>01.Obj\03.Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

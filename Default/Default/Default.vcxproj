@@ -150,6 +150,7 @@
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="MonsterHp.h" />
     <ClInclude Include="PlayerHp.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Jusin_1945조.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Enum.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="MonsterHp.cpp" />
     <ClCompile Include="PlayerHp.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jusin_1945조.cpp" />
     <ClCompile Include="Life.cpp" />
     <ClCompile Include="MainGame.cpp" />

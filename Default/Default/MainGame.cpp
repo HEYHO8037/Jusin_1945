@@ -18,33 +18,37 @@ CMainGame::~CMainGame()
 
 void CMainGame::Initialize(void)
 {
-	srand(unsigned(time(nullptr))); //¾îµð¿¡ ³Ö¾î¾ßÇÒÁö
+	srand(unsigned(time(nullptr))); //ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	m_hDC = GetDC(g_hWnd);
-
+	
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-	if (!m_ObjList[OBJ_PLAYER].empty()) // ÇÃ·¹ÀÌ¾î ÁÂÇ¥ ¾ò¾î¿Í¼­ °´Ã¼ »ý¼ºÇÏ±â
+	if (!m_ObjList[OBJ_PLAYER].empty()) // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½Í¼ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	{
 		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate());
 	}
 
-	//boss¸ó½ºÅÍ°¡ ÀÖÀ»¶§ monsterHp »ý¼º, monster¶û ¿¬µ¿
+	//bossï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ monsterHp ï¿½ï¿½ï¿½ï¿½, monsterï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
 	
-	//cloud ¿Ï·á
+	//cloud ï¿½Ï·ï¿½
 	for (int i = 0; i < 3; ++i)
 	{
 		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 +10)*(rand()% 12 +1)), float((-rand() % 30 + 1) * 15) - 10));
 	}
 
-	//life »ý¼º, ÇÃ·¹ÀÌ¾îÀÇ hp¶û ¿¬µ¿
+	//life ï¿½ï¿½ï¿½ï¿½, ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ hpï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	int iTemp = 0;
 	for (int i = 0; i < 3; ++i)
 	{
 		m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate( (50.f+iTemp) , 930.f));
 		iTemp += 70;
 	}
+	
+	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create()); // ï¿½Ó½ï¿½ ï¿½×½ï¿½Æ®(OBJ_listï¿½ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ enumï¿½ï¿½ ï¿½ß°ï¿½ï¿½Øµï¿½ ï¿½Ç´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½×½ï¿½Æ®)
+	/*TestItem = new CItem;
+	TestItem->Initialize();*/
 }
 
 void CMainGame::Update(void)
@@ -83,6 +87,7 @@ void CMainGame::Update(void)
 				++iter;
 		}
 	}
+	//TestItem->Update();
 }
 
 void CMainGame::Late_Update(void)
@@ -117,14 +122,14 @@ void CMainGame::Render(void)
 	}
 
 
-	//ÆùÆ®Ãâ·Â
+	//ï¿½ï¿½Æ®ï¿½ï¿½ï¿½
 	TCHAR	szBuff[32] = L"";
-	//1000ÀÚ¸®¿¡ get_scroe
+	//1000ï¿½Ú¸ï¿½ï¿½ï¿½ get_scroe
 	swprintf_s(szBuff, L"SCORE : %d", 1000);
 	TextOut(m_hDC, 600, 50, szBuff, lstrlen(szBuff));
 
 	TCHAR	szBuff2[32] = L"";
-	//30ÀÚ¸®¿¡ Á×ÀÎ ¸ó½ºÅÍ ¼ýÀÚ ³Ö±â
+	//30ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
 	swprintf_s(szBuff2, L"KILL : %d", 30);
 	TextOut(m_hDC, 650, 950, szBuff2, lstrlen(szBuff2));
 
@@ -132,6 +137,7 @@ void CMainGame::Render(void)
 	//PLAYER level
 	swprintf_s(szBuff3, L"LEVEL %d", 1);
 	TextOut(m_hDC, 350, 950, szBuff3, lstrlen(szBuff3));
+	//TestItem->Render(m_hDC);
 }
 
 void CMainGame::Release(void)
