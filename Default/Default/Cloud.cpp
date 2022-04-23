@@ -24,7 +24,7 @@ int CCloud::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_tInfo.fY += m_fSpeed * 0.6f;
+	m_tInfo.fY += m_fSpeed /10;
 	Update_Rect();
 	return OBJ_NOEVENT;
 }
