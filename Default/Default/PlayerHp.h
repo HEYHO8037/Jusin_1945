@@ -1,7 +1,8 @@
 #pragma once
-#include "Obj.h"
+#include "Ui.h"
+
 class CPlayerHp :
-	public CObj
+	public CUi
 {
 public:
 	CPlayerHp();

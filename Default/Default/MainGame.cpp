@@ -18,27 +18,31 @@ CMainGame::~CMainGame()
 
 void CMainGame::Initialize(void)
 {
-	srand(unsigned(time(nullptr)));
-	
+	srand(unsigned(time(nullptr))); //어디에 넣어야할지
+
 	m_hDC = GetDC(g_hWnd);
 
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-	//플레이어, 몬스터 hp
-	m_ObjList[OBJ_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::Create());
-	m_ObjList[OBJ_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::Create());
-	
-	//구름 생성완료 충돌처리
-	for (int i = 0; i < (rand() % 3 + 1); ++i)
+	if (!m_ObjList[OBJ_PLAYER].empty()) // 플레이어 좌표 얻어와서 객체 생성하기
 	{
-		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::CreateUi(float((rand() % 50 +10)*(rand()% 12 +1)), float((-rand() % 30 + 1) * 15) - 10));
+		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate());
 	}
 
-	//life 생성
+	//boss몬스터가 있을때 monsterHp 생성, monster랑 연동
+	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
+	
+	//cloud 완료
+	for (int i = 0; i < 3; ++i)
+	{
+		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 +10)*(rand()% 12 +1)), float((-rand() % 30 + 1) * 15) - 10));
+	}
+
+	//life 생성, 플레이어의 hp랑 연동
 	int iTemp = 0;
 	for (int i = 0; i < 3; ++i)
 	{
-		m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::CreateUi( (70.f+iTemp) , 900.f));
+		m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate( (50.f+iTemp) , 930.f));
 		iTemp += 70;
 	}
 }
@@ -113,9 +117,21 @@ void CMainGame::Render(void)
 	}
 
 
+	//폰트출력
 	TCHAR	szBuff[32] = L"";
+	//1000자리에 get_scroe
 	swprintf_s(szBuff, L"SCORE : %d", 1000);
 	TextOut(m_hDC, 600, 50, szBuff, lstrlen(szBuff));
+
+	TCHAR	szBuff2[32] = L"";
+	//30자리에 죽인 몬스터 숫자 넣기
+	swprintf_s(szBuff2, L"KILL : %d", 30);
+	TextOut(m_hDC, 650, 950, szBuff2, lstrlen(szBuff2));
+
+	TCHAR	szBuff3[32] = L"";
+	//PLAYER level
+	swprintf_s(szBuff3, L"LEVEL %d", 1);
+	TextOut(m_hDC, 350, 950, szBuff3, lstrlen(szBuff3));
 }
 
 void CMainGame::Release(void)

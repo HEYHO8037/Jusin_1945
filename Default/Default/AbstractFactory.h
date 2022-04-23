@@ -37,7 +37,7 @@ public :
 		return pObj;
 	}
 
-	static CUi* CreateUi(void)
+	static CUi* UICreate(void)
 	{
 		CUi* pUi = new T;
 		pUi->Initialize();
@@ -45,7 +45,7 @@ public :
 		return pUi;
 	}
 
-	static CUi* CreateUi(float _fX, float _fY)
+	static CUi* UICreate(float _fX, float _fY)
 	{
 		CUi* pUi = new T;
 		pUi->Initialize();

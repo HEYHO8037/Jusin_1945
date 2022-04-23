@@ -13,12 +13,17 @@ CLife::~CLife()
 
 void CLife::Initialize(void)
 {
-
+	Release();
 }
 
 int CLife::Update(void)
 {
-	return 0;
+	if (m_bDead)
+		return OBJ_DEAD;
+	
+
+	Update_Rect();
+	return OBJ_NOEVENT;
 }
 
 void CLife::Late_Update(void)

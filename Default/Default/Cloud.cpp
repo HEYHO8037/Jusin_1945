@@ -9,6 +9,7 @@ CCloud::CCloud()
 
 CCloud::~CCloud()
 {
+	Release();
 }
 
 void CCloud::Initialize(void)
@@ -24,13 +25,22 @@ int CCloud::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_tInfo.fY += m_fSpeed /10;
+	m_tInfo.fY += m_fSpeed;
+
+	if (1024 < m_tRect.top)
+	{
+		m_tInfo.fX = float((rand() % 50 + 10)*(rand() % 12 + 1))+ 20.f;
+		m_tInfo.fY = float(((-rand() % 30 + 1) * 15) - 10);
+
+	}
 	Update_Rect();
 	return OBJ_NOEVENT;
 }
 
 void CCloud::Late_Update(void)
 {
+
+	
 }
 
 void CCloud::Render(HDC hDC)
