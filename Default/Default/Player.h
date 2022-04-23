@@ -1,5 +1,6 @@
 #pragma once
 #include "Obj.h"
+
 class CPlayer :
 	public CObj
 {
@@ -16,6 +17,7 @@ public:
 
 private:
 	void		Key_Input(void);
+
 
 	//bullet 클래스 생성시 Set_BulletList 함수 만들기
 };

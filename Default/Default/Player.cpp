@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "AbstractFactory.h"
+#include "PlayerHp.h"
 
 CPlayer::CPlayer()
 {
@@ -13,7 +15,7 @@ CPlayer::~CPlayer()
 void CPlayer::Initialize(void)
 {
 	m_tInfo.fX = 400.f;
-	m_tInfo.fY = 300.f;
+	m_tInfo.fY = 700.f;
 
 	m_tInfo.fCX = 100.f;
 	m_tInfo.fCY = 100.f;
@@ -27,7 +29,6 @@ int CPlayer::Update(void)
 		return OBJ_DEAD;
 	// 연산을 진행
 	Key_Input();
-
 
 
 	// 모든 연산이 끝난 뒤에 최종적인 좌표를 완성

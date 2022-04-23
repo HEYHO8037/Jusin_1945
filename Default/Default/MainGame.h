@@ -3,6 +3,7 @@
 #include "Include.h"
 
 #include "Player.h"
+#include "Ui.h"
 
 class CMainGame
 {
@@ -23,6 +24,9 @@ private:
 	HDC		m_hDC;
 	
 	list<CObj*> m_ObjList[OBJ_END];
+	list<CUi*> m_UiList[UI_END];
 
+	TCHAR m_szFPS[64];
+	
 };
 

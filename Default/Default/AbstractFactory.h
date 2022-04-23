@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Obj.h"
+#include "Ui.h"
 
 template<typename T>
 class CAbstractFactory
@@ -34,6 +35,23 @@ public :
 		}
 
 		return pObj;
+	}
+
+	static CUi* UICreate(void)
+	{
+		CUi* pUi = new T;
+		pUi->Initialize();
+
+		return pUi;
+	}
+
+	static CUi* UICreate(float _fX, float _fY)
+	{
+		CUi* pUi = new T;
+		pUi->Initialize();
+		pUi->Set_Pos(_fX, _fY);
+
+		return pUi;
 	}
 };
 
