@@ -27,10 +27,15 @@ void CMainGame::Initialize(void)
 	
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
+	//플레이어 생성시 hp바 생성
+	float fXtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fX;
+	float fYtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fY;
 	if (!m_ObjList[OBJ_PLAYER].empty()) 
 	{
-		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate());
+		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp-40));
 	}
+
+	//플레이어의 정보를 hp에 넣어주기
 
 	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
 	
@@ -63,6 +68,8 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
+	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
+	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerPointer());
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
@@ -123,10 +130,6 @@ void CMainGame::Render(void)
 	backBitmap = CreateCompatibleBitmap(m_hDC, WINCX, WINCY);
 	backBitmapStage = (HBITMAP)SelectObject(backHDC, backBitmap);
 	//Rectangle(m_hDC, 0, 0, WINCX, WINCY);
-
-
-
-
 
 	Rectangle(backHDC, 0, 0, WINCX, WINCY);
 	Rectangle(backHDC, 100, 100, WINCX - 100, WINCY - 100);

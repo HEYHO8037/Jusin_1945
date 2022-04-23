@@ -21,6 +21,8 @@ public:
 	void SetGetPowerItem(); // 파워아이템을 먹게 되면 발동 함수
 	class CBarrier* GetBarrierClass(); // 베리어클래스 포인터를 반환하는 함수
 
+	 INFO* GetPlayerPointer(void) { return &m_tInfo; }
+
 private:
 	void		Key_Input(void);
 	void		CollisionWindow(); //플레이어가 화면 밖으로 못나가게 충돌처리
