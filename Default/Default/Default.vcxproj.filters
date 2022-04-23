@@ -31,6 +31,9 @@
     <Filter Include="98.Design\AbstractFactory">
       <UniqueIdentifier>{407ba3f1-e164-427c-a0b0-597e925f1b3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Obj\03.Item">
+      <UniqueIdentifier>{2142b0a7-cb83-4ccf-83cb-74756944d78e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -75,6 +78,9 @@
     <ClInclude Include="Jusin_1945조.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>01.Obj\03.Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -91,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="Jusin_1945조.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>01.Obj\03.Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

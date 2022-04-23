@@ -3,6 +3,7 @@
 #include "Include.h"
 
 #include "Player.h"
+#include "Item.h"
 
 class CMainGame
 {
@@ -23,6 +24,6 @@ private:
 	HDC		m_hDC;
 	
 	list<CObj*> m_ObjList[OBJ_END];
-
+	CObj* TestItem;
 };
 
