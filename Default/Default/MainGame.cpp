@@ -141,6 +141,8 @@ void CMainGame::Render(void)
 	swprintf_s(szBuff, L"??? : %d", m_ObjList[OBJ_BULLET].size());
 	TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
 
+	for (auto & iter : m_UiList[UI_CLOUD])
+		iter->Render(backHDC);
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
@@ -164,7 +166,7 @@ void CMainGame::Render(void)
 	//TestItem->Render(m_hDC);
 	
 
-	for (int i = 0; i < UI_END; ++i)
+	for (int i = UI_LIFE; i < UI_END; ++i)
 	{
 		for (auto & iter : m_UiList[i])
 			iter->Render(backHDC);

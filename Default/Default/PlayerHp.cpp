@@ -3,6 +3,7 @@
 
 
 CPlayerHp::CPlayerHp()
+	:m_pPlayerInfo(nullptr)
 {
 }
 
