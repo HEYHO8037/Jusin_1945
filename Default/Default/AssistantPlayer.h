@@ -1,11 +1,12 @@
 #pragma once
 #include "Obj.h"
-class CBarrier :
+class CAssistantPlayer :
 	public CObj
 {
 public:
-	CBarrier();
-	virtual ~CBarrier();
+	CAssistantPlayer();
+	CAssistantPlayer(ASSISTANT_DIR iLeftRight);
+	virtual ~CAssistantPlayer();
 
 public:
 	virtual void Initialize(void) override;
@@ -16,13 +17,10 @@ public:
 
 public:
 	void SetPlayerInfo(INFO* pPlayerInfo);
+	void SetSpeed(float fSpeed);
 
 private:
-	void UpdatePos();
-
-private:
+	ASSISTANT_DIR m_iLeftRight;
 	INFO* m_pPlayerInfo;
-	float m_fAngle;
-
 };
 

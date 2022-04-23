@@ -37,6 +37,9 @@
     <Filter Include="01.Obj\02_Monster">
       <UniqueIdentifier>{4fd25c03-e27a-4571-8eb0-8fc789efa2aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Obj\00.Player\00.PlayerItem">
+      <UniqueIdentifier>{f817e033-cfc2-4aff-abab-83dfd95fb0c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -78,9 +81,6 @@
     <ClInclude Include="AbstractFactory.h">
       <Filter>98.Design\AbstractFactory</Filter>
     </ClInclude>
-    <ClInclude Include="Barrier.h">
-      <Filter>01.Obj\00.Player</Filter>
-    </ClInclude>
     <ClInclude Include="Jusin_1945조.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -89,6 +89,12 @@
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>01.Obj\02_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Barrier.h">
+      <Filter>01.Obj\00.Player\00.PlayerItem</Filter>
+    </ClInclude>
+    <ClInclude Include="AssistantPlayer.h">
+      <Filter>01.Obj\00.Player\00.PlayerItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -107,14 +113,17 @@
     <ClCompile Include="Jusin_1945조.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Barrier.cpp">
-      <Filter>01.Obj\00.Player</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>01.Obj\01_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>01.Obj\02_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>01.Obj\00.Player\00.PlayerItem</Filter>
+    </ClCompile>
+    <ClCompile Include="AssistantPlayer.cpp">
+      <Filter>01.Obj\00.Player\00.PlayerItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

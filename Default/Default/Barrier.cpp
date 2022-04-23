@@ -45,6 +45,7 @@ void CBarrier::Render(HDC hDC)
 
 void CBarrier::Release(void)
 {
+	m_pPlayerInfo = nullptr;
 }
 
 void CBarrier::SetPlayerInfo(INFO * pPlayerInfo)

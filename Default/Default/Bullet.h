@@ -16,6 +16,7 @@ public:
 	virtual void Release(void) override;
 
 private:
+	float m_fAngle;
 	bool m_bIsScrew;
 
 };

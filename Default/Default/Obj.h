@@ -31,6 +31,5 @@ protected:
 	DIRECTION	m_eDir;
 	float		m_fSpeed;
 	bool		m_bDead;
-	float		m_fAngle;
 };
 

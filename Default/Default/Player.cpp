@@ -1,11 +1,19 @@
 #include "stdafx.h"
 #include "Barrier.h"
+#include "AssistantPlayer.h"
 #include "Bullet.h"
 #include "Player.h"
 
 CPlayer::CPlayer()
-	: m_pBarrier(nullptr)
+	: m_pBarrier(nullptr),
+	  m_iHP(100),
+	  m_iPowerUpItemCount(0),
+	  m_bIsBarrier(false)
 {
+	for (int i = 0; i < AST_END; ++i)
+	{
+		m_pAssistant[i] = nullptr;
+	}
 }
 
 CPlayer::~CPlayer()
@@ -36,6 +44,14 @@ int CPlayer::Update(void)
 		m_pBarrier->Update();
 	}
 
+	if (m_pAssistant[AST_LEFT])
+	{
+		for (int i = 0; i < AST_END; ++i)
+		{
+			m_pAssistant[i]->Update();
+		}
+	}
+
 	// 모든 연산이 끝난 뒤에 최종적인 좌표를 완성
 	Update_Rect();
 
@@ -60,18 +76,54 @@ void CPlayer::Render(HDC hDC)
 	{
 		m_pBarrier->Render(hDC);
 	}
+
+	if (m_pAssistant[AST_LEFT])
+	{
+		for (int i = 0; i < AST_END; ++i)
+		{
+			m_pAssistant[i]->Render(hDC);
+		}
+	}
 }
 
 void CPlayer::Release(void)
 {
-	delete m_pBarrier;
-	m_pBarrier = nullptr;
+	if (m_pAssistant[AST_LEFT])
+	{
+		for (int i = 0; i < AST_END; ++i)
+		{
+			delete m_pAssistant[i];
+			m_pAssistant[i] = nullptr;
+		}
+	}
+
+	if (m_pBarrier)
+	{
+		delete m_pBarrier;
+		m_pBarrier = nullptr;
+	}
 }
 
 void CPlayer::SetObjList(list<CObj*>* pObjList)
 {
 	m_pObjList = pObjList;
 }
+
+void CPlayer::SetGetBarrierItem()
+{
+	m_bIsBarrier = true;
+}
+
+void CPlayer::SetGetPowerItem()
+{
+	m_iPowerUpItemCount++;
+}
+
+CBarrier * CPlayer::GetBarrierClass()
+{
+	return m_pBarrier;
+}
+
 
 void CPlayer::Key_Input(void)
 {
@@ -119,13 +171,17 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		m_pObjList->push_back(new CBullet(m_tInfo, true));
+		m_pObjList->push_back(new CBullet(m_tInfo, false));
 	}
 
-	//베리어 생성
+	//베리어 생성(임시키 지정)
 	if (GetAsyncKeyState('Z'))
 	{
-		SetBarrier();
+		InitBarrier();
+	}
+	if (GetAsyncKeyState('X'))
+	{
+		InitAssistantPlane();
 	}
 	
 }
@@ -155,7 +211,7 @@ void CPlayer::CollisionWindow()
 	}
 }
 
-void CPlayer::SetBarrier()
+void CPlayer::InitBarrier()
 {
 	if (!m_pBarrier)
 	{
@@ -163,4 +219,17 @@ void CPlayer::SetBarrier()
 		m_pBarrier->Initialize();
 		m_pBarrier->SetPlayerInfo(&m_tInfo);
 	}
+}
+
+void CPlayer::InitAssistantPlane()
+{
+	m_pAssistant[0] = new CAssistantPlayer(AST_LEFT);
+	m_pAssistant[0]->Initialize();
+	m_pAssistant[0]->SetPlayerInfo(&m_tInfo);
+	m_pAssistant[0]->SetSpeed(m_fSpeed);
+
+	m_pAssistant[1] = new CAssistantPlayer(AST_RIGHT);
+	m_pAssistant[1]->Initialize();
+	m_pAssistant[1]->SetPlayerInfo(&m_tInfo);
+	m_pAssistant[1]->SetSpeed(m_fSpeed);
 }

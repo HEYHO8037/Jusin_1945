@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="AssistantPlayer.h" />
     <ClInclude Include="Barrier.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Jusin_1945조.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssistantPlayer.cpp" />
     <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Jusin_1945조.cpp" />
