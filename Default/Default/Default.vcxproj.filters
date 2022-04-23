@@ -40,6 +40,18 @@
     <Filter Include="01.Obj\00.Player\00.PlayerItem">
       <UniqueIdentifier>{f817e033-cfc2-4aff-abab-83dfd95fb0c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.UI">
+      <UniqueIdentifier>{b7ff3f47-23df-4693-b553-939bb45257ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\00.Cloud">
+      <UniqueIdentifier>{1d558582-8e8e-4c76-8fb9-b608aa73d847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\01.Life">
+      <UniqueIdentifier>{17c138aa-0c24-4703-ae89-b21f51a0a2b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\02.Hp">
+      <UniqueIdentifier>{20918055-93be-4ad7-9356-df48df4ddc77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -96,26 +108,26 @@
     <ClInclude Include="AssistantPlayer.h">
       <Filter>01.Obj\00.Player\00.PlayerItem</Filter>
     </ClInclude>
-    <ClInclude Include="Cloud.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MonsterHp.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerHp.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Life.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Plane.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Ui.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>02.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Cloud.h">
+      <Filter>02.UI\00.Cloud</Filter>
+    </ClInclude>
+    <ClInclude Include="Life.h">
+      <Filter>02.UI\01.Life</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHp.h">
+      <Filter>02.UI\02.Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterHp.h">
+      <Filter>02.UI\02.Hp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -146,26 +158,26 @@
     <ClCompile Include="AssistantPlayer.cpp">
       <Filter>01.Obj\00.Player\00.PlayerItem</Filter>
     </ClCompile>
-    <ClCompile Include="Cloud.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="MonsterHp.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerHp.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Life.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Plane.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Ui.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>02.UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>02.UI\00.Cloud</Filter>
+    </ClCompile>
+    <ClCompile Include="Life.cpp">
+      <Filter>02.UI\01.Life</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHp.cpp">
+      <Filter>02.UI\02.Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterHp.cpp">
+      <Filter>02.UI\02.Hp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
