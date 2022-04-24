@@ -55,6 +55,9 @@
     <Filter Include="01.Obj\02_Monster\00.SuicideMonster">
       <UniqueIdentifier>{1ff670a7-12bd-4f50-ab74-d2272e646fe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.UI\03.Bomb">
+      <UniqueIdentifier>{8b59aa76-1320-41a0-902a-1e50d16231b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -135,6 +138,9 @@
     <ClInclude Include="SuicidePlane.h">
       <Filter>01.Obj\02_Monster\00.SuicideMonster</Filter>
     </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>02.UI\03.Bomb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -187,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="SuicidePlane.cpp">
       <Filter>01.Obj\02_Monster\00.SuicideMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>02.UI\03.Bomb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@
 #include "Monster.h"
 #include "Plane.h"
 #include "SuicidePlane.h"
-
+#include "Bomb.h"
 CMainGame::CMainGame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -40,9 +40,9 @@ void CMainGame::Initialize(void)
 
 	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
 	
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
-		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 +10)*(rand()% 12 +1)), float((-rand() % 30 + 1) * 15) - 10));
+		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 +10)*(rand()% 12 +1))+25.f, float((-rand() % 30 + 1) * 15) - 10));
 	}
 
 	int iTemp = 0;
@@ -51,6 +51,16 @@ void CMainGame::Initialize(void)
 		m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate( (50.f+iTemp) , 930.f));
 		iTemp += 70;
 	}
+
+	int iTemp2 = 0;
+	for (int i = 0; i < 3; ++i)
+	{
+		m_UiList[UI_BOMB].push_back(CAbstractFactory<CBomb>::UICreate(70.f, (400.f + iTemp)));
+		iTemp += 60;
+	}
+	
+
+
 	
 	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create()); 
 	/*TestItem = new CItem;
@@ -141,7 +151,6 @@ void CMainGame::Render(void)
 	//Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 
 	Rectangle(backHDC, 0, 0, WINCX, WINCY);
-	Rectangle(backHDC, 100, 100, WINCX - 100, WINCY - 100);
 
 	TCHAR szBuff[256] = L"";
 	swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
