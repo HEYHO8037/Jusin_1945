@@ -20,6 +20,8 @@ public :
 
 public :
 	void SetPlayerInfo(INFO* _pPlayerInfo) { m_pPlayerInfo = _pPlayerInfo; }
+	void SetDirection(float _x, float _y) { m_tDir.fX = _x, m_tDir.fY = _y; };
+
 private:
 	enum State
 	{
@@ -32,5 +34,11 @@ private:
 	State currentState;
 
 	INFO* m_pPlayerInfo;
+
+	INFO m_tDir;
+	POINT m_tPosin;
+
+	float m_fDiagonal;
+	float m_fAngle;
 };
 
