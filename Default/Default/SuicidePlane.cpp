@@ -72,7 +72,7 @@ void CSuicidePlane::BehaviorEnter()
 
 		m_fDiagonal = sqrtf((targetPosition.x *m_tDir.fX) + (targetPosition.y *m_tDir.fY));
 		m_fAngle = atan2(m_tDir.fY, m_tDir.fX);
-		m_fSpeed = 7.f;
+		m_fSpeed = 8.f;
 		break;
 
 	case Destroy :
