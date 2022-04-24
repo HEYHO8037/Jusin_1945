@@ -71,13 +71,13 @@ void CMainGame::Initialize(void)
 
 	CObj* bossObj = CAbstractFactory<CBoss1>::Create();
 	CBoss1* boss = dynamic_cast<CBoss1*>(bossObj);
-	boss->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
+	boss->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
 	boss->SetAppearPosition(WINCX / 2, 500);
 	m_ObjList[OBJ_MONSTER].push_back(bossObj);
 
 	CObj* planeObj = CAbstractFactory<CPlane>::Create();
 	CPlane* plane = dynamic_cast<CPlane*>(planeObj);
-	plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
+	plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
 	plane->SetAppearPosition(WINCX / 2 + 200, WINCY / 2);
 	m_ObjList[OBJ_MONSTER].push_back(planeObj);
 
@@ -89,7 +89,7 @@ void CMainGame::Initialize(void)
 	//자살공격하는 비행기
 	//나중에 create 생성자 있는 버전으로 넣어주기
 	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
-	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, nullptr);
+	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, nullptr, nullptr);
 	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
 
 }

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Boss1.h"
 
-
 CBoss1::CBoss1():
 	currentState(Create) {
 }
@@ -22,6 +21,9 @@ void CBoss1::Initialize() {
 	m_bDisplayInfo = true;
 
 	m_iScore = 1000;
+
+	m_iMaxHP = 1000;
+	m_iHP = 1000;
 };
 
 void CBoss1::Render(HDC hDC) {
@@ -40,6 +42,8 @@ void CBoss1::Render(HDC hDC) {
 };
 
 void CBoss1::Release() {
+	if (bossShotTimer)
+		Safe_Delete<CTimer*>(bossShotTimer);
 }
 
 void CBoss1::BehaviorEnter() {
@@ -73,6 +77,31 @@ void CBoss1::BehaviorEnter() {
 	case Pattern2Back:
 		targetPosition.x = originPosition.x;
 		targetPosition.y = originPosition.y;
+		break;
+
+	case Pattern3:
+		bossShotTimer = new CTimer;
+		bossShotTimer->StartTimer(1, [&]() {
+			int angle = 0;
+			while (angle <= 360) {
+				Fire(angle);
+				angle += 10;
+			}
+		});
+		break;
+
+	case Pattern4:
+		patternAngle = 0;
+		bossShotTimer = new CTimer;
+		bossShotTimer->StartTimer(0.01f, [&]() {
+			if (patternAngle >= 360) {
+				behaviorState = Exit;
+			}
+
+			Fire(patternAngle);
+			patternAngle += 10;
+		});
+
 		break;
 
 	case Destroy:
@@ -110,6 +139,14 @@ void CBoss1::BehaviorExecute() {
 		}
 		break;
 
+	case Pattern3:
+		bossShotTimer->Update();
+		break;
+
+	case Pattern4:
+		bossShotTimer->Update();
+		break;
+
 	case Leave:
 		m_tInfo.fY += m_fSpeed;
 		break;
@@ -117,13 +154,16 @@ void CBoss1::BehaviorExecute() {
 }
 
 void CBoss1::BehaviorExit() {
+	if (bossShotTimer)
+		Safe_Delete<CTimer*>(bossShotTimer);
+
 	switch (currentState) {
 	case Create:
-		currentState = Pattern1;
+		//currentState = Pattern1;
+		currentState = Pattern4;
 		break;
 
 	case Pattern1:
-		Safe_Delete<CTimer*>(bossShotTimer);
 		//currentState = Pattern2;
 		break;
 
@@ -132,6 +172,9 @@ void CBoss1::BehaviorExit() {
 		break;
 
 	case Pattern2Back:
+		break;
+
+	case Pattern3:
 		break;
 
 	case Leave:

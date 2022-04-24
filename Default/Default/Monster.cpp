@@ -15,6 +15,9 @@ CMonster::~CMonster() {
 }
 
 int CMonster::Update() {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	BehaviorUpdate();
 
 	Update_Rect();
@@ -24,16 +27,27 @@ int CMonster::Update() {
 
 void CMonster::Late_Update() {
 
+	if (!m_bulletList)
+		return;
+
+	RECT rc{};
+	for (auto& target : *m_bulletList) {
+		if (IntersectRect(&rc, &(this->Get_Rect()), &(target->Get_Rect()))) {
+			CBullet* bulletObj = dynamic_cast<CBullet*>(target);
+			if (bulletObj)
+				bulletObj->CollisionEnter(this);
+		}
+	}
 };
 
 
-void CMonster::CollisionEnter(CObj * _sour)
-{
+void CMonster::CollisionEnter(CObj* _sour) {
 }
 
-void CMonster::BehaviorStart(CObj* _targetObj, std::list<CObj*>* _pList) {
+void CMonster::BehaviorStart(CObj* _targetObj, std::list<CObj*>* _pBulletList, std::list<CObj*>* _pItemList) {
 	targetObj = _targetObj;
-	m_bulletList = _pList;
+	m_bulletList = _pBulletList;
+	m_itemList = _pItemList;
 
 	m_bAIStart = true;
 	behaviorState = Enter;
@@ -81,6 +95,7 @@ void CMonster::Fire(float degree) {
 	CObj* newBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
+	BulletObj->SetType(MONSTER_BULLET);
 	BulletObj->SetDirection(cosf(degree * PI / 180.f), sinf(degree * PI / 180.f));
 	BulletObj->SetType(MONSTER_BULLET);
 	m_bulletList->push_back(newBullet);
@@ -129,4 +144,19 @@ void CMonster::EffectRender() {
 		m_effectCount = 0;
 		m_bRunEffect = false;
 	}
+}
+
+void CMonster::Hit() {
+	m_iHP -= 1;
+	RunEffect();
+
+ 	if (m_iHP <= 0)
+		Die();
+}
+
+void CMonster::Die() {
+	// item Create(m_itemList, this);
+
+	m_bDead = true;
+	m_bAIStart = false;
 }
