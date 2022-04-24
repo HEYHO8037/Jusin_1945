@@ -2,7 +2,8 @@
 #include "Plane.h"
 
 
-CPlane::CPlane() {
+CPlane::CPlane():
+	residenceTimer(nullptr) {
 }
 
 
@@ -20,6 +21,8 @@ void CPlane::Initialize() {
 	m_fSpeed = 5.f;
 
 	m_bDisplayInfo = true;
+
+	m_iScore = 100;
 };
 
 void CPlane::Render(HDC hDC) {
@@ -34,18 +37,24 @@ void CPlane::Release() {
 void CPlane::BehaviorEnter() {
 	switch (currentState) {
 	case Create:
-		targetPosition.x = WINCX / 2 + 200;
-		targetPosition.y = WINCY / 2;
+		targetPosition.x = appearPosition.x;
+		targetPosition.y = appearPosition.y;
 
 		originPosition.x = targetPosition.x;
 		originPosition.y = targetPosition.y;
 		break;
 
 	case Pattern1: {
-		int angle = 90;
-		Fire(angle);
+		Fire(90);
 	}
 	break;
+
+	case Idle:
+		residenceTimer = new CTimer;
+		residenceTimer->StartTimer(residenceSecond, [&]() {
+			behaviorState = Exit;
+		});
+		break;
 
 	case Destroy:
 		m_bDead = true;
@@ -69,6 +78,10 @@ void CPlane::BehaviorExecute() {
 		behaviorState = Exit;
 		break;
 
+	case Idle:
+		residenceTimer->Update();
+		break;
+
 	case Leave:
 		m_tInfo.fY += m_fSpeed;
 		break;
@@ -82,7 +95,12 @@ void CPlane::BehaviorExit() {
 		break;
 
 	case Pattern1:
+		currentState = Idle;
+		break;
+
+	case Idle:
 		currentState = Leave;
+		Safe_Delete<CTimer*>(residenceTimer);
 		break;
 
 	case Leave:

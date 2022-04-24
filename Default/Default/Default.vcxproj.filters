@@ -111,10 +111,16 @@
     <ClInclude Include="Life.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Plane.h">
+    <ClInclude Include="Ui.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Ui.h">
+    <ClInclude Include="Plane.h">
+      <Filter>01.Obj\02_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss1.h">
+      <Filter>01.Obj\02_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
@@ -161,10 +167,16 @@
     <ClCompile Include="Life.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Plane.cpp">
+    <ClCompile Include="Ui.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Ui.cpp">
+    <ClCompile Include="Plane.cpp">
+      <Filter>01.Obj\02_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss1.cpp">
+      <Filter>01.Obj\02_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">

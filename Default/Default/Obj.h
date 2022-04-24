@@ -8,7 +8,7 @@ public:
 	CObj();
 	virtual ~CObj();
 public :
-	void Set_pos(float _fX, float _fY)	{ m_tInfo.fX = _fX; m_tInfo.fY = _fY; }
+	void Set_pos(float _fX, float _fY) { m_tInfo.fX = _fX; m_tInfo.fY = _fY; Update_Rect(); }
 	void Set_Dir(DIRECTION _eDir)		{ m_eDir = _eDir; }
 	void Set_Dead(void)					{ m_bDead = true; }
 

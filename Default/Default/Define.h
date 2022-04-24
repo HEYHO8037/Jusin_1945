@@ -13,3 +13,6 @@
 #define		PlayerSize  50
 
 extern HWND			g_hWnd;
+
+extern DWORD g_dwCurrentTime;
+extern DWORD g_dwDeltaTime;
