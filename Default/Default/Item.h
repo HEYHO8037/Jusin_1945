@@ -13,6 +13,8 @@ public:
 	virtual		void	Late_Update(void);
 	virtual		void	Render(HDC hDC);
 	virtual		void	Release(void);
+	virtual		void	CollisionEnter(CObj* _sour);
+
 public:
 	void Item_Render(HDC hDC);
 private:

@@ -172,6 +172,10 @@ void CItem::Release(void)
 
 }
 
+void CItem::CollisionEnter(CObj * _sour)
+{
+}
+
 void CItem::Item_Render(HDC hDC)
 {
 #pragma region Render

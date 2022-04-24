@@ -68,6 +68,10 @@ void CBarrier::Release(void)
 	m_pPlayerInfo = nullptr;
 }
 
+void CBarrier::CollisionEnter(CObj * _sour)
+{
+}
+
 void CBarrier::SetPlayerInfo(INFO * pPlayerInfo)
 {
 	m_pPlayerInfo = pPlayerInfo;

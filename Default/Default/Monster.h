@@ -15,6 +15,7 @@ public:
 	void SetTarget(CObj* _obj) { targetObj = _obj; };
 	void SetAppearPosition(const int _x, const int _y) { appearPosition = { _x, _y }; };
 
+	void CollisionEnter(CObj* _sour);
 	void BehaviorStart(CObj*, std::list<CObj*>*); 
 
 	int GetScore() { return m_iScore; }

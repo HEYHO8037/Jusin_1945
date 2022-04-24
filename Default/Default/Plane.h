@@ -13,6 +13,7 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
+
 protected:
 	virtual void BehaviorEnter();
 	virtual void BehaviorExecute();

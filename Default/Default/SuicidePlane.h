@@ -11,6 +11,7 @@ public : //obj 加己
 	void Initialize() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	void CollisionEnter(CObj* _sour);
 
 public :
 	void BehaviorEnter() override; //积己磊 开且
