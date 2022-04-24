@@ -1,5 +1,6 @@
 #pragma once
 #include "Include.h"
+#include "Obj.h"
 
 class CUi
 {
@@ -15,8 +16,8 @@ public :
 	virtual void Release(void)		PURE;
 
 public :
-	void Set_Pos(float _fX, float _fY) { m_tInfo.fX = _fX; m_tInfo.fY = _fY; }
-
+	void Set_Pos(float _fX, float _fY)	{ m_tInfo.fX = _fX; m_tInfo.fY = _fY; }
+	void SetObjInfo(CObj* _pObj)		{ m_pObj = _pObj; }
 protected:
 	void Update_Rect(void);
 
@@ -26,5 +27,9 @@ protected:
 
 	float m_fSpeed;
 	bool m_bDead;
+
+	CObj* m_pObj;
+
+	//업데이트마다 GETHP해서 줄어들게하기
 };
 

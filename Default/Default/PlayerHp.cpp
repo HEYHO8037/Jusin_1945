@@ -35,7 +35,6 @@ int CPlayerHp::Update(void)
 
 void CPlayerHp::Late_Update(void)
 {
-
 }
 
 void CPlayerHp::Render(HDC hDC)
