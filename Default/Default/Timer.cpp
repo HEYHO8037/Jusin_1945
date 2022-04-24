@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "Timer.h"
 
-CTimer::CTimer() {
+CTimer::CTimer():
+	m_iCurrentTime(0),
+	m_iCurrentCount(0){
 
 }
 
@@ -14,16 +16,16 @@ void CTimer::StartTimer(float _repeatRateSecond, std::function<void()> _pCallBac
 	pExcuteCallBack = _pCallBack;
 
 	m_iCurrentTime = g_dwCurrentTime;
-	m_iCurrentSecondCount = 0;
+	m_iCurrentCount = 0;
 	m_bRunTimer = true;
 }
 
 void CTimer::Update() {
-	if (m_iRepeatRateSecond <= m_iCurrentTime - g_dwCurrentTime) {
-		++m_iCurrentSecondCount;
+	if (TIMESCALE <= m_iCurrentTime - g_dwCurrentTime) {
+		m_iCurrentCount += TIMESCALE;
 
-		if (m_iCurrentSecondCount >= m_iRepeatRateSecond) {
-			m_iCurrentSecondCount = 0;
+		if (m_iCurrentCount >= m_iRepeatRateSecond) {
+			m_iCurrentCount = 0;
 			
 			pExcuteCallBack();
 		}

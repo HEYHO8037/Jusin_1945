@@ -12,6 +12,8 @@
 #define		OBJ_DEAD	1
 #define		PlayerSize  50
 
+#define		TIMESCALE	0.01f
+
 extern HWND			g_hWnd;
 
 extern DWORD g_dwCurrentTime;

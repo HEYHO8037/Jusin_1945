@@ -23,6 +23,9 @@ void CPlane::Initialize() {
 	m_bDisplayInfo = true;
 
 	m_iScore = 100;
+
+	m_iMaxHP = 1;
+	m_iHP = 1;
 };
 
 void CPlane::Render(HDC hDC) {

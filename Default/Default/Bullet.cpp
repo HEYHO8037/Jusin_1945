@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Bullet.h"
-
+#include "Monster.h"
 
 
 CBullet::CBullet() {
@@ -12,8 +12,8 @@ CBullet::~CBullet() {
 }
 
 void CBullet::Initialize() {
-	m_tInfo.fCX = 10.f;	// �÷��̾� ���� ������
-	m_tInfo.fCY = 10.f;	// �÷��̾� ���� ������
+	m_tInfo.fCX = 10.f;
+	m_tInfo.fCY = 10.f;
 
 	m_fSpeed = 10.f;
 	 
@@ -37,6 +37,7 @@ void CBullet::Late_Update() {
 		m_bDead = true;
 	}
 }
+
 //
 //void CBullet::Hit() {
 //	m_bDead = true;
@@ -59,8 +60,13 @@ void CBullet::Render(HDC hdc) {
 void CBullet::Release() {
 }
 
-void CBullet::CollisionEnter(CObj * _sour)
-{
+void CBullet::CollisionEnter(CObj* _sour) {
+	CMonster* collisionMonster = dynamic_cast<CMonster*>(_sour);
+
+	if (collisionMonster && m_eBulletType == PLAYER_BULLET) {
+		collisionMonster->Hit();
+		m_bDead = true;
+	}
 }
 
 void CBullet::SetType(BULLET_TYPE eType)

@@ -23,6 +23,8 @@ private:
 		Pattern1,
 		Pattern2,
 		Pattern2Back,
+		Pattern3,		// 한꺼번에 회전발사
+		Pattern4,		// 시간차 회전발사
 		Idle,
 		Leave,
 		Destroy
@@ -31,5 +33,7 @@ private:
 	State currentState;
 
 	CTimer* bossShotTimer;
+
+	int patternAngle;
 };
 

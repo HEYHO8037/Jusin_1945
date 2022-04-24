@@ -19,7 +19,7 @@ private:
 
 	int m_iCurrentTime;
 	float m_iRepeatRateSecond;
-	int m_iCurrentSecondCount;
+	float m_iCurrentCount;
 	
 };
 
