@@ -193,7 +193,7 @@ int * CPlayer::GetBombNum()
 
 void CPlayer::PlayerHit()
 {
-	m_iHP -= 25;
+	m_iHP -= 20;
 
 	if (m_iHP <= 0)
 	{

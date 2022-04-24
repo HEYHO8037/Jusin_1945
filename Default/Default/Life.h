@@ -1,5 +1,6 @@
 #pragma once
 #include "Ui.h"
+#include "Obj.h"
 class CLife :
 	public CUi
 {

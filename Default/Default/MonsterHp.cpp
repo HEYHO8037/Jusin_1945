@@ -16,8 +16,8 @@ void CMonsterHp::Initialize(void)
 	m_tInfo.fX = WINCX * 0.5f;
 	m_tInfo.fY = 120.f;
 
-	m_tInfo.fCX = 150.f;
-	m_tInfo.fCY = 100.f;
+	m_tInfo.fCX = 500.f;
+	m_tInfo.fCY = 80.f;
 }
 
 int CMonsterHp::Update(void)
@@ -31,32 +31,68 @@ int CMonsterHp::Update(void)
 
 void CMonsterHp::Late_Update(void)
 {
-	m_tInfo.fCX -= 50.f;
 	
-	Update_Rect();
-
-	m_bDead = true;
 }
 
 void CMonsterHp::Render(HDC hDC)
 {
 
 	HBRUSH	brush;
-	HPEN pen;
-	HGDIOBJ h_old_pen;
 	HGDIOBJ h_old_brush;
 
-	pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
-	h_old_pen = SelectObject(hDC, pen);
+	Update_Rect();
+	m_barRight = m_tRect.left + (m_tInfo.fCX * ((float)m_pObj->GetHP() / m_pObj->GetMaxHP()));
 
-	brush = CreateSolidBrush(RGB(255,38, 38));
+	brush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	h_old_brush = SelectObject(hDC, brush);
-	Rectangle(hDC, m_tRect.left-150, m_tRect.top + 10, m_tRect.right+150, m_tRect.bottom - 10);
+	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 	SelectObject(hDC, h_old_brush);
-
 	DeleteObject(brush);
-	DeleteObject(pen);
+	brush = CreateSolidBrush(RGB(255, 0, 0));
+	h_old_brush = SelectObject(hDC, brush);
+	Rectangle(hDC, m_tRect.left, m_tRect.top, (int)m_barRight, m_tRect.bottom);
+	SelectObject(hDC, h_old_brush);
+	DeleteObject(brush);
 
+	if (250 < m_pObj->GetHP() && 500 >= m_pObj->GetHP())
+	{
+		Update_Rect();
+
+		m_barRight = m_tRect.left + (m_tInfo.fCX * ((float)m_pObj->GetHP() / m_pObj->GetMaxHP()));
+
+		brush = (HBRUSH)GetStockObject(NULL_BRUSH);
+		h_old_brush = SelectObject(hDC, brush);
+		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		SelectObject(hDC, h_old_brush);
+		DeleteObject(brush);
+		brush = CreateSolidBrush(RGB(255, 128, 0));
+		h_old_brush = SelectObject(hDC, brush);
+		Rectangle(hDC, m_tRect.left, m_tRect.top, (int)m_barRight, m_tRect.bottom);
+		SelectObject(hDC, h_old_brush);
+		DeleteObject(brush);
+	}
+	if (250 >= m_pObj->GetHP())
+	{
+		Update_Rect();
+
+		m_barRight = m_tRect.left + (m_tInfo.fCX * ((float)m_pObj->GetHP() / m_pObj->GetMaxHP()));
+
+		brush = (HBRUSH)GetStockObject(NULL_BRUSH);
+		h_old_brush = SelectObject(hDC, brush);
+		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		SelectObject(hDC, h_old_brush);
+		DeleteObject(brush);
+		brush = CreateSolidBrush(RGB(255, 255, 0));
+		h_old_brush = SelectObject(hDC, brush);
+		Rectangle(hDC, m_tRect.left, m_tRect.top, (int)m_barRight, m_tRect.bottom);
+		SelectObject(hDC, h_old_brush);
+		DeleteObject(brush);
+	}
+
+	if (0 >= m_pObj->GetHP())
+	{
+		m_bDead = true;
+	}
 }
 
 void CMonsterHp::Release(void)

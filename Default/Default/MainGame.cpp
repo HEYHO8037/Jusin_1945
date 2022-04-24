@@ -27,33 +27,12 @@ void CMainGame::Initialize(void)
 	srand(unsigned(time(nullptr)));
 
 	m_hDC = GetDC(g_hWnd);
-	
+
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-	//플레이어의 정보를 hp에 넣어주기
-	
-	for (int i = 0; i < 4; ++i)
-	{
-		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 +10)*(rand()% 12 +1))+25.f, float((-rand() % 30 + 1) * 15) - 10));
-	}
 
-	int iTemp = 0;
-	for (int i = 0; i < 3; ++i)
-	{
-		m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate( (50.f+iTemp) , 930.f));
-		iTemp += 70;
-	}
+	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create());
 
-
-	for (int i = 0; i < 3; ++i)
-	{
-		m_UiList[UI_BOMB].push_back(CAbstractFactory<CBomb>::UICreate(70.f, (400.f + iTemp)));
-		iTemp += 60;
-	}
-
-
-	
-	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create()); 
 	/*TestItem = new CItem;
 	TestItem->Initialize();*/
 	CObj* player = m_ObjList[OBJ_PLAYER].front();
@@ -65,17 +44,23 @@ void CMainGame::Initialize(void)
 	m_ObjList[OBJ_MONSTER].push_back(bossObj);
 
 	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
+	dynamic_cast<CMonsterHp*>(m_UiList[UI_MONSTERHP].front())->SetObjInfo(bossObj);
 
+	/*테스트용으로 주석
 	CObj* planeObj = CAbstractFactory<CPlane>::Create();
 	CPlane* plane = dynamic_cast<CPlane*>(planeObj);
 	plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
 	plane->SetAppearPosition(WINCX / 2 + 200, WINCY / 2);
 	m_ObjList[OBJ_MONSTER].push_back(planeObj);
 
+	//돌진형 비행기
+	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
+	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
+	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
+	*/
 
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetObjList(&m_ObjList[OBJ_BULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetMonsterList(&m_ObjList[OBJ_MONSTER]);
-
 
 	//플레이어 생성시 hp바 생성
 	float fXtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fX;
@@ -84,14 +69,20 @@ void CMainGame::Initialize(void)
 	{
 		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp - 40));
 	}
-
+	//playerHp에 player obj 넣기
 	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetObjInfo(player);
 
-	//자살공격하는 비행기
-	//나중에 create 생성자 있는 버전으로 넣어주기
-	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
-	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
-	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
+	//life 생성
+	m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate((50.f), 930.f));
+	dynamic_cast<CLife*>(m_UiList[UI_LIFE].front())->SetObjInfo(player);
+	//폭탄 생성
+	m_UiList[UI_BOMB].push_back(CAbstractFactory<CBomb>::UICreate());
+	dynamic_cast<CBomb*>(m_UiList[UI_BOMB].front())->SetObjInfo(player);
+	//구름 생성
+	for (int i = 0; i < 4; ++i)
+	{
+		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 10.f, float((-rand() % 60 + 1) * 15) - 20));
+	}
 
 }
 
@@ -100,7 +91,6 @@ void CMainGame::Update(void)
 	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
 
 	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
-	
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
