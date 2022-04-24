@@ -275,3 +275,15 @@ void CItem::Item_Render(HDC hDC)
 	DeleteObject(m_brush);
 
 }
+
+ITEMID CItem::GetItemID() const
+{
+	if (this)
+	{
+		return m_Item_Id;
+	}
+	else
+	{
+		return ITEM_END;
+	}
+}

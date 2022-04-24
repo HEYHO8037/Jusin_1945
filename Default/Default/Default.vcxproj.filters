@@ -43,6 +43,9 @@
     <Filter Include="01.Obj\04_Item">
       <UniqueIdentifier>{d6e6d5f1-21d6-4882-8def-f78442245421}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98.Design\CollisionMgr">
+      <UniqueIdentifier>{f1cb4ba8-408f-4cc9-ad4f-e8999d9f3189}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -126,6 +129,15 @@
     <ClInclude Include="Item.h">
       <Filter>01.Obj\04_Item</Filter>
     </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SuicidePlane.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>98.Design\CollisionMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -181,6 +193,15 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>01.Obj\04_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SuicidePlane.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>98.Design\CollisionMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

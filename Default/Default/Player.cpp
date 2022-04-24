@@ -5,12 +5,14 @@
 #include "Player.h"
 #include "AbstractFactory.h"
 #include "PlayerHp.h"
+#include "Item.h"
 
 CPlayer::CPlayer()
 	: m_pBarrier(nullptr),
-	  m_iHP(100),
 	  m_iPowerUpItemCount(0),
-	  m_bIsBarrier(false)
+	  m_bIsBarrier(false),
+	  m_bIsCollision(false),
+	  m_iBomb(0)
 {
 	for (int i = 0; i < AST_END; ++i)
 	{
@@ -27,6 +29,9 @@ void CPlayer::Initialize(void)
 {
 	m_tInfo.fX = 400.f;
 	m_tInfo.fY = 700.f;
+	m_iHP = 100;
+	m_iMaxHP = 100;
+	m_iLife = 3;
 
 	m_tInfo.fCX = (float)PlayerSize;
 	m_tInfo.fCY = (float)PlayerSize;
@@ -70,7 +75,6 @@ void CPlayer::Late_Update(void)
 			m_pBarrier = nullptr;
 		}
 	}
-
 
 	CollisionWindow();
 }
@@ -124,11 +128,37 @@ void CPlayer::Release(void)
 
 void CPlayer::CollisionEnter(CObj * _sour)
 {
+	if (dynamic_cast<CBullet*>(_sour)->GetType() == MONSTER_BULLET)
+	{
+		PlayerHit();
+		_sour->Set_Dead();
+	}
+	else if (dynamic_cast<CItem*>(_sour)->GetItemID() == ITEM_POWER)
+	{
+		PowerUp();
+		_sour->Set_Dead();
+	}
+	else if (dynamic_cast<CItem*>(_sour)->GetItemID() == ITEM_SHIELD)
+	{
+		InitBarrier();
+		_sour->Set_Dead();
+	}
+	else if (dynamic_cast<CItem*>(_sour)->GetItemID() == ITEM_BOMB)
+	{
+		AddBomb();
+		_sour->Set_Dead();
+	}
+
 }
 
 void CPlayer::SetObjList(list<CObj*>* pObjList)
 {
 	m_bulletList = pObjList;
+}
+
+void CPlayer::SetMonsterList(list<CObj*>* pMonsterList)
+{
+	m_MonsterList = pMonsterList;
 }
 
 void CPlayer::SetGetBarrierItem()
@@ -151,14 +181,30 @@ int* CPlayer::GetPowerUpItemCount()
 	return &m_iPowerUpItemCount;
 }
 
-int* CPlayer::GetPlayerHP()
+int * CPlayer::GetLife()
 {
-	return &m_iHP;
+	return &m_iLife;
+}
+
+int * CPlayer::GetBombNum()
+{
+	return &m_iBomb;
 }
 
 void CPlayer::PlayerHit()
 {
 	m_iHP -= 34;
+
+	if (m_iHP < 0)
+	{
+		m_iLife -= 1;
+		m_iHP = m_iMaxHP;
+	}
+
+	if (!m_iLife)
+	{
+		Set_Dead();
+	}
 }
 
 
@@ -207,25 +253,44 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		ShotGunFire();
-
-		if (m_pAssistant[AST_LEFT])
+		if (m_iPowerUpItemCount == 1)
 		{
-			for (int i = 0; i < AST_END; ++i)
+			LevelOneFire();
+		}
+		else if (m_iPowerUpItemCount == 3)
+		{
+			ShotGunFire();
+
+			if (m_pAssistant[AST_LEFT])
 			{
-				m_pAssistant[i]->ShotGunFire();
+				for (int i = 0; i < AST_END; ++i)
+				{
+					m_pAssistant[i]->ShotGunFire();
+				}
+			}
+		}
+		else
+		{
+			NormalFire();
+
+			if (m_pAssistant[AST_LEFT])
+			{
+				for (int i = 0; i < AST_END; ++i)
+				{
+					m_pAssistant[i]->NormalFire();
+				}
 			}
 		}
 	}
 
-	if (GetAsyncKeyState('Z'))
-	{
-		InitBarrier();
-	}
-	if (GetAsyncKeyState('X'))
-	{
-		InitAssistantPlane();
-	}
+	//if (GetAsyncKeyState('Z'))
+	//{
+	//	InitBarrier();
+	//}
+	//if (GetAsyncKeyState('X'))
+	//{
+	//	InitAssistantPlane();
+	//}
 	
 }
 
@@ -234,6 +299,27 @@ void CPlayer::NormalFire()
 	int iDegree = -90;
 	CObj* newBullet = CAbstractFactory<CBullet>::Create();
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
+	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
+	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
+	m_bulletList->push_back(newBullet);
+}
+
+void CPlayer::LevelOneFire()
+{
+	int iDegree = -90;
+	iDegree -= 15;
+	CObj* newBullet = CAbstractFactory<CBullet>::Create();
+	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
+	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+	BulletObj->SetType(PLAYER_BULLET);
+	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
+	m_bulletList->push_back(newBullet);
+
+	iDegree = -90;
+	iDegree += 15;
+	newBullet = CAbstractFactory<CBullet>::Create();
+	BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
 	BulletObj->SetType(PLAYER_BULLET);
 	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
@@ -317,4 +403,33 @@ void CPlayer::InitAssistantPlane()
 	m_pAssistant[1]->SetPlayer(this);
 	m_pAssistant[1]->SetObjList(m_bulletList);
 	m_pAssistant[1]->SetSpeed(m_fSpeed);
+}
+
+void CPlayer::PowerUp()
+{
+	m_iPowerUpItemCount++;
+
+	if (m_iPowerUpItemCount == 2)
+	{
+		InitAssistantPlane();
+	}
+}
+
+void CPlayer::AddBomb()
+{
+	m_iBomb++;
+}
+
+bool CPlayer::DeployBomb()
+{
+	if (m_iBomb)
+	{
+		m_iBomb--;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 }

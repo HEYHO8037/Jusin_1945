@@ -9,7 +9,7 @@ public:
 	virtual ~CItem();
 public:
 	virtual		void	Initialize(void);
-	virtual		int	Update(void);
+	virtual		int		Update(void);
 	virtual		void	Late_Update(void);
 	virtual		void	Render(HDC hDC);
 	virtual		void	Release(void);
@@ -17,6 +17,7 @@ public:
 
 public:
 	void Item_Render(HDC hDC);
+	ITEMID GetItemID() const;
 private:
 	float m_fAngle;
 	int m_iCount;

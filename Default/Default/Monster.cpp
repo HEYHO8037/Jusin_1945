@@ -82,6 +82,7 @@ void CMonster::Fire(float degree) {
 
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(degree * PI / 180.f), sinf(degree * PI / 180.f));
+	BulletObj->SetType(MONSTER_BULLET);
 	m_bulletList->push_back(newBullet);
 }
 
