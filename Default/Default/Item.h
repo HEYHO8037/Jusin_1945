@@ -15,12 +15,29 @@ public:
 	virtual		void	Release(void);
 	virtual		void	CollisionEnter(CObj* _sour);
 
+	static void Create(std::list<CObj*>* ItemList,CObj* _ObjPtr)
+	{
+		CItem* Item = new CItem;
+
+		ItemList->push_back(Item);
+
+		srand((unsigned int)time(NULL));
+		Item->iCreate_Per = (rand() % 10) + 1;
+			if (Item->iCreate_Per == 1)
+			{
+				Item->Initialize();
+
+			}
+	}
+
+
 public:
 	void Item_Render(HDC hDC);
 	ITEMID GetItemID() const;
 private:
 	float m_fAngle;
-	int m_iCount;
+	int m_iCount; 
+	int iCreate_Per = 0;
 	ITEMID m_Item_Id;
 	RECT rc;
 	TCHAR		m_szItem_Name[64];
