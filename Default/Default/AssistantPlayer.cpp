@@ -72,6 +72,10 @@ void CAssistantPlayer::Release(void)
 	m_pPlayer = nullptr;
 }
 
+void CAssistantPlayer::CollisionEnter(CObj * _sour)
+{
+}
+
 void CAssistantPlayer::SetPlayer(CPlayer * pPlayer)
 {
 	m_pPlayer = pPlayer;

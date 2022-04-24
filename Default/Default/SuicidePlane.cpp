@@ -47,6 +47,10 @@ void CSuicidePlane::Release()
 {
 }
 
+void CSuicidePlane::CollisionEnter(CObj * _sour)
+{
+}
+
 void CSuicidePlane::BehaviorEnter()
 {
 	

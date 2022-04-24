@@ -59,6 +59,10 @@ void CBullet::Render(HDC hdc) {
 void CBullet::Release() {
 }
 
+void CBullet::CollisionEnter(CObj * _sour)
+{
+}
+
 void CBullet::SetType(BULLET_TYPE eType)
 {
 	m_eBulletType = eType;

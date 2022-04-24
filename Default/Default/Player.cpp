@@ -122,6 +122,10 @@ void CPlayer::Release(void)
 	}
 }
 
+void CPlayer::CollisionEnter(CObj * _sour)
+{
+}
+
 void CPlayer::SetObjList(list<CObj*>* pObjList)
 {
 	m_bulletList = pObjList;

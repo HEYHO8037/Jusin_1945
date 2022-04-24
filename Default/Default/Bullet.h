@@ -11,6 +11,7 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	virtual	void CollisionEnter(CObj* _sour);
 
 public:
 	void SetType(BULLET_TYPE eType);
