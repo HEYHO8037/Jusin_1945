@@ -40,6 +40,9 @@
     <Filter Include="01.Obj\00.Player\00.PlayerItem">
       <UniqueIdentifier>{f817e033-cfc2-4aff-abab-83dfd95fb0c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Obj\04_Item">
+      <UniqueIdentifier>{d6e6d5f1-21d6-4882-8def-f78442245421}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -105,9 +108,6 @@
     <ClInclude Include="PlayerHp.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Life.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -116,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Ui.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>01.Obj\04_Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +158,6 @@
     <ClCompile Include="PlayerHp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Life.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -166,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="Ui.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>01.Obj\04_Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

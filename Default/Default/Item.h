@@ -1,5 +1,6 @@
 #pragma once
 #include "Obj.h"
+#include <fontsub.h>
 class CItem :
 	public CObj
 {
@@ -16,8 +17,13 @@ public:
 	void Item_Render(HDC hDC);
 private:
 	float m_fAngle;
+	int m_iCount;
 	ITEMID m_Item_Id;
 	RECT rc;
 	TCHAR		m_szItem_Name[64];
+	HFONT m_Font;
+	POINT m_ItemPoint;
+	HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200)); 
+	HPEN m_pen = CreatePen(PS_SOLID, 5, RGB(153, 153, 153));
 };
 

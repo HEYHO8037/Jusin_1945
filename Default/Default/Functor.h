@@ -1,6 +1,6 @@
 #pragma once
 
-// ÇÔ¼ö ÅÛÇÃ¸´
+
 
 template<typename T>
 void		Safe_Delete(T& Temp)
@@ -23,7 +23,7 @@ void		Safe_Delete_Array(T& Temp)
 }
 
 
-// ÇÔ¼ö °´Ã¼
+
 
 class CDeleteObj
 {
