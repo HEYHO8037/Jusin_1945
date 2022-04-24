@@ -24,6 +24,8 @@ public:
 	int* GetPlayerHP(); //플레이어 HP 반환
 	void PlayerHit(); // 플레이어 피격시 발동 함수
 
+	 INFO* GetPlayerInfo(void) { return &m_tInfo; }
+
 private:
 	void		Key_Input(void);
 	void		NormalFire(); //일반 총알 발사

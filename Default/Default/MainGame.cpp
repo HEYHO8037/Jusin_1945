@@ -7,7 +7,8 @@
 #include "Life.h"
 #include "Boss1.h"
 #include "Plane.h"
-
+#include "SuicidePlane.h"
+#include "Bomb.h"
 CMainGame::CMainGame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -27,16 +28,21 @@ void CMainGame::Initialize(void)
 	
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
+	//플레이어 생성시 hp바 생성
+	float fXtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fX;
+	float fYtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fY;
 	if (!m_ObjList[OBJ_PLAYER].empty()) 
 	{
-		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate());
+		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp-40));
 	}
+
+	//플레이어의 정보를 hp에 넣어주기
 
 	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
 	
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
-		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 +10)*(rand()% 12 +1)), float((-rand() % 30 + 1) * 15) - 10));
+		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 +10)*(rand()% 12 +1))+25.f, float((-rand() % 30 + 1) * 15) - 10));
 	}
 
 	int iTemp = 0;
@@ -45,6 +51,16 @@ void CMainGame::Initialize(void)
 		m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate( (50.f+iTemp) , 930.f));
 		iTemp += 70;
 	}
+
+	int iTemp2 = 0;
+	for (int i = 0; i < 3; ++i)
+	{
+		m_UiList[UI_BOMB].push_back(CAbstractFactory<CBomb>::UICreate(70.f, (400.f + iTemp)));
+		iTemp += 60;
+	}
+	
+
+
 	
 	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create()); 
 	/*TestItem = new CItem;
@@ -65,10 +81,21 @@ void CMainGame::Initialize(void)
 
 
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetObjList(&m_ObjList[OBJ_BULLET]);
+
+	//자살공격하는 비행기
+	//나중에 create 생성자 있는 버전으로 넣어주기
+	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
+	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, nullptr);
+	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
+
 }
 
 void CMainGame::Update(void)
 {
+	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
+	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
+
+
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin();
@@ -129,12 +156,7 @@ void CMainGame::Render(void)
 	backBitmapStage = (HBITMAP)SelectObject(backHDC, backBitmap);
 	//Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 
-
-
-
-
 	Rectangle(backHDC, 0, 0, WINCX, WINCY);
-	Rectangle(backHDC, 100, 100, WINCX - 100, WINCY - 100);
 
 	TCHAR szBuff[256] = L"";
 	swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
@@ -143,6 +165,8 @@ void CMainGame::Render(void)
 	swprintf_s(szBuff, L"총알 : %d", m_ObjList[OBJ_BULLET].size());
 	TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
 
+	for (auto & iter : m_UiList[UI_CLOUD])
+		iter->Render(backHDC);
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
@@ -166,7 +190,7 @@ void CMainGame::Render(void)
 	//TestItem->Render(m_hDC);
 	
 
-	for (int i = 0; i < UI_END; ++i)
+	for (int i = UI_LIFE; i < UI_END; ++i)
 	{
 		for (auto & iter : m_UiList[i])
 			iter->Render(backHDC);

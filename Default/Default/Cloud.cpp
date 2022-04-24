@@ -17,7 +17,7 @@ void CCloud::Initialize(void)
 	m_tInfo.fCX = 60.f;
 	m_tInfo.fCY = 40.f;
 	
-	m_fSpeed = 1.f;
+	m_fSpeed = 1.5f; // 추가 수정, 구름 속도 조절, 
 }
 
 int CCloud::Update(void)
@@ -29,7 +29,7 @@ int CCloud::Update(void)
 
 	if (1024 < m_tRect.top)
 	{
-		m_tInfo.fX = float((rand() % 50 + 10)*(rand() % 12 + 1))+ 20.f;
+		m_tInfo.fX = float((rand() % 50 + 10)*(rand() % 12 + 1))+ 40.f;
 		m_tInfo.fY = float(((-rand() % 30 + 1) * 15) - 10);
 
 	}

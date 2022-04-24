@@ -3,6 +3,7 @@
 
 
 CPlayerHp::CPlayerHp()
+	:m_pPlayerInfo(nullptr)
 {
 }
 
@@ -24,6 +25,9 @@ int CPlayerHp::Update(void)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	
+	m_tInfo.fX = m_pPlayerInfo->fX;
+	m_tInfo.fY = m_pPlayerInfo->fY - 45;
 
 	Update_Rect();
 	return OBJ_NOEVENT;
@@ -31,6 +35,7 @@ int CPlayerHp::Update(void)
 
 void CPlayerHp::Late_Update(void)
 {
+
 }
 
 void CPlayerHp::Render(HDC hDC)

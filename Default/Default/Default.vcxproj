@@ -89,7 +89,6 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../Header</AdditionalIncludeDirectories>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="Boss1.h" />
+    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="MonsterHp.h" />
     <ClInclude Include="PlayerHp.h" />
@@ -170,12 +170,14 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="SuicidePlane.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Ui.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boss1.cpp" />
+    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="MonsterHp.cpp" />
     <ClCompile Include="PlayerHp.cpp" />
@@ -197,6 +199,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="SuicidePlane.cpp" />
     <ClCompile Include="Ui.cpp" />
   </ItemGroup>
   <ItemGroup>
