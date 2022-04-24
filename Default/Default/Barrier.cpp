@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Barrier.h"
+#include "Bullet.h"
 
 
 CBarrier::CBarrier()
@@ -70,6 +71,10 @@ void CBarrier::Release(void)
 
 void CBarrier::CollisionEnter(CObj * _sour)
 {
+	if (dynamic_cast<CBullet*>(_sour)->GetType() == MONSTER_BULLET)
+	{
+		_sour->Set_Dead();
+	}
 }
 
 void CBarrier::SetPlayerInfo(INFO * pPlayerInfo)

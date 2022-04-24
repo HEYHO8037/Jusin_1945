@@ -150,6 +150,7 @@
     <ClInclude Include="Boss1.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Cloud.h" />
+    <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="MonsterHp.h" />
     <ClInclude Include="PlayerHp.h" />
     <ClInclude Include="Item.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Boss1.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Cloud.cpp" />
+    <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="MonsterHp.cpp" />
     <ClCompile Include="PlayerHp.cpp" />
     <ClCompile Include="Item.cpp" />

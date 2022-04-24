@@ -14,6 +14,7 @@ public:
 	virtual	void CollisionEnter(CObj* _sour);
 
 public:
+	BULLET_TYPE GetType() const;
 	void SetType(BULLET_TYPE eType);
 	void SetDirection(float _x, float _y) { m_tDir.fX = _x, m_tDir.fY = _y; };
 

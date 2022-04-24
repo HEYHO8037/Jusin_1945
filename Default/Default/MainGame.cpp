@@ -9,6 +9,8 @@
 #include "Plane.h"
 #include "SuicidePlane.h"
 #include "Bomb.h"
+#include "CollisionMgr.h"
+
 CMainGame::CMainGame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -81,6 +83,8 @@ void CMainGame::Initialize(void)
 
 
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetObjList(&m_ObjList[OBJ_BULLET]);
+	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetMonsterList(&m_ObjList[OBJ_MONSTER]);
+
 
 	//자살공격하는 비행기
 	//나중에 create 생성자 있는 버전으로 넣어주기
@@ -145,6 +149,10 @@ void CMainGame::Late_Update(void)
 		for (auto & iter : m_ObjList[i])
 			iter->Late_Update();
 	}
+
+	//CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BULLET]);
+
 }
 
 void CMainGame::Render(void)
