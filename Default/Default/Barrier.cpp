@@ -3,6 +3,9 @@
 
 
 CBarrier::CBarrier()
+	: m_pPlayerInfo(nullptr),
+	  m_fAngle(0.f),
+	  m_iRotate(0)
 {
 }
 
@@ -36,6 +39,12 @@ int CBarrier::Update(void)
 void CBarrier::Late_Update(void)
 {
 	m_fAngle += m_fSpeed;
+
+	if ((int)m_fAngle % 360 == 0)
+	{
+		m_iRotate++;
+	}
+
 }
 
 void CBarrier::Render(HDC hDC)
@@ -65,6 +74,11 @@ void CBarrier::SetPlayerInfo(INFO * pPlayerInfo)
 
 	m_tInfo.fX = m_pPlayerInfo->fX;
 	m_tInfo.fY = m_pPlayerInfo->fY;
+}
+
+int CBarrier::GetRotateRate() const
+{
+	return m_iRotate;
 }
 
 void CBarrier::UpdatePos()

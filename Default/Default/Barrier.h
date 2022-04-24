@@ -16,6 +16,7 @@ public:
 
 public:
 	void SetPlayerInfo(INFO* pPlayerInfo);
+	int GetRotateRate() const; // 회전바퀴수 반환
 
 private:
 	void UpdatePos();
@@ -23,6 +24,7 @@ private:
 private:
 	INFO* m_pPlayerInfo;
 	float m_fAngle;
+	int m_iRotate;
 
 };
 

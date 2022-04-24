@@ -6,11 +6,6 @@
 CBullet::CBullet() {
 }
 
-CBullet::CBullet(BULLET_TYPE eType)
-{
-	m_eBulletType = eType;
-}
-
 
 CBullet::~CBullet() {
 	Release();
@@ -21,7 +16,7 @@ void CBullet::Initialize() {
 	m_tInfo.fCY = 10.f;	// �÷��̾� ���� ������
 
 	m_fSpeed = 10.f;
-
+	 
 	Update_Rect();
 }
 

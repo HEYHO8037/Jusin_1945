@@ -63,7 +63,14 @@ void CPlayer::Late_Update(void)
 	if (m_pBarrier)
 	{
 		m_pBarrier->Late_Update();
+
+		if (m_pBarrier->GetRotateRate() >= 10)
+		{
+			delete m_pBarrier;
+			m_pBarrier = nullptr;
+		}
 	}
+
 
 	CollisionWindow();
 }
@@ -135,9 +142,19 @@ CBarrier * CPlayer::GetBarrierClass()
 	return m_pBarrier;
 }
 
-int CPlayer::GetPowerUpItemCount() const
+int* CPlayer::GetPowerUpItemCount()
 {
-	return m_iPowerUpItemCount;
+	return &m_iPowerUpItemCount;
+}
+
+int* CPlayer::GetPlayerHP()
+{
+	return &m_iHP;
+}
+
+void CPlayer::PlayerHit()
+{
+	m_iHP -= 34;
 }
 
 
