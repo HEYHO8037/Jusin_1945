@@ -5,7 +5,7 @@
 #include "PlayerHp.h"
 #include "MonsterHp.h"
 #include "Life.h"
-#include "Monster.h"
+#include "Boss1.h"
 #include "Plane.h"
 
 CMainGame::CMainGame()
@@ -51,19 +51,24 @@ void CMainGame::Initialize(void)
 	TestItem->Initialize();*/
 	CObj* player = m_ObjList[OBJ_PLAYER].front();
 
-	CObj* boss = CAbstractFactory<CMonster>::Create();
-	dynamic_cast<CMonster*>(boss)->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
-	m_ObjList[OBJ_MONSTER].push_back(boss);
+	CObj* bossObj = CAbstractFactory<CBoss1>::Create();
+	CBoss1* boss = dynamic_cast<CBoss1*>(bossObj);
+	boss->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
+	boss->SetAppearPosition(WINCX / 2, 500);
+	m_ObjList[OBJ_MONSTER].push_back(bossObj);
 
-	CObj* plane = CAbstractFactory<CPlane>::Create();
-	dynamic_cast<CMonster*>(plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
-	m_ObjList[OBJ_MONSTER].push_back(plane);
+	CObj* planeObj = CAbstractFactory<CPlane>::Create();
+	CPlane* plane = dynamic_cast<CPlane*>(planeObj);
+	plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET]);
+	plane->SetAppearPosition(WINCX / 2 + 200, WINCY / 2);
+	m_ObjList[OBJ_MONSTER].push_back(planeObj);
+
+
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetObjList(&m_ObjList[OBJ_BULLET]);
 }
 
 void CMainGame::Update(void)
 {
-
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin();
@@ -135,7 +140,7 @@ void CMainGame::Render(void)
 	swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
 	TextOut(backHDC, 200, 200, szBuff, lstrlen(szBuff));
 
-	swprintf_s(szBuff, L"??? : %d", m_ObjList[OBJ_BULLET].size());
+	swprintf_s(szBuff, L"ÃÑ¾Ë : %d", m_ObjList[OBJ_BULLET].size());
 	TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
 
 

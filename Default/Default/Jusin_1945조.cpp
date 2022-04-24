@@ -9,6 +9,8 @@ HINSTANCE hInst;
 WCHAR szTitle[MAX_LOADSTRING];                  
 WCHAR szWindowClass[MAX_LOADSTRING];           
 HWND	g_hWnd;
+DWORD g_dwCurrentTime;
+DWORD g_dwDeltaTime;
 
 ATOM                MyRegisterClass(HINSTANCE hInstance);		
 BOOL                InitInstance(HINSTANCE, int);				
@@ -47,6 +49,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 	DWORD		dwOldTime = GetTickCount();
+	g_dwCurrentTime = GetTickCount() * 0.001;
 
 	while (true)
 	{
@@ -67,6 +70,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		{
 			if (dwOldTime + 10 < GetTickCount())
 			{
+				DWORD currentTime = GetTickCount() * 0.001;
+				g_dwDeltaTime = currentTime - g_dwCurrentTime;
+				g_dwCurrentTime = currentTime;
+
 				pMainGame->Update();
 				pMainGame->Late_Update();
 				pMainGame->Render();

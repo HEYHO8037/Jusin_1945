@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+#include "Timer.h"
 
 class CPlane : public CMonster
 {
@@ -21,6 +22,7 @@ private:
 	enum State {
 		Create, // »ý¼º
 		Pattern1,
+		Idle,
 		Leave,
 		Destroy
 	};
@@ -34,7 +36,7 @@ private:
 
 	State currentState;
 
-
-
+	const int residenceSecond = 3;
+	CTimer* residenceTimer;
 };
 

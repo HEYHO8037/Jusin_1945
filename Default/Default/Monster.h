@@ -8,40 +8,28 @@ public:
 	CMonster();
 	~CMonster();
 	
-	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
-	void Render(HDC hDC) override;
-	void Release() override;
 
 	void SetBulletList(std::list<CObj*>* _pList) { m_bulletList = _pList; };
 	void SetTarget(CObj* _obj) { targetObj = _obj; };
+	void SetAppearPosition(const int _x, const int _y) { appearPosition = { _x, _y }; };
 
 	void BehaviorStart(CObj*, std::list<CObj*>*); 
+
+	int GetScore() { return m_iScore; }
 
 protected:
 	bool TargetMove(); 
 	void Fire(float); 
+	void DisplayInfo(HDC, int);
+	void RunEffect();
+	void EffectRender();
 
 	void BehaviorUpdate();
-	virtual void BehaviorEnter();
-	virtual void BehaviorExecute();
-	virtual void BehaviorExit();
-
-	void DisplayInfo(HDC, int);
-
-private:
-	enum State {
-		Create, 
-		Pattern1,
-		Pattern2,
-		Pattern3,
-		Leave,
-		Destroy
-	};
-
-	State currentState;
-
+	virtual void BehaviorEnter() PURE;
+	virtual void BehaviorExecute() PURE;
+	virtual void BehaviorExit() PURE;
 
 protected:
 	enum Behavior {
@@ -50,8 +38,10 @@ protected:
 		Exit
 	};
 
+
 	POINT originPosition;
 	POINT targetPosition;
+	POINT appearPosition; // 생성후 이동할 위치
 	
 	CObj* targetObj;
 
@@ -61,5 +51,14 @@ protected:
 	
 	bool m_bAIStart;
 	bool m_bDisplayInfo;
+
+	int m_effectCount;
+	
+	int m_iScore;
+
+private:
+	bool m_bRunEffect;
+	bool m_bEffectStep;
+
 };
 
