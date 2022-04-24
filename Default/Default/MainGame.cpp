@@ -84,9 +84,10 @@ void CMainGame::Initialize(void)
 
 	//자살공격하는 비행기
 	//나중에 create 생성자 있는 버전으로 넣어주기
-	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
-	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, nullptr);
-	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
+	CObj* suicidePlaneObj = CAbstractFactory<CSuicidePlane>::Create();
+	CSuicidePlane*  sucidePlane =  dynamic_cast<CSuicidePlane*>(suicidePlaneObj);
+	sucidePlane->BehaviorStart(player, nullptr);
+	m_ObjList[OBJ_MONSTER].push_back(sucidePlane);
 
 }
 

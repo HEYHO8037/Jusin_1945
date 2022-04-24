@@ -43,6 +43,21 @@
     <Filter Include="01.Obj\04_Item">
       <UniqueIdentifier>{d6e6d5f1-21d6-4882-8def-f78442245421}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.UI">
+      <UniqueIdentifier>{8a1c693a-e3dc-467a-86ce-83a36c4965b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\00_Cloud">
+      <UniqueIdentifier>{82541101-b34e-4a43-917c-580cfd8a05ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\01_Life">
+      <UniqueIdentifier>{df6013c3-cdb4-4d1f-9c9b-0ac9e76db39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\02.HP">
+      <UniqueIdentifier>{ae8de3c7-ec01-4cdd-a3b3-61775c3b5b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\03_Bomb">
+      <UniqueIdentifier>{fe5e62e2-d130-47fb-8d3c-08ff8e75c5a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -99,21 +114,6 @@
     <ClInclude Include="AssistantPlayer.h">
       <Filter>01.Obj\00.Player\00.PlayerItem</Filter>
     </ClInclude>
-    <ClInclude Include="Cloud.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MonsterHp.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerHp.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Life.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Ui.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Plane.h">
       <Filter>01.Obj\02_Monster</Filter>
     </ClInclude>
@@ -125,6 +125,27 @@
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>01.Obj\04_Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Ui.h">
+      <Filter>02.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Cloud.h">
+      <Filter>02.UI\00_Cloud</Filter>
+    </ClInclude>
+    <ClInclude Include="Life.h">
+      <Filter>02.UI\01_Life</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHp.h">
+      <Filter>02.UI\02.HP</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterHp.h">
+      <Filter>02.UI\02.HP</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>02.UI\03_Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="SuicidePlane.h">
+      <Filter>01.Obj\02_Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,21 +176,6 @@
     <ClCompile Include="AssistantPlayer.cpp">
       <Filter>01.Obj\00.Player\00.PlayerItem</Filter>
     </ClCompile>
-    <ClCompile Include="Cloud.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="MonsterHp.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerHp.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Life.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Ui.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Plane.cpp">
       <Filter>01.Obj\02_Monster</Filter>
     </ClCompile>
@@ -181,6 +187,27 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>01.Obj\04_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Ui.cpp">
+      <Filter>02.UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>02.UI\00_Cloud</Filter>
+    </ClCompile>
+    <ClCompile Include="Life.cpp">
+      <Filter>02.UI\01_Life</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHp.cpp">
+      <Filter>02.UI\02.HP</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterHp.cpp">
+      <Filter>02.UI\02.HP</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>02.UI\03_Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="SuicidePlane.cpp">
+      <Filter>01.Obj\02_Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
