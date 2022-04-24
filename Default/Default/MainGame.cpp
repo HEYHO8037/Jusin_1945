@@ -97,7 +97,8 @@ void CMainGame::Initialize(void)
 void CMainGame::Update(void)
 {
 	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
-	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
+	if(!m_ObjList[OBJ_PLAYER].empty())
+		dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
 
 
 	for (int i = 0; i < OBJ_END; ++i)
@@ -146,7 +147,7 @@ void CMainGame::Late_Update(void)
 
 	for (int i = 0; i < UI_END; ++i)
 	{
-		for (auto & iter : m_ObjList[i])
+		for (auto & iter : m_UiList[i])
 			iter->Late_Update();
 	}
 

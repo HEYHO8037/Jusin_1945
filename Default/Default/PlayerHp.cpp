@@ -26,6 +26,11 @@ int CPlayerHp::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 	
+	if (m_pPlayerInfo->fCX < 0)
+	{
+		return OBJ_DEAD;
+	}
+
 	m_tInfo.fX = m_pPlayerInfo->fX;
 	m_tInfo.fY = m_pPlayerInfo->fY - 45;
 
