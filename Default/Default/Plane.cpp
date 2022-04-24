@@ -54,7 +54,7 @@ void CPlane::BehaviorEnter() {
 
 	case Idle:
 		residenceTimer = new CTimer;
-		residenceTimer->StartTimer(residenceSecond, [&]() {
+		residenceTimer->StartTimer(5, [&]() {
 			behaviorState = Exit;
 		});
 		break;

@@ -64,7 +64,6 @@ protected:
 
 private:
 	bool m_bRunEffect;
-	bool m_bEffectStep;
 
 };
 

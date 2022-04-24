@@ -11,6 +11,8 @@
 #include "Bomb.h"
 #include "CollisionMgr.h"
 
+#include "TestObj.h";
+
 CMainGame::CMainGame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -92,6 +94,7 @@ void CMainGame::Initialize(void)
 	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, nullptr, nullptr);
 	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
 
+	m_ObjList[OBJ_MOUSE].push_back(CAbstractFactory<CTestObj>::Create());
 }
 
 void CMainGame::Update(void)

@@ -2,11 +2,11 @@
 #include "Monster.h"
 #include "AbstractFactory.h"
 #include "Bullet.h"
+#include "Item.h"
 
 CMonster::CMonster():
 	m_bAIStart(false),
 	m_bRunEffect(false),
-	m_bEffectStep(true),
 	m_effectCount(0),
 	m_iScore(0) {
 }
@@ -125,20 +125,14 @@ void CMonster::DisplayInfo(HDC hDC, int _displayState) {
 
 void CMonster::RunEffect() {
 	m_bRunEffect = true;
-	m_bEffectStep = true;
-	m_effectCount = 1;
+	m_effectCount = 255;
 }
 
 void CMonster::EffectRender() {
 	if (!m_bRunEffect)
 		return;
 
-	m_effectCount += m_bEffectStep ? 15 : -15;
-
-	if (m_effectCount >= 255) {
-		m_effectCount = 255 - 1;
-		m_bEffectStep = false;
-	}
+	m_effectCount -= 15;
 
 	if (m_effectCount <= 0) {
 		m_effectCount = 0;
@@ -155,7 +149,7 @@ void CMonster::Hit() {
 }
 
 void CMonster::Die() {
-	// item Create(m_itemList, this);
+	CItem:: Create(m_itemList, this);
 
 	m_bDead = true;
 	m_bAIStart = false;
