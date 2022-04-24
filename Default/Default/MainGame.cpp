@@ -28,8 +28,6 @@ void CMainGame::Initialize(void)
 	
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-	CObj* Item2 = new CItem;
-	CItem::Create(&m_ObjList[OBJ_ITEM], Item2);
 
 	//플레이어 생성시 hp바 생성
 	float fXtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fX;
