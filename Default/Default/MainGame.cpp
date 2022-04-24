@@ -30,15 +30,6 @@ void CMainGame::Initialize(void)
 	
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-
-	//플레이어 생성시 hp바 생성
-	float fXtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fX;
-	float fYtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fY;
-	if (!m_ObjList[OBJ_PLAYER].empty()) 
-	{
-		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp-40));
-	}
-
 	//플레이어의 정보를 hp에 넣어주기
 	
 	for (int i = 0; i < 4; ++i)
@@ -86,10 +77,20 @@ void CMainGame::Initialize(void)
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetMonsterList(&m_ObjList[OBJ_MONSTER]);
 
 
+	//플레이어 생성시 hp바 생성
+	float fXtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fX;
+	float fYtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fY;
+	if (!m_ObjList[OBJ_PLAYER].empty())
+	{
+		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp - 40));
+	}
+
+	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetObjInfo(player);
+
 	//자살공격하는 비행기
 	//나중에 create 생성자 있는 버전으로 넣어주기
 	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
-	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, nullptr, nullptr);
+	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
 	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
 
 }
@@ -97,8 +98,9 @@ void CMainGame::Initialize(void)
 void CMainGame::Update(void)
 {
 	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
-	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
 
+	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
+	
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
@@ -146,7 +148,7 @@ void CMainGame::Late_Update(void)
 
 	for (int i = 0; i < UI_END; ++i)
 	{
-		for (auto & iter : m_ObjList[i])
+		for (auto & iter : m_UiList[i])
 			iter->Late_Update();
 	}
 

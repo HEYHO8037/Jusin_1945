@@ -27,5 +27,7 @@ public:
 private :
 	INFO* m_pPlayerInfo;
 
+	float m_barRight;
+
 };
 

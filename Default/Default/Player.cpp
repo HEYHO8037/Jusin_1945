@@ -193,9 +193,9 @@ int * CPlayer::GetBombNum()
 
 void CPlayer::PlayerHit()
 {
-	m_iHP -= 34;
+	m_iHP -= 25;
 
-	if (m_iHP < 0)
+	if (m_iHP <= 0)
 	{
 		m_iLife -= 1;
 		m_iHP = m_iMaxHP;
