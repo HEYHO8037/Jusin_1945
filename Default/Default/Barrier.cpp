@@ -3,6 +3,9 @@
 
 
 CBarrier::CBarrier()
+	: m_pPlayerInfo(nullptr),
+	  m_fAngle(0.f),
+	  m_iRotate(0)
 {
 }
 
@@ -36,11 +39,28 @@ int CBarrier::Update(void)
 void CBarrier::Late_Update(void)
 {
 	m_fAngle += m_fSpeed;
+
+	if ((int)m_fAngle % 360 == 0)
+	{
+		m_iRotate++;
+	}
+
 }
 
 void CBarrier::Render(HDC hDC)
 {
+	HBRUSH brush;
+	HPEN pen;
+
+	pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
+	brush = CreateSolidBrush(RGB(200, 200, 200));
+	SelectObject(hDC, pen);
+	SelectObject(hDC, brush);
+
 	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	DeleteObject(pen);
+	DeleteObject(brush);
 }
 
 void CBarrier::Release(void)
@@ -54,6 +74,11 @@ void CBarrier::SetPlayerInfo(INFO * pPlayerInfo)
 
 	m_tInfo.fX = m_pPlayerInfo->fX;
 	m_tInfo.fY = m_pPlayerInfo->fY;
+}
+
+int CBarrier::GetRotateRate() const
+{
+	return m_iRotate;
 }
 
 void CBarrier::UpdatePos()

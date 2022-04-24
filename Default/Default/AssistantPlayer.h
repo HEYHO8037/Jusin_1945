@@ -16,11 +16,17 @@ public:
 	virtual void Release(void) override;
 
 public:
-	void SetPlayerInfo(INFO* pPlayerInfo);
+	void SetPlayer(class CPlayer* pPlayer);
 	void SetSpeed(float fSpeed);
+	void SetObjList(list<CObj*>* pObjList);
+
+public:
+	void NormalFire();
+	void ShotGunFire();
 
 private:
-	ASSISTANT_DIR m_iLeftRight;
-	INFO* m_pPlayerInfo;
+	ASSISTANT_DIR m_eDir;
+	CPlayer* m_pPlayer;
+	list<CObj*>* m_bulletList;
 };
 

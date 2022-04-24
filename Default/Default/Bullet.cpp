@@ -2,9 +2,6 @@
 #include "Bullet.h"
 
 
-#include "stdafx.h"
-#include "Bullet.h"
-
 
 CBullet::CBullet() {
 }
@@ -19,7 +16,7 @@ void CBullet::Initialize() {
 	m_tInfo.fCY = 10.f;	// �÷��̾� ���� ������
 
 	m_fSpeed = 10.f;
-
+	 
 	Update_Rect();
 }
 
@@ -60,4 +57,9 @@ void CBullet::Render(HDC hdc) {
 }
 
 void CBullet::Release() {
+}
+
+void CBullet::SetType(BULLET_TYPE eType)
+{
+	m_eBulletType = eType;
 }
