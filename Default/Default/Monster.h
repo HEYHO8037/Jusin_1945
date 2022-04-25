@@ -33,6 +33,7 @@ protected:
 	virtual void BehaviorExecute() PURE;
 	virtual void BehaviorExit() PURE;
 
+	void CommonDie();
 	virtual void Die();
 
 	void LeaveCheck();

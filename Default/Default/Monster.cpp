@@ -145,15 +145,18 @@ void CMonster::Hit() {
 	m_iHP -= 1;
 	RunEffect();
 
- 	if (m_iHP <= 0)
+	if (m_iHP <= 0) {
 		Die();
+		CommonDie();
+	}
 }
 
-void CMonster::Die() {
+void CMonster::CommonDie() {
 	CItem::Create(m_itemList, this);
 
-	CMainGame::killCount += 1;
-	CMainGame::Score += m_iScore;
+	CMainGame::KillCount += 1;
+	CMainGame::TotalKillCount += 1;
+	CMainGame::Score += (m_iScore * CMainGame::Level);
 
 	CObj* newEffect = CAbstractFactory<CEffect>::Create(m_tInfo.fX, m_tInfo.fY);
 	dynamic_cast<CEffect*>(newEffect)->SetEndSize(m_tInfo.fCX, m_tInfo.fCY);
@@ -161,6 +164,9 @@ void CMonster::Die() {
 
 	m_bDead = true;
 	m_bAIStart = false;
+}
+
+void CMonster::Die() {
 }
 
 void CMonster::LeaveCheck() {
