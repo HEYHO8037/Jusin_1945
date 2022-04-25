@@ -23,6 +23,11 @@ int CBomb::Update(void)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+
+	if (m_pObj->GetDead())
+	{
+		ClearObjInfo();
+	}
 	
 
 	Update_Rect();
@@ -36,10 +41,9 @@ void CBomb::Late_Update(void)
 void CBomb::Render(HDC hDC)
 {
 
-	if (m_pObj->GetHP() <= 0)
+	if (!m_pObj)
 	{
 		m_bDead = true;
-
 		return;
 	}
 
