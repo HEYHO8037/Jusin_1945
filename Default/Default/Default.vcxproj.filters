@@ -58,6 +58,9 @@
     <Filter Include="02.UI\03_Bomb">
       <UniqueIdentifier>{fe5e62e2-d130-47fb-8d3c-08ff8e75c5a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.UI\04_Tree">
+      <UniqueIdentifier>{93665c85-c392-4ab3-a894-441cc6b53032}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -150,6 +153,9 @@
     <ClInclude Include="CollisionMgr.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>02.UI\04_Tree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -214,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>02.UI\04_Tree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
