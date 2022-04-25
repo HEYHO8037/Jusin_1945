@@ -186,8 +186,14 @@ void CMainGame::Render(void)
 	backBitmapStage = (HBITMAP)SelectObject(backHDC, backBitmap);
 	//Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 
-	Rectangle(backHDC, 0, 0, WINCX, WINCY);
-
+	HBRUSH	brush;
+	HGDIOBJ h_old_brush;
+	brush = CreateSolidBrush(RGB(0, 106, 0));
+	h_old_brush = SelectObject(backHDC, brush);
+	Rectangle(backHDC, 0, 0, WINCY, WINCY);
+	SelectObject(backHDC, h_old_brush);
+	DeleteObject(brush);
+	
 	TCHAR szBuff[256] = L"";
 	swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
 	TextOut(backHDC, 200, 200, szBuff, lstrlen(szBuff));

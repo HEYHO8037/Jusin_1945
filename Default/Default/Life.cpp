@@ -48,7 +48,7 @@ void CLife::Render(HDC hDC)
 		for (int i = 0; i < *dynamic_cast<CPlayer*>(m_pObj)->GetLife(); ++i)
 		{
 
-			HPEN pen = CreatePen(PS_SOLID, 3, RGB(0, 128, 0));
+			HPEN pen = CreatePen(PS_SOLID, 3, RGB(255, 255, 0));
 			HGDIOBJ h_old_pen = SelectObject(hDC, pen);
 
 			MoveToEx(hDC, (int)m_tInfo.fX + iTemp, (int)m_tInfo.fY, nullptr);
