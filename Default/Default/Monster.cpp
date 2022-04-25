@@ -33,7 +33,10 @@ void CMonster::Late_Update() {
 
 
 void CMonster::CollisionEnter(CObj* _sour) {
-	Hit();
+	CBullet* bulletObj = dynamic_cast<CBullet*>(_sour);
+	if (bulletObj && bulletObj->GetType() == PLAYER_BULLET) {
+		Hit();
+	}
 }
 
 void CMonster::BehaviorStart(CObj* _targetObj, std::list<CObj*>* _pBulletList, std::list<CObj*>* _pItemList) {
@@ -89,7 +92,6 @@ void CMonster::Fire(float degree) {
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetType(MONSTER_BULLET);
 	BulletObj->SetDirection(cosf(degree * PI / 180.f), sinf(degree * PI / 180.f));
-	BulletObj->SetType(MONSTER_BULLET);
 	m_bulletList->push_back(newBullet);
 }
 

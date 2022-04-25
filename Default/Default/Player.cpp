@@ -65,6 +65,7 @@ int CPlayer::Update(void)
 	}
 
 	Update_Rect();
+	CollisionWindow();
 
 	return OBJ_NOEVENT;
 }
@@ -81,8 +82,6 @@ void CPlayer::Late_Update(void)
 			m_pBarrier = nullptr;
 		}
 	}
-
-	CollisionWindow();
 }
 
 void CPlayer::Render(HDC hDC)
@@ -134,6 +133,11 @@ void CPlayer::Release(void)
 
 void CPlayer::CollisionEnter(CObj * _sour)
 {
+
+	if (dynamic_cast<CBullet*>(_sour)->GetType() == PLAYER_BULLET)
+	{
+		return;
+	}
 
 	if (dynamic_cast<CBullet*>(_sour)->GetType() == MONSTER_BULLET)
 	{
