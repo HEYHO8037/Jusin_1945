@@ -3,9 +3,7 @@
 #include "AssistantPlayer.h"
 #include "Bullet.h"
 #include "Player.h"
-#include "Boss1.h"
-#include "Plane.h"
-#include "SuicidePlane.h"
+#include "Monster.h"
 #include "AbstractFactory.h"
 #include "PlayerHp.h"
 #include "Item.h"
@@ -87,16 +85,16 @@ void CPlayer::Late_Update(void)
 void CPlayer::Render(HDC hDC)
 {
 	HBRUSH brush;
-	HPEN pen;
+	HGDIOBJ OldBrush;
 
-	pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
 	brush = CreateSolidBrush(RGB(0, 200, 200));
-	SelectObject(hDC, pen);
+	OldBrush = SelectObject(hDC, brush);
+
 	SelectObject(hDC, brush);
 
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 
-	DeleteObject(pen);
+	SelectObject(hDC, OldBrush);
 	DeleteObject(brush);
 
 	if (m_pBarrier)
@@ -156,20 +154,20 @@ void CPlayer::CollisionEnter(CObj * _sour)
 	}
 	else if (dynamic_cast<CItem*>(_sour)->GetItemID() == ITEM_BOMB)
 	{
-		_sour->Set_Dead();
+ 		_sour->Set_Dead();
  		AddBomb();
 	}
-	else if (dynamic_cast<CPlane*>(_sour)->GetHP() == 1)
+	else if (dynamic_cast<CMonster*>(_sour)->GetDead() == false)
 	{
 		PlayerHit();
-	}
-	else if (dynamic_cast<CSuicidePlane*>(_sour)->GetHP() == 1)
-	{
-		PlayerHit();
-	}
-	else if (dynamic_cast<CBoss1*>(_sour)->GetHP() != 0)
-	{
-		PlayerHit();
+		if (_sour->GetMaxHP() == 1)
+		{
+			_sour->Set_Dead();
+		}
+		else
+		{
+			m_tInfo.fY += 200;
+		}
 	}
 
 }
@@ -196,7 +194,14 @@ void CPlayer::SetGetPowerItem()
 
 CObj * CPlayer::GetBarrierClass()
 {
-	return dynamic_cast<CObj*>(m_pBarrier);
+	if (m_pBarrier)
+	{
+		return dynamic_cast<CObj*>(m_pBarrier); 
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 int* CPlayer::GetPowerUpItemCount()
@@ -395,7 +400,15 @@ void CPlayer::CollisionWindow()
 
 void CPlayer::InitBarrier()
 {
-	if (!m_pBarrier)
+	if (m_pBarrier)
+	{
+		delete m_pBarrier;
+		m_pBarrier = nullptr;
+		m_pBarrier = new CBarrier();
+		m_pBarrier->Initialize();
+		m_pBarrier->SetPlayerInfo(&m_tInfo);
+	}
+	else if (!m_pBarrier)
 	{
 		m_pBarrier = new CBarrier();
 		m_pBarrier->Initialize();
@@ -430,6 +443,11 @@ void CPlayer::PowerUp()
 
 void CPlayer::AddBomb()
 {
+	if (m_iBomb == 3)
+	{
+		return;
+	}
+
 	m_iBomb++;
 }
 

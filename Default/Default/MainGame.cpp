@@ -43,10 +43,8 @@ void CMainGame::Initialize(void)
 	//플레이어 생성시 hp바 생성
 	float fXtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fX;
 	float fYtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fY;
-	if (!m_ObjList[OBJ_PLAYER].empty())
-	{
-		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp - 40));
-	}
+	m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp - 40));
+
 	//playerHp에 player obj 넣기(front 사용 문제)
 	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetObjInfo(m_player);
 
@@ -124,14 +122,14 @@ void CMainGame::Update(void)
 	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
 	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
 
-	if (!m_ObjList[OBJ_PLAYER].empty())
+	if (!m_ObjList[OBJ_PLAYER].empty() && m_ObjList[OBJ_PLAYER].front())
 	{
 		CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_MONSTER]);
 		CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_BULLET]);
 	}
 
 	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
-	if(!m_ObjList[OBJ_PLAYER].empty())
+	if(!m_ObjList[OBJ_PLAYER].empty() && m_ObjList[OBJ_PLAYER].front())
 		dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
 
 	for (int i = 0; i < UI_END; ++i)

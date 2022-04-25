@@ -25,7 +25,7 @@ int CPlayerHp::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 	
-	if (m_pPlayerInfo->fCX < 0)
+	if (m_pPlayerInfo->fCX <= 0)
 	{
 		return OBJ_DEAD;
 	}
@@ -47,7 +47,7 @@ void CPlayerHp::Render(HDC hDC)
 
 	HBRUSH	brush;
 	HGDIOBJ h_old_brush;
-	
+
 	Update_Rect();
 	m_barRight = m_tRect.left + (m_tInfo.fCX * ((float)m_pObj->GetHP() / m_pObj->GetMaxHP()));
 
