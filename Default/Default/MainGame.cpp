@@ -64,23 +64,41 @@ void CMainGame::Initialize(void)
 	killCount = 0;
 
 	m_timer = new CTimer;
-	m_timer->StartTimer(1.f, [&]() {
-		switch(rand() % Suicide == 1) {
-		case Plane:
-			CObj* planeObj = CAbstractFactory<CPlane>::Create();
-			CPlane* plane = dynamic_cast<CPlane*>(planeObj);
+	m_timer->StartTimer(ENERMY_PER_SECOND, [&]() {
+		CObj* monsterObj = nullptr;
+		switch(rand() % MonsterEnd) {
+		case Plane: {
+			float posX = rand() % WINCX + 100;
+			float posY = rand() % (WINCY / 2) + 100;
+			
+			float startPosX = posX > (WINCX/2) ? WINCX + 100 : -100;
+
+			monsterObj = CAbstractFactory<CPlane>::Create(startPosX, posY);
+			CPlane* plane = dynamic_cast<CPlane*>(monsterObj);
 			plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
-			plane->SetAppearPosition(WINCX / 2 + 200, WINCY / 2);
-			m_ObjList[OBJ_MONSTER].push_back(planeObj);
+			plane->SetAppearPosition(posX, posY);
+		}
 			break;
 
-		case Suicide:
+		case Suicide: {
 			//돌진형 비행기
-			CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
-			dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
-			m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
+			/////////////////////
+			monsterObj = CAbstractFactory<CPlane>::Create();
+			CPlane* plane = dynamic_cast<CPlane*>(monsterObj);
+			plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
+
+			float posX = rand() % WINCX + 100;
+			float posY = rand() % (WINCY / 2) + 100;
+			plane->SetAppearPosition(posX, posY);
+			/////////////////////
+
+			//CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
+			//dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
+			//m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
+		}
 			break;
 		}
+		m_ObjList[OBJ_MONSTER].push_back(monsterObj);
 
 		if (killCount > BOSS_APPEAR_COUNT) {
 			CObj* bossObj = CAbstractFactory<CBoss1>::Create();

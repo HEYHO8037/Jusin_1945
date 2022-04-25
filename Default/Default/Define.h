@@ -16,6 +16,7 @@
 #define		TICKSCALE	TIMESCALE * 0.1f
 
 #define		BOSS_APPEAR_COUNT 5
+#define		ENERMY_PER_SECOND 1.f
 
 extern HWND			g_hWnd;
 

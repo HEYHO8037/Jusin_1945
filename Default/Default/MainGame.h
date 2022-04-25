@@ -26,7 +26,8 @@ public:
 private:
 	enum monsterType {
 		Plane,
-		Suicide
+		Suicide,
+		MonsterEnd
 	};
 	HDC		m_hDC;
 	
