@@ -94,7 +94,11 @@ void CPlayer::Render(HDC hDC)
 
 	SelectObject(hDC, brush);
 
-	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	Ellipse(hDC, m_tRect.left - 30, m_tRect.top + 5, m_tRect.right + 30, m_tRect.bottom - 15);
+	Ellipse(hDC, m_tRect.left + 50, m_tRect.top - 45, m_tRect.right - 50, m_tRect.bottom);
+	Rectangle(hDC, m_tRect.left, m_tRect.top - 10, m_tRect.right, m_tRect.bottom);
+
+
 
 	SelectObject(hDC, OldBrush);
 	DeleteObject(brush);

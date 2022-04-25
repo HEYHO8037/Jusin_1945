@@ -31,7 +31,7 @@ int CPlayerHp::Update(void)
 	}
 
 	m_tInfo.fX = m_pPlayerInfo->fX;
-	m_tInfo.fY = m_pPlayerInfo->fY - 45;
+	m_tInfo.fY = m_pPlayerInfo->fY - 100;
 
 	Update_Rect();
 	return OBJ_NOEVENT;
