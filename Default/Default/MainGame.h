@@ -25,6 +25,9 @@ public:
 public:
 	static int killCount;
 	static bool bBoss;
+	static long Score;
+	static int Level;
+	static int PlayTime;
 								
 private:
 	enum monsterType {

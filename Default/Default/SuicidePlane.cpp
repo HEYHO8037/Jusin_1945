@@ -27,6 +27,8 @@ void CSuicidePlane::Initialize()
 	m_iMaxHP = 1;
 	m_iHP = 1;
 
+	m_iScore = 100;
+
 }
 
 

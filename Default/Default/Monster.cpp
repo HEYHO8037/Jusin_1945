@@ -3,6 +3,7 @@
 #include "AbstractFactory.h"
 #include "Bullet.h"
 #include "Item.h"
+#include "Effect.h"
 #include "MainGame.h"
 
 CMonster::CMonster():
@@ -39,10 +40,16 @@ void CMonster::CollisionEnter(CObj* _sour) {
 	}
 }
 
-void CMonster::BehaviorStart(CObj* _targetObj, std::list<CObj*>* _pBulletList, std::list<CObj*>* _pItemList) {
+void CMonster::BehaviorStart(
+	CObj* _targetObj, 
+	std::list<CObj*>* _pBulletList, 
+	std::list<CObj*>* _pItemList,
+	std::list<CObj*>* _pEffectList
+) {
 	m_targetObj = _targetObj;
 	m_bulletList = _pBulletList;
 	m_itemList = _pItemList;
+	m_effectList = _pEffectList;
 
 	m_bAIStart = true;
 	behaviorState = Enter;
@@ -146,6 +153,11 @@ void CMonster::Die() {
 	CItem::Create(m_itemList, this);
 
 	CMainGame::killCount += 1;
+	CMainGame::Score += m_iScore;
+
+	CObj* newEffect = CAbstractFactory<CEffect>::Create(m_tInfo.fX, m_tInfo.fY);
+	dynamic_cast<CEffect*>(newEffect)->SetEndSize(m_tInfo.fCX, m_tInfo.fCY);
+	m_effectList->push_back(newEffect);
 
 	m_bDead = true;
 	m_bAIStart = false;
