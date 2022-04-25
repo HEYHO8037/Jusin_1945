@@ -27,7 +27,7 @@ public:
 	int* GetBombNum(); // 폭탄 개수 반환
 	void PlayerHit(); // 플레이어 피격시 발동 함수
 
-	 INFO* GetPlayerInfo(void) { return &m_tInfo; }
+	INFO* GetPlayerInfo(void) { return &m_tInfo; }
 
 private:
 	void		Key_Input(void);
@@ -37,9 +37,9 @@ private:
 	void		CollisionWindow(); //플레이어가 화면 으로 못나가게 충돌처리
 	void		InitBarrier(); // 베리어 생성 함수
 	void		InitAssistantPlane(); //보조 비행기 생성 함수
-	void		PowerUp();
-	void		AddBomb();
-	bool		DeployBomb();
+	void		PowerUp(); // 파워업 카운트 상승
+	void		AddBomb(); // 폭탄 추가
+	bool		DeployBomb(); // 폭탄 발동
 
 
 private:

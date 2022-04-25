@@ -23,6 +23,8 @@ CPlayer::CPlayer()
 CPlayer::~CPlayer()
 {
 	Release();
+	m_bulletList = nullptr;
+	m_MonsterList = nullptr;
 }
 
 void CPlayer::Initialize(void)
@@ -31,7 +33,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.fY = 700.f;
 	m_iHP = 100;
 	m_iMaxHP = 100;
-	m_iLife = 3;
+	m_iLife = 1;
 
 	m_tInfo.fCX = (float)PlayerSize;
 	m_tInfo.fCY = (float)PlayerSize;
@@ -43,6 +45,7 @@ int CPlayer::Update(void)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+
 	Key_Input();
 
 	if (m_pBarrier)
