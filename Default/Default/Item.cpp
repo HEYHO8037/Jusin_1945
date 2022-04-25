@@ -22,7 +22,7 @@ void CItem::Initialize(void)
 	m_Item_Id = (ITEMID)(rand()% ITEM_END); 
 	m_tInfo.fCX = (float)PlayerSize - 10;  
 	m_tInfo.fCY = (float)PlayerSize - 10;
-	m_fSpeed = 10.f;
+	m_fSpeed = 5.f;
 	m_fAngle = -((rand() % 50) + 31);
 	m_ItemPoint.x = 1;
 	m_ItemPoint.y = -1;

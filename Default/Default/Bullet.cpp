@@ -51,7 +51,7 @@ void CBullet::Render(HDC hdc) {
 	SelectObject(hdc, pen);
 	SelectObject(hdc, brush);
 
-	Rectangle(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	Ellipse(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 
 	DeleteObject(pen);
 	DeleteObject(brush);

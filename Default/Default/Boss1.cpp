@@ -20,8 +20,8 @@ void CBoss1::Initialize() {
 
 	m_iScore = 1000;
 
-	m_iMaxHP = 1000;
-	m_iHP = 1000;
+	m_iMaxHP = 500;
+	m_iHP = 500;
 };
 
 void CBoss1::Render(HDC hDC) {

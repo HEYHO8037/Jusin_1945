@@ -337,21 +337,18 @@ void CPlayer::NormalFire()
 void CPlayer::LevelOneFire()
 {
 	int iDegree = -90;
-	iDegree -= 15;
 	CObj* newBullet = CAbstractFactory<CBullet>::Create();
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
 	BulletObj->SetType(PLAYER_BULLET);
-	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
+	BulletObj->Set_pos(m_tInfo.fX - 10, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 
-	iDegree = -90;
-	iDegree += 15;
 	newBullet = CAbstractFactory<CBullet>::Create();
 	BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
 	BulletObj->SetType(PLAYER_BULLET);
-	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
+	BulletObj->Set_pos(m_tInfo.fX + 10, m_tInfo.fY - (m_tInfo.fCY / 2.f));
 	m_bulletList->push_back(newBullet);
 }
 

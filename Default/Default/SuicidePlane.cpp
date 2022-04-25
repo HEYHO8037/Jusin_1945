@@ -61,7 +61,10 @@ void CSuicidePlane::CollisionEnter(CObj * _sour)
 
 void CSuicidePlane::BehaviorEnter()
 {
-	
+	if (!m_targetObj)
+	{
+		return;
+	}
 	switch (currentState)
 	{
 	//입장할때 플레이어 좌표 얻어오기, 임시로 설정

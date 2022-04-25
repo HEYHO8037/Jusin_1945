@@ -274,6 +274,13 @@ void CMainGame::Render(void)
 			iter->Render(backHDC);
 	}
 	
+	if (m_ObjList[OBJ_PLAYER].empty())
+	{
+		swprintf_s(szBuff3, L"GAME OVER", minute, second);
+		TextOut(backHDC, WINCX * 0.5 -50, WINCY * 0.5, szBuff3, lstrlen(szBuff3));
+
+	}
+
 	BitBlt(m_hDC, 0, 0, WINCX, WINCY, backHDC, 0, 0, SRCCOPY);
 	DeleteObject(SelectObject(backHDC, backBitmapStage));
 	DeleteDC(backHDC);
