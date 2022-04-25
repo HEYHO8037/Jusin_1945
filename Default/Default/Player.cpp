@@ -457,6 +457,11 @@ void CPlayer::InitAssistantPlane()
 
 void CPlayer::PowerUp()
 {
+	if (m_iPowerUpItemCount == 3)
+	{
+		return;
+	}
+
 	m_iPowerUpItemCount++;
 
 	if (m_iPowerUpItemCount == 2)
