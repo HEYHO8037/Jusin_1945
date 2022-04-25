@@ -36,7 +36,7 @@ void CMonsterHp::Late_Update(void)
 
 void CMonsterHp::Render(HDC hDC)
 {
-	if (!m_pObj || 0 >= m_pObj->GetHP())
+	if (!m_pObj || 0 > m_pObj->GetHP())
 	{
 		m_bDead = true;
 		return;
@@ -76,7 +76,7 @@ void CMonsterHp::Render(HDC hDC)
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
 	}
-	if (250 >= m_pObj->GetHP())
+	else if (250 >= m_pObj->GetHP())
 	{
 		Update_Rect();
 

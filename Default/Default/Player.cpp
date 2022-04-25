@@ -140,6 +140,7 @@ void CPlayer::CollisionEnter(CObj * _sour)
 
 	if (dynamic_cast<CBullet*>(_sour)->GetType() == MONSTER_BULLET)
 	{
+		_sour->Set_Dead();
 		PlayerHit();
 	}
 	else if (dynamic_cast<CItem*>(_sour)->GetItemID() == ITEM_POWER)
@@ -279,8 +280,15 @@ void CPlayer::Key_Input(void)
 		m_tInfo.fY += m_fSpeed;
 
 
+	if (GetAsyncKeyState('Z') & 0x8001)
+	{
+		if (m_iBomb)
+		{
+			DeployBomb();
+		}
+	}
 
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	if (GetAsyncKeyState(VK_SPACE) & 0x8001)
 	{
 		if (m_iPowerUpItemCount == 1)
 		{
@@ -374,6 +382,22 @@ void CPlayer::ShotGunFire()
 	m_bulletList->push_back(newBullet);
 }
 
+void CPlayer::BombGunFire()
+{
+	int iDegree = 0;
+
+	for (int i = 0; i < 360; ++i)
+	{
+		iDegree = i;
+		CObj* newBullet = CAbstractFactory<CBullet>::Create();
+		CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
+		BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
+		BulletObj->SetType(PLAYER_BULLET);
+		BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
+		m_bulletList->push_back(newBullet);
+	}
+}
+
 void CPlayer::CollisionWindow()
 {
 	if (m_tRect.left < 0)
@@ -457,6 +481,9 @@ bool CPlayer::DeployBomb()
 	if (m_iBomb)
 	{
 		m_iBomb--;
+
+		BombGunFire();
+
 		return true;
 	}
 	else

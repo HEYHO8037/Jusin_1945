@@ -34,6 +34,7 @@ private:
 	void		NormalFire(); //일반 총알 발사
 	void		LevelOneFire(); // 1단계 총알 발사
 	void		ShotGunFire(); // 샷건 총알 발사
+	void		BombGunFire();
 	void		CollisionWindow(); //플레이어가 화면 으로 못나가게 충돌처리
 	void		InitBarrier(); // 베리어 생성 함수
 	void		InitAssistantPlane(); //보조 비행기 생성 함수

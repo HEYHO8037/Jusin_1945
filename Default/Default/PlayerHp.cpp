@@ -57,7 +57,6 @@ void CPlayerHp::Render(HDC hDC)
 
 	brush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	h_old_brush = SelectObject(hDC, brush);
-
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 	SelectObject(hDC, h_old_brush);
 	DeleteObject(brush);
@@ -84,8 +83,7 @@ void CPlayerHp::Render(HDC hDC)
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
 	}
-	
-	if (40 > m_pObj->GetHP() && 0 <= m_pObj->GetHP())
+	else if (40 > m_pObj->GetHP() && 0 <= m_pObj->GetHP())
 	{
 		Update_Rect();
 		m_barRight = m_tRect.left + (m_tInfo.fCX * ((float)m_pObj->GetHP() / m_pObj->GetMaxHP()));
