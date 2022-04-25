@@ -35,6 +35,7 @@ private:
 	// Leave 퇴장(아래로 쭉 이동함)
 	// Destroy 삭제
 
+
 	State currentState;
 
 	const int residenceSecond = 3;
