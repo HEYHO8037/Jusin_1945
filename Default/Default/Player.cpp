@@ -87,7 +87,9 @@ void CPlayer::Render(HDC hDC)
 	HBRUSH brush;
 	HGDIOBJ OldBrush;
 
-	brush = CreateSolidBrush(RGB(0, 200, 200));
+	EffectRender();
+
+	brush = CreateSolidBrush(RGB(m_iEffectCount, 200, 200));
 	OldBrush = SelectObject(hDC, brush);
 
 	SelectObject(hDC, brush);
@@ -131,7 +133,6 @@ void CPlayer::Release(void)
 
 void CPlayer::CollisionEnter(CObj * _sour)
 {
-
 
 	if (dynamic_cast<CBullet*>(_sour)->GetType() == PLAYER_BULLET)
 	{
@@ -223,6 +224,7 @@ int * CPlayer::GetBombNum()
 
 void CPlayer::PlayerHit()
 {
+	RunEffect();
 	m_iHP -= 20;
 
 	if (m_iHP <= 0)
@@ -280,7 +282,7 @@ void CPlayer::Key_Input(void)
 		m_tInfo.fY += m_fSpeed;
 
 
-	if (GetAsyncKeyState('Z') & 0x8001)
+	if (GetAsyncKeyState('Z') & 0x0001)
 	{
 		if (m_iBomb)
 		{
@@ -288,7 +290,7 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	if (GetAsyncKeyState(VK_SPACE) & 0x8001)
+	if (GetAsyncKeyState(VK_SPACE) & 0x0001)
 	{
 		if (m_iPowerUpItemCount == 1)
 		{
@@ -491,4 +493,23 @@ bool CPlayer::DeployBomb()
 		return false;
 	}
 
+}
+
+void CPlayer::RunEffect()
+{
+	m_bIsRunEffect = true;
+	m_iEffectCount = 255;
+}
+
+void CPlayer::EffectRender()
+{
+	if (!m_bIsRunEffect)
+		return;
+
+	m_iEffectCount -= 15;
+
+	if (m_iEffectCount <= 0) {
+		m_iEffectCount = 0;
+		m_bIsRunEffect = false;
+	}
 }

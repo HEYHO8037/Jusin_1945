@@ -41,6 +41,8 @@ private:
 	void		PowerUp(); // 파워업 카운트 상승
 	void		AddBomb(); // 폭탄 추가
 	bool		DeployBomb(); // 폭탄 발동
+	void		RunEffect(); //피격 이펙트
+	void		EffectRender(); //피격이펙트 실행
 
 
 private:
@@ -53,6 +55,8 @@ private:
 	list<CObj*>* m_bulletList; // 총알 리스트
 	list<CObj*>* m_MonsterList; // 몬스터 리스트
 	bool m_bIsCollision; //충돌 됐는지 안됐는지 확인
+	bool m_bIsRunEffect; //피격 받았는지 안받았는지 확인
+	int m_iEffectCount; // 이펙트 색상
 
 };
 
