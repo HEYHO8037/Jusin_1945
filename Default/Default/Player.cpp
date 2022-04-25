@@ -138,37 +138,34 @@ void CPlayer::CollisionEnter(CObj * _sour)
 	if (dynamic_cast<CBullet*>(_sour)->GetType() == MONSTER_BULLET)
 	{
 		PlayerHit();
-		_sour->Set_Dead();
 	}
 	else if (dynamic_cast<CItem*>(_sour)->GetItemID() == ITEM_POWER)
 	{
-		PowerUp();
 		_sour->Set_Dead();
+		PowerUp();
 	}
 	else if (dynamic_cast<CItem*>(_sour)->GetItemID() == ITEM_SHIELD)
 	{
-		InitBarrier();
 		_sour->Set_Dead();
+		InitBarrier();
+
 	}
 	else if (dynamic_cast<CItem*>(_sour)->GetItemID() == ITEM_BOMB)
 	{
-		AddBomb();
 		_sour->Set_Dead();
+ 		AddBomb();
 	}
 	else if (dynamic_cast<CPlane*>(_sour)->GetHP() == 1)
 	{
 		PlayerHit();
-		dynamic_cast<CSuicidePlane*>(_sour)->Hit();
 	}
 	else if (dynamic_cast<CSuicidePlane*>(_sour)->GetHP() == 1)
 	{
 		PlayerHit();
-		dynamic_cast<CSuicidePlane*>(_sour)->Hit();
 	}
-	else if (dynamic_cast<CBoss1*>(_sour)->GetHP() == 1)
+	else if (dynamic_cast<CBoss1*>(_sour)->GetHP() != 0)
 	{
 		PlayerHit();
-		dynamic_cast<CSuicidePlane*>(_sour)->Hit();
 	}
 
 }
@@ -193,9 +190,9 @@ void CPlayer::SetGetPowerItem()
 	m_iPowerUpItemCount++;
 }
 
-CBarrier * CPlayer::GetBarrierClass()
+CObj * CPlayer::GetBarrierClass()
 {
-	return m_pBarrier;
+	return dynamic_cast<CObj*>(m_pBarrier);
 }
 
 int* CPlayer::GetPowerUpItemCount()
@@ -304,16 +301,6 @@ void CPlayer::Key_Input(void)
 			}
 		}
 	}
-
-	//if (GetAsyncKeyState('Z'))
-	//{
-	//	InitBarrier();
-	//}
-	//if (GetAsyncKeyState('X'))
-	//{
-	//	InitAssistantPlane();
-	//}
-	
 }
 
 void CPlayer::NormalFire()

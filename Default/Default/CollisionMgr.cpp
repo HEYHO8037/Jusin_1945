@@ -28,6 +28,27 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour)
 		}
 	}
 }
+
+void CCollisionMgr::Collision_ObjListRect(CObj* _Dest, list<CObj*> _Sour)
+{
+	RECT		rc{};
+
+	if (!_Dest)
+	{
+		return;
+	}
+
+
+	for (auto& Sour : _Sour)
+	{
+		if (IntersectRect(&rc, &(_Dest->Get_Rect()), &(Sour->Get_Rect())))
+		{
+			_Dest->CollisionEnter(Sour);
+			Sour->CollisionEnter(_Dest);
+		}
+	}
+}
+
 bool CCollisionMgr::Check_Sphere(CObj* pDest, CObj* pSour)
 {
 	

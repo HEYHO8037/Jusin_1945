@@ -116,6 +116,13 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BULLET]);
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+	CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_MONSTER]);
+	CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_BULLET]);
+
+
 	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
 	if(!m_ObjList[OBJ_PLAYER].empty())
 		dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
@@ -171,10 +178,6 @@ void CMainGame::Late_Update(void)
 		for (auto & iter : m_UiList[i])
 			iter->Late_Update();
 	}
-
-	//CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
-	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BULLET]);
-
 }
 
 void CMainGame::Render(void)
