@@ -59,14 +59,14 @@ void CMainGame::Initialize(void)
 	}
 
 	//구름 생성
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 8; ++i)
 	{
-		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 10.f, float((-rand() % 60 + 1) * 15) - 20));
+		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 20.f, float((-rand() % 60 + 1) * 15) - 20));
 	}
 	
-	for (int i = 0; i < 2; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
-		m_UiList[UI_TREE].push_back(CAbstractFactory<CTree>::UICreate());
+		m_UiList[UI_TREE].push_back(CAbstractFactory<CTree>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 20.f, float((rand() % 60 + 1) * 15) - 5.f));
 	}
 
 	killCount = 0;
@@ -219,6 +219,8 @@ void CMainGame::Render(void)
 	swprintf_s(szBuff, L"총알 : %d", m_ObjList[OBJ_BULLET].size());
 	TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
 
+	for (auto & iter : m_UiList[UI_TREE])
+		iter->Render(backHDC);
 	for (auto & iter : m_UiList[UI_CLOUD])
 		iter->Render(backHDC);
 

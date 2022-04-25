@@ -19,8 +19,8 @@ void CSuicidePlane::Initialize()
 	m_tInfo.fX = -30.f;
 	m_tInfo.fY = 40.f;
 	//비행기 사이즈
-	m_tInfo.fCX = 30.f;
-	m_tInfo.fCY = 60.f;
+	m_tInfo.fCX = 40.f;
+	m_tInfo.fCY = 50.f;
 
 	m_fSpeed = 0.3f;
 
@@ -36,7 +36,11 @@ void CSuicidePlane::Render(HDC hDC)
 	HGDIOBJ h_old_brush = SelectObject(hDC, brush);
 	HPEN pen = CreatePen(PS_SOLID, 2, RGB(104, 0, 0));
 	HGDIOBJ h_old_pen = SelectObject(hDC, pen);
-	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	Ellipse(hDC, m_tRect.left, m_tRect.top + 30, m_tRect.right, m_tRect.bottom + 20);
+	Ellipse(hDC, m_tRect.left - 40, m_tRect.top + 35, m_tRect.right + 40, m_tRect.bottom - 35);
+
+	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
 
 	SelectObject(hDC, h_old_brush);
 	SelectObject(hDC, h_old_pen);
