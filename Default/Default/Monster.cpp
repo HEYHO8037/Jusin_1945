@@ -38,6 +38,7 @@ void CMonster::CollisionEnter(CObj* _sour) {
 	CBullet* bulletObj = dynamic_cast<CBullet*>(_sour);
 	if (bulletObj && bulletObj->GetType() == PLAYER_BULLET) {
 		Hit();
+		bulletObj->Set_Dead();
 	}
 }
 
