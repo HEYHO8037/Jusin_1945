@@ -96,7 +96,7 @@ void CMonster::Fire(float degree) {
 	if (!m_bulletList)
 		return;
 	
-	CObj* newBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY);
+	CObj* newBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tRect.bottom);
 
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetType(MONSTER_BULLET);
