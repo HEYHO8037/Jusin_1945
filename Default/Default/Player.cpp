@@ -334,7 +334,7 @@ void CPlayer::NormalFire()
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
 	BulletObj->SetType(PLAYER_BULLET);
-	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f));
+	BulletObj->Set_pos(m_tInfo.fX, m_tInfo.fY - (m_tInfo.fCY / 2.f) - 45);
 	m_bulletList->push_back(newBullet);
 }
 
@@ -345,14 +345,14 @@ void CPlayer::LevelOneFire()
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
 	BulletObj->SetType(PLAYER_BULLET);
-	BulletObj->Set_pos(m_tInfo.fX - 10, m_tInfo.fY - (m_tInfo.fCY / 2.f));
+	BulletObj->Set_pos(m_tInfo.fX - 10, m_tInfo.fY - (m_tInfo.fCY / 2.f) - 45);
 	m_bulletList->push_back(newBullet);
 
 	newBullet = CAbstractFactory<CBullet>::Create();
 	BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetDirection(cosf(iDegree * PI / 180.f), sinf(iDegree * PI / 180.f));
 	BulletObj->SetType(PLAYER_BULLET);
-	BulletObj->Set_pos(m_tInfo.fX + 10, m_tInfo.fY - (m_tInfo.fCY / 2.f));
+	BulletObj->Set_pos(m_tInfo.fX + 10, m_tInfo.fY - (m_tInfo.fCY / 2.f) - 45);
 	m_bulletList->push_back(newBullet);
 }
 
