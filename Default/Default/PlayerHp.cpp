@@ -44,6 +44,8 @@ void CPlayerHp::Late_Update(void)
 
 void CPlayerHp::Render(HDC hDC)
 {
+	if (!m_pObj)
+		return;
 
 	HBRUSH	brush;
 	HGDIOBJ h_old_brush;
@@ -63,7 +65,6 @@ void CPlayerHp::Render(HDC hDC)
 	Rectangle(hDC, m_tRect.left, m_tRect.top, int(m_barRight), m_tRect.bottom);
 	SelectObject(hDC, h_old_brush);
 	DeleteObject(brush);
-
 
 	if(40 <= m_pObj->GetHP() && m_pObj->GetHP() < 75)
 	{

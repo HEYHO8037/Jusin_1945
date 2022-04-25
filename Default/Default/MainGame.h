@@ -18,7 +18,9 @@ public:
 	void	Update(void);			
 	void	Late_Update(void);
 	void	Render(void);			
-	void	Release(void);			
+	void	Release(void);		
+
+	void	RemovedToTargetClear(CObj*);
 
 public:
 	static int killCount;

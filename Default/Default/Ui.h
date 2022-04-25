@@ -20,6 +20,7 @@ public :
 	void SetDead(void)					{ m_bDead = true; }
 	void SetObjInfo(CObj* _pObj)		{ m_pObj = _pObj; }
 	CObj* GetObjInfo() { return m_pObj; }
+	void ClearObjInfo() { m_pObj = nullptr; }
 
 protected:
 	void Update_Rect(void);

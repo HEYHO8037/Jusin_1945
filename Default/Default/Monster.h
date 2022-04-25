@@ -12,7 +12,6 @@ public:
 	void Late_Update() override;
 
 	void SetBulletList(std::list<CObj*>* _pList) { m_bulletList = _pList; };
-	void SetTarget(CObj* _obj) { targetObj = _obj; };
 	void SetAppearPosition(const int _x, const int _y) { appearPosition = { _x, _y }; };
 
 	void CollisionEnter(CObj* _sour);
@@ -47,8 +46,6 @@ protected:
 	POINT originPosition;
 	POINT targetPosition;
 	POINT appearPosition; // 생성후 이동할 위치
-	
-	CObj* targetObj;
 
 	Behavior behaviorState;
 

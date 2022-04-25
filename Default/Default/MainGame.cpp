@@ -31,31 +31,33 @@ void CMainGame::Initialize(void)
 
 	m_hDC = GetDC(g_hWnd);
 
-	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
+	m_player = CAbstractFactory<CPlayer>::Create();
+	m_ObjList[OBJ_PLAYER].push_back(m_player);
 
-	m_player = m_ObjList[OBJ_PLAYER].front();
+	CPlayer* player = dynamic_cast<CPlayer*>(m_player);
 
-
-
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetObjList(&m_ObjList[OBJ_BULLET]);
-	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetMonsterList(&m_ObjList[OBJ_MONSTER]);
+	player->SetObjList(&m_ObjList[OBJ_BULLET]);
+	player->SetMonsterList(&m_ObjList[OBJ_MONSTER]);
 
 	//플레이어 생성시 hp바 생성
-	float fXtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fX;
-	float fYtemp = dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->Get_Info().fY;
+	float fXtemp = player->Get_Info().fX;
+	float fYtemp = player->Get_Info().fY;
 	if (!m_ObjList[OBJ_PLAYER].empty())
 	{
-		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp - 40));
-	}
-	//playerHp에 player obj 넣기(front 사용 문제)
-	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetObjInfo(m_player);
+		CUi* newPlayerHP = CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp - 40);
+		//playerHp에 player obj 넣기(front 사용 문제)
+		dynamic_cast<CPlayerHp*>(newPlayerHP)->SetObjInfo(m_player);
+		
+		m_UiList[UI_PLAYERHP].push_back(newPlayerHP);
 
-	//life 생성
-	m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate((50.f), 930.f));
-	dynamic_cast<CLife*>(m_UiList[UI_LIFE].front())->SetObjInfo(m_player);
-	//폭탄 생성
-	m_UiList[UI_BOMB].push_back(CAbstractFactory<CBomb>::UICreate());
-	dynamic_cast<CBomb*>(m_UiList[UI_BOMB].front())->SetObjInfo(m_player);
+		//life 생성
+		m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate((50.f), 930.f));
+		dynamic_cast<CLife*>(m_UiList[UI_LIFE].front())->SetObjInfo(m_player);
+		//폭탄 생성
+		m_UiList[UI_BOMB].push_back(CAbstractFactory<CBomb>::UICreate());
+		dynamic_cast<CBomb*>(m_UiList[UI_BOMB].front())->SetObjInfo(m_player);
+	}
+
 	//구름 생성
 	for (int i = 0; i < 4; ++i)
 	{
@@ -66,6 +68,10 @@ void CMainGame::Initialize(void)
 
 	m_timer = new CTimer;
 	m_timer->StartTimer(ENERMY_PER_SECOND, [&]() {
+		if (!m_player) {
+			return;
+		}
+
 		CObj* monsterObj = nullptr;
 		switch(rand() % MonsterEnd) {
 		case Plane: {
@@ -83,19 +89,8 @@ void CMainGame::Initialize(void)
 
 		case Suicide: {
 			//돌진형 비행기
-			/////////////////////
-			monsterObj = CAbstractFactory<CPlane>::Create();
-			CPlane* plane = dynamic_cast<CPlane*>(monsterObj);
-			plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
-
-			float posX = rand() % WINCX + 100;
-			float posY = rand() % (WINCY / 2) + 100;
-			plane->SetAppearPosition(posX, posY);
-			/////////////////////
-
-			//CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
-			//dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
-			//m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
+			monsterObj = CAbstractFactory<CSuicidePlane>::Create();
+			dynamic_cast<CMonster*>(monsterObj)->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
 		}
 			break;
 		}
@@ -119,19 +114,12 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BULLET]);
-	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
-	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
-
-	if (!m_ObjList[OBJ_PLAYER].empty())
-	{
-		CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_MONSTER]);
-		CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_BULLET]);
+	if (m_ObjList[OBJ_PLAYER].empty()) {
+		m_player = nullptr;
 	}
 
 	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
-	if(!m_ObjList[OBJ_PLAYER].empty())
+	if(!m_ObjList[OBJ_PLAYER].empty() && !m_UiList[UI_PLAYERHP].empty())
 		dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
 
 	for (int i = 0; i < UI_END; ++i)
@@ -155,6 +143,17 @@ void CMainGame::Update(void)
 		}
 	}
 
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BULLET]);
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
+
+	if (!m_ObjList[OBJ_PLAYER].empty())
+	{
+		CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_MONSTER]);
+		CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_BULLET]);
+	}
+
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin();
@@ -164,6 +163,7 @@ void CMainGame::Update(void)
 
 			if (OBJ_DEAD == iResult)
 			{
+				RemovedToTargetClear(*iter);
 				Safe_Delete<CObj*>(*iter);
 				iter = m_ObjList[i].erase(iter);
 			}
@@ -272,3 +272,31 @@ void CMainGame::Release(void)
 	ReleaseDC(g_hWnd, m_hDC);
 }
 
+void CMainGame::RemovedToTargetClear(CObj* _pRemovedObject) {
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		for (auto* iter : m_ObjList[i]) {
+			if (_pRemovedObject == iter) {
+				continue;
+			}
+			
+			CObj* currentTarget = (*iter).GetTarget();
+			if ((iter->GetTarget()) && _pRemovedObject == (iter->GetTarget())) {
+				iter->ClearTarget();
+			}
+		}
+	}
+
+	for (int i = 0; i < UI_END; ++i)
+	{
+		for (auto* iter : m_UiList[i]) {
+			iter->Late_Update();
+
+			CObj* currentTarget = (*iter).GetObjInfo();
+			if ((iter->GetObjInfo()) && _pRemovedObject == (iter->GetObjInfo())) {
+				iter->ClearObjInfo();
+			}
+		}
+	}
+
+} // 오브젝트가 삭제될때 삭제할 오브젝트를 참조하고있는 오브젝트의 타겟 오브젝트를 nullptr로 바꿔줍니다.

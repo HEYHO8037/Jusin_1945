@@ -41,6 +41,8 @@ void CLife::Render(HDC hDC)
 {
 	int iTemp = 0;
 
+	if (!m_pObj)
+		return;
 
 	if (m_pObj->GetHP() > 0)
 	{
