@@ -3,6 +3,9 @@
 #include "AssistantPlayer.h"
 #include "Bullet.h"
 #include "Player.h"
+#include "Boss1.h"
+#include "Plane.h"
+#include "SuicidePlane.h"
 #include "AbstractFactory.h"
 #include "PlayerHp.h"
 #include "Item.h"
@@ -131,6 +134,7 @@ void CPlayer::Release(void)
 
 void CPlayer::CollisionEnter(CObj * _sour)
 {
+
 	if (dynamic_cast<CBullet*>(_sour)->GetType() == MONSTER_BULLET)
 	{
 		PlayerHit();
@@ -150,6 +154,21 @@ void CPlayer::CollisionEnter(CObj * _sour)
 	{
 		AddBomb();
 		_sour->Set_Dead();
+	}
+	else if (dynamic_cast<CPlane*>(_sour)->GetHP() == 1)
+	{
+		PlayerHit();
+		dynamic_cast<CSuicidePlane*>(_sour)->Hit();
+	}
+	else if (dynamic_cast<CSuicidePlane*>(_sour)->GetHP() == 1)
+	{
+		PlayerHit();
+		dynamic_cast<CSuicidePlane*>(_sour)->Hit();
+	}
+	else if (dynamic_cast<CBoss1*>(_sour)->GetHP() == 1)
+	{
+		PlayerHit();
+		dynamic_cast<CSuicidePlane*>(_sour)->Hit();
 	}
 
 }
