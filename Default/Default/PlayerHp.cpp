@@ -47,7 +47,9 @@ void CPlayerHp::Render(HDC hDC)
 
 	HBRUSH	brush;
 	HGDIOBJ h_old_brush;
-	
+	HPEN pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
+	HGDIOBJ h_old_pen = SelectObject(hDC, pen);
+
 	Update_Rect();
 	m_barRight = m_tRect.left + (m_tInfo.fCX * ((float)m_pObj->GetHP() / m_pObj->GetMaxHP()));
 
@@ -99,6 +101,8 @@ void CPlayerHp::Render(HDC hDC)
 		DeleteObject(brush);
 	}
 
+	SelectObject(hDC, h_old_pen);
+	DeleteObject(pen);
 
 }
 

@@ -10,7 +10,7 @@
 #include "SuicidePlane.h"
 #include "Bomb.h"
 #include "CollisionMgr.h"
-
+#include "Tree.h"
 int CMainGame::killCount = 0;
 bool CMainGame::bBoss = false;
 
@@ -60,6 +60,11 @@ void CMainGame::Initialize(void)
 	for (int i = 0; i < 4; ++i)
 	{
 		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 10.f, float((-rand() % 60 + 1) * 15) - 20));
+	}
+	
+	for (int i = 0; i < 2; ++i)
+	{
+		m_UiList[UI_TREE].push_back(CAbstractFactory<CTree>::UICreate());
 	}
 
 	killCount = 0;

@@ -134,6 +134,7 @@ void CPlayer::Release(void)
 void CPlayer::CollisionEnter(CObj * _sour)
 {
 
+
 	if (dynamic_cast<CBullet*>(_sour)->GetType() == PLAYER_BULLET)
 	{
 		return;
