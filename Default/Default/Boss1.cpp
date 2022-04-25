@@ -13,8 +13,8 @@ CBoss1::~CBoss1() {
 }
 
 void CBoss1::Initialize() {
-	m_tInfo.fCX = 200;
-	m_tInfo.fCY = 200;
+	m_tInfo.fCX = 400;
+	m_tInfo.fCY = 380;
 
 	m_fSpeed = 5.f;
 
@@ -30,12 +30,17 @@ void CBoss1::Render(HDC hDC) {
 
 	EffectRender();
 	
-	brush = CreateSolidBrush(RGB(m_effectCount, 0, 0));
+	brush = CreateSolidBrush(RGB(m_effectCount, 100, 100));
 	OldBrush = SelectObject(hDC, brush);
 
 	SelectObject(hDC, brush);
-	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-	
+	Ellipse(hDC, m_tRect.left + 100, m_tRect.top + 20, m_tRect.right - 100, m_tRect.top + 80);
+	// µÞ ³¯°³
+	Ellipse(hDC, m_tRect.left, m_tRect.top + 250, m_tRect.right, m_tRect.bottom - 50);
+	// ³¯°³
+
+	Rectangle(hDC, m_tRect.left + 170, m_tRect.top, m_tRect.right - 170, m_tRect.bottom);
+
 	SelectObject(hDC, OldBrush);
 	DeleteObject(brush);
 
@@ -67,9 +72,13 @@ void CBoss1::BehaviorEnter() {
 				return;
 			}
 			int angle = 90;
+			Fire(angle + 25);
 			Fire(angle + 45);
+			Fire(angle + 65);
 			Fire(angle);
+			Fire(angle - 25);
 			Fire(angle - 45);
+			Fire(angle - 65);
 
 			--m_iShotCount;
 		});

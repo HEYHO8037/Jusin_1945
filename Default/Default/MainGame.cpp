@@ -7,6 +7,8 @@
 #include "Life.h"
 #include "Boss1.h"
 #include "Plane.h"
+#include "Plane2.h"
+#include "Plane3.h"
 #include "SuicidePlane.h"
 #include "Bomb.h"
 #include "CollisionMgr.h"
@@ -85,24 +87,46 @@ void CMainGame::Initialize(void)
 
 		if (!bBoss) {
 			CObj* monsterObj = nullptr;
-			switch(rand() % MonsterEnd) {
-			case Plane: {
-				float posX = rand() % WINCX + 100;
-				float posY = rand() % (WINCY / 2) + 100;
-			
-				float startPosX = posX > (WINCX/2) ? WINCX + 100 : -100;
+			float posX = rand() % (WINCX - 200) + 200;
+			float posY = rand() % (WINCY / 2) + 100;
 
+			float startPosX = posX > (WINCX / 2) ? WINCX + 100 : -100;
+
+			switch(rand() % MonsterEnd) {
+			case Plane1: {
 				monsterObj = CAbstractFactory<CPlane>::Create(startPosX, posY);
-				CPlane* plane = dynamic_cast<CPlane*>(monsterObj);
-				plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
+				CMonster* plane = dynamic_cast<CMonster*>(monsterObj);
 				plane->SetAppearPosition(posX, posY);
+				plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
+			}
+				break;
+
+			case Plane2: {
+				posX = rand() % 2 == 1 ? 100 : WINCX - 100;
+				startPosX = posX > (WINCX / 2) ? WINCX + 100 : -100;
+				monsterObj = CAbstractFactory<CPlane2>::Create(startPosX, posY);
+				CMonster* plane = dynamic_cast<CMonster*>(monsterObj);
+				plane->SetAppearPosition(posX, posY);
+				plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
+			}
+				break;
+
+			case Plane3: {
+				posX = rand() % 2 == 1 ? 100 : WINCX - 100;
+				startPosX = posX > (WINCX / 2) ? WINCX + 100 : -100;
+				monsterObj = CAbstractFactory<CPlane3>::Create(startPosX, posY);
+				CMonster* plane = dynamic_cast<CMonster*>(monsterObj);
+				plane->SetAppearPosition(posX, posY);
+				plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
 			}
 				break;
 
 			case Suicide: {
 				//돌진형 비행기
-				monsterObj = CAbstractFactory<CSuicidePlane>::Create();
-				dynamic_cast<CMonster*>(monsterObj)->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
+				monsterObj = CAbstractFactory<CSuicidePlane>::Create(startPosX, rand() % 100 + 20);
+				CMonster* monster = dynamic_cast<CMonster*>(monsterObj);
+				monster->SetAppearPosition(posX, 80);
+				monster->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
 			}
 				break;
 			}

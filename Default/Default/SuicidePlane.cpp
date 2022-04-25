@@ -15,14 +15,11 @@ CSuicidePlane::~CSuicidePlane()
 
 void CSuicidePlane::Initialize()
 {
-	//비행기 처음 위치 왼쪽부터 시작
-	m_tInfo.fX = -30.f;
-	m_tInfo.fY = 40.f;
 	//비행기 사이즈
 	m_tInfo.fCX = 40.f;
 	m_tInfo.fCY = 50.f;
 
-	m_fSpeed = 0.3f;
+	m_fSpeed = 1.f;
 
 	m_iMaxHP = 1;
 	m_iHP = 1;
@@ -69,21 +66,26 @@ void CSuicidePlane::BehaviorEnter()
 	{
 	//입장할때 플레이어 좌표 얻어오기, 임시로 설정
 	case Create:
-		
-		targetPosition.x = 20;
-		targetPosition.y = 80;
-	
-
+		targetPosition.x = appearPosition.x;
+		targetPosition.y = appearPosition.y;
 		break;
 
-	case Pattern:
-	
-		m_tDir.fX = fabs(m_targetObj->Get_Info().fX - targetPosition.x);
-		m_tDir.fY = fabs(m_targetObj->Get_Info().fY - targetPosition.y);
+	case Pattern: {
+		float width = fabs(m_targetObj->Get_Info().fX - m_tInfo.fX);
+		float height = fabs(m_targetObj->Get_Info().fY - m_tInfo.fY);
 
-		m_fDiagonal = sqrtf((targetPosition.x *m_tDir.fX) + (targetPosition.y *m_tDir.fY));
-		m_fAngle = atan2(m_tDir.fY, m_tDir.fX);
+		m_fDiagonal = sqrtf((width * width) + (height * height));
+		m_fAngle = asinf(height / m_fDiagonal);
+
+		m_tDir.fX = cosf(m_fAngle);
+		m_tDir.fY = sinf(m_fAngle);
+
+		if (m_tInfo.fX > m_targetObj->Get_Info().fX) {
+			m_tDir.fX *= -1;
+		}
+
 		m_fSpeed = 8.f;
+	}
 		break;
 
 	case Destroy :
@@ -106,19 +108,19 @@ void CSuicidePlane::BehaviorExecute()
 		}
 		break;
 
-	case Pattern:
+	case Pattern: {
+		m_tInfo.fX += m_fSpeed * m_tDir.fX; 
+		m_tInfo.fY += m_fSpeed * m_tDir.fY; 
 
-		m_tInfo.fX += m_fSpeed* cosf(m_fAngle);
-		m_tInfo.fY += m_fSpeed* sinf(m_fAngle);
-
-		//behaviorState = Exit;
 		Update_Rect();
+		LeaveCheck();
+	}
 		break;
 
 	case Leave:
 		
 		m_tInfo.fX += (m_fDiagonal) * m_fAngle;
-		m_tInfo.fY += (m_fDiagonal)* m_fAngle;
+		m_tInfo.fY += (m_fDiagonal) * m_fAngle;
 		LeaveCheck();
 		break;
 

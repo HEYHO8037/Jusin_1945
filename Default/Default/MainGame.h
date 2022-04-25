@@ -33,7 +33,9 @@ public:
 								
 private:
 	enum monsterType {
-		Plane,
+		Plane1,
+		Plane2,
+		Plane3,
 		Suicide,
 		MonsterEnd
 	};

@@ -1,22 +1,19 @@
 #include "stdafx.h"
-#include "Plane.h"
+#include "Plane2.h"
 
 
-CPlane::CPlane():
-	residenceTimer(nullptr) {
+CPlane2::CPlane2():
+	shotTimer(nullptr) {
 }
 
 
-CPlane::~CPlane() {
+CPlane2::~CPlane2() {
 	Release();
 }
 
-void CPlane::Initialize() {
-	m_tInfo.fX = WINCX + 200;
-	m_tInfo.fY = WINCY / 2;
-
-	m_tInfo.fCX = 150; //50
-	m_tInfo.fCY = 100; 
+void CPlane2::Initialize() {
+	m_tInfo.fCX = 130; //50
+	m_tInfo.fCY = 80; 
 
 	m_fSpeed = 5.f;
 
@@ -26,13 +23,13 @@ void CPlane::Initialize() {
 	m_iHP = 1;
 };
 
-void CPlane::Render(HDC hDC) {
+void CPlane2::Render(HDC hDC) {
 	HBRUSH brush;
 	HGDIOBJ OldBrush;
 
 	EffectRender();
 
-	brush = CreateSolidBrush(RGB(0, 0, 235));
+	brush = CreateSolidBrush(RGB(10, 255, 10));
 	OldBrush = SelectObject(hDC, brush);
 
 	DisplayInfo(hDC, currentState);
@@ -50,42 +47,35 @@ void CPlane::Render(HDC hDC) {
 	DisplayInfo(hDC, currentState);
 };
 
-void CPlane::Release() {
-
-	if (residenceTimer)
-		Safe_Delete<CTimer*>(residenceTimer);
+void CPlane2::Release() {
+	if (shotTimer)
+		Safe_Delete<CTimer*>(shotTimer);
 };
 
-void CPlane::BehaviorEnter() {
+void CPlane2::BehaviorEnter() {
 	switch (currentState) {
 	case Create:
 		targetPosition.x = appearPosition.x;
 		targetPosition.y = appearPosition.y;
-
-		originPosition.x = targetPosition.x;
-		originPosition.y = targetPosition.y;
 		break;
 
 	case Pattern1: {
-		Fire(90);
+		shotTimer = new CTimer;
+		float dirAngle = appearPosition.x > (WINCX * 0.5f) ? 80 : -80;
+		m_tDir.fX = cosf((90 + dirAngle) * RADIAN);
+		m_tDir.fY = 0.2f;
+
+		shotTimer->StartTimer(0.5f, [&]() {
+			Fire(90);
+		});
 	}
 	break;
 
-	case Idle:
-		residenceTimer = new CTimer;
-		residenceTimer->StartTimer(5, [&]() {
-			behaviorState = Exit;
-		});
-		break;
-
-	case Destroy:
-		m_bDead = true;
-		break;
 	}
 
 	behaviorState = Execute;
 } 
-void CPlane::BehaviorExecute() {
+void CPlane2::BehaviorExecute() {
 	switch (currentState) {
 	case Create:
 		if (TargetMove()) {
@@ -95,36 +85,22 @@ void CPlane::BehaviorExecute() {
 		break;
 
 	case Pattern1:
-		behaviorState = Exit;
-		break;
+		m_tInfo.fX += m_fSpeed * m_tDir.fX;
+		m_tInfo.fY += m_fSpeed * m_tDir.fY;
+		shotTimer->Update();
 
-	case Idle:
-		residenceTimer->Update();
-		break;
-
-	case Leave:
-		m_tInfo.fY += m_fSpeed;
 		LeaveCheck();
 		break;
 	}
 } 
 
-void CPlane::BehaviorExit() {
+void CPlane2::BehaviorExit() {
 	switch (currentState) {
 	case Create:
 		currentState = Pattern1;
 		break;
 
 	case Pattern1:
-		currentState = Idle;
-		break;
-
-	case Idle:
-		currentState = Leave;
-		Safe_Delete<CTimer*>(residenceTimer);
-		break;
-
-	case Leave:
 		break;
 	}
 
