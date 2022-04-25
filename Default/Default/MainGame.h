@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Ui.h"
 #include "Item.h"
+#include "Timer.h"
 
 class CMainGame
 {
@@ -19,8 +20,14 @@ public:
 	void	Render(void);			
 	void	Release(void);			
 
+public:
+	static int killCount;
 								
 private:
+	enum monsterType {
+		Plane,
+		Suicide
+	};
 	HDC		m_hDC;
 	
 	list<CObj*> m_ObjList[OBJ_END];
@@ -29,5 +36,7 @@ private:
 	TCHAR m_szFPS[64];
 	
 	CObj* TestItem;
+
+	CTimer* m_timer;
 };
 

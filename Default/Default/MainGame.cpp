@@ -11,6 +11,8 @@
 #include "Bomb.h"
 #include "CollisionMgr.h"
 
+int CMainGame::killCount = 0;
+
 CMainGame::CMainGame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -30,29 +32,9 @@ void CMainGame::Initialize(void)
 
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-	/*TestItem = new CItem;
-	TestItem->Initialize();*/
 	CObj* player = m_ObjList[OBJ_PLAYER].front();
 
-	CObj* bossObj = CAbstractFactory<CBoss1>::Create();
-	CBoss1* boss = dynamic_cast<CBoss1*>(bossObj);
-	boss->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
-	boss->SetAppearPosition(WINCX / 2, 500);
-	m_ObjList[OBJ_MONSTER].push_back(bossObj);
 
-	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
-	dynamic_cast<CMonsterHp*>(m_UiList[UI_MONSTERHP].front())->SetObjInfo(bossObj);
-
-	CObj* planeObj = CAbstractFactory<CPlane>::Create();
-	CPlane* plane = dynamic_cast<CPlane*>(planeObj);
-	plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
-	plane->SetAppearPosition(WINCX / 2 + 200, WINCY / 2);
-	m_ObjList[OBJ_MONSTER].push_back(planeObj);
-
-	//돌진형 비행기
-	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
-	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
-	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
 
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetObjList(&m_ObjList[OBJ_BULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetMonsterList(&m_ObjList[OBJ_MONSTER]);
@@ -78,6 +60,40 @@ void CMainGame::Initialize(void)
 	{
 		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 10.f, float((-rand() % 60 + 1) * 15) - 20));
 	}
+
+	killCount = 0;
+
+	m_timer = new CTimer;
+	m_timer->StartTimer(1.f, [&]() {
+		switch(rand() % Suicide == 1) {
+		case Plane:
+			CObj* planeObj = CAbstractFactory<CPlane>::Create();
+			CPlane* plane = dynamic_cast<CPlane*>(planeObj);
+			plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
+			plane->SetAppearPosition(WINCX / 2 + 200, WINCY / 2);
+			m_ObjList[OBJ_MONSTER].push_back(planeObj);
+			break;
+
+		case Suicide:
+			//돌진형 비행기
+			CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
+			dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
+			m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
+			break;
+		}
+
+		if (killCount > BOSS_APPEAR_COUNT) {
+			CObj* bossObj = CAbstractFactory<CBoss1>::Create();
+			CBoss1* boss = dynamic_cast<CBoss1*>(bossObj);
+			boss->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
+			boss->SetAppearPosition(WINCX / 2, 500);
+			m_ObjList[OBJ_MONSTER].push_back(bossObj);
+
+			m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
+			dynamic_cast<CMonsterHp*>(m_UiList[UI_MONSTERHP].front())->SetObjInfo(bossObj);
+
+		}
+	});
 }
 
 void CMainGame::Update(void)
@@ -86,6 +102,7 @@ void CMainGame::Update(void)
 	if(!m_ObjList[OBJ_PLAYER].empty())
 		dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
 
+	m_timer->Update();
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{

@@ -15,6 +15,8 @@
 #define		TIMESCALE	0.1f
 #define		TICKSCALE	TIMESCALE * 0.1f
 
+#define		BOSS_APPEAR_COUNT 5
+
 extern HWND			g_hWnd;
 
 extern DWORD g_dwCurrentTime;

@@ -3,6 +3,7 @@
 #include "AbstractFactory.h"
 #include "Bullet.h"
 #include "Item.h"
+#include "MainGame.h"
 
 CMonster::CMonster():
 	m_bAIStart(false),
@@ -150,6 +151,8 @@ void CMonster::Hit() {
 
 void CMonster::Die() {
 	CItem::Create(m_itemList, this);
+
+	CMainGame::killCount += 1;
 
 	m_bDead = true;
 	m_bAIStart = false;
