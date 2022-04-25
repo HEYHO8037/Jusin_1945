@@ -149,7 +149,7 @@ void CMonster::Hit() {
 }
 
 void CMonster::Die() {
-	CItem:: Create(m_itemList, this);
+	CItem::Create(m_itemList, this);
 
 	m_bDead = true;
 	m_bAIStart = false;

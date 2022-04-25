@@ -18,10 +18,8 @@ void CItem::Initialize(void)
 {
 
 	//m_Font = CreateFont()
-	Set_pos(400.f, 300.f); 
 	srand((unsigned int)time(NULL));
 	m_Item_Id = (ITEMID)(rand()% ITEM_END); 
-	m_Item_Id = ITEM_SHIELD;
 	m_tInfo.fCX = (float)PlayerSize - 10;  
 	m_tInfo.fCY = (float)PlayerSize - 10;
 	m_fSpeed = 10.f;
@@ -154,8 +152,6 @@ void CItem::Item_Render(HDC hDC)
 	/*lstrcpy(m_szItem_Name, L"S");
 	TextOut(hDC, m_tRect.left + 15, m_tRect.top + 10, m_szItem_Name, lstrlen(m_szItem_Name));*/
 	//DrawText(hDC, m_szItem_Name, lstrlen(m_szItem_Name), &rc, DT_CENTER);
-	
-	m_Item_Id = ITEM_SHIELD;
 	
 	switch (m_Item_Id)
 	{

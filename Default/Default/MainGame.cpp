@@ -11,8 +11,6 @@
 #include "Bomb.h"
 #include "CollisionMgr.h"
 
-#include "TestObj.h";
-
 CMainGame::CMainGame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -31,9 +29,6 @@ void CMainGame::Initialize(void)
 	m_hDC = GetDC(g_hWnd);
 
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
-
-
-	m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create());
 
 	/*TestItem = new CItem;
 	TestItem->Initialize();*/
@@ -83,8 +78,6 @@ void CMainGame::Initialize(void)
 	{
 		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 10.f, float((-rand() % 60 + 1) * 15) - 20));
 	}
-
-	m_ObjList[OBJ_MOUSE].push_back(CAbstractFactory<CTestObj>::Create());
 }
 
 void CMainGame::Update(void)
@@ -93,7 +86,6 @@ void CMainGame::Update(void)
 	if(!m_ObjList[OBJ_PLAYER].empty())
 		dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
 
-	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{

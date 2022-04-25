@@ -23,6 +23,10 @@ int CLife::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 	
+	//if (0 >= m_pObj->GetHP())
+	//{
+	//	m_bDead = true;
+	//}
 
 	Update_Rect();
 	return OBJ_NOEVENT;
@@ -37,7 +41,8 @@ void CLife::Render(HDC hDC)
 {
 	int iTemp = 0;
 
-	if (0 < m_pObj)
+
+	if (m_pObj->GetHP() > 0)
 	{
 		//플레이어 완전사망시 주소값 못불러와서 에러
 		for (int i = 0; i < *dynamic_cast<CPlayer*>(m_pObj)->GetLife(); ++i)
@@ -61,8 +66,10 @@ void CLife::Render(HDC hDC)
 			Update_Rect();
 			iTemp += 70;
 		}
-
 	}
+
+	
+
 	}
 
 void CLife::Release(void)

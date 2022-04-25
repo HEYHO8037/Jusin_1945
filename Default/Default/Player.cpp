@@ -36,7 +36,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.fY = 700.f;
 	m_iHP = 100;
 	m_iMaxHP = 100;
-	m_iLife = 1;
+	m_iLife = 3;
 
 	m_tInfo.fCX = (float)PlayerSize;
 	m_tInfo.fCY = (float)PlayerSize;
@@ -223,7 +223,7 @@ void CPlayer::PlayerHit()
 		m_iHP = m_iMaxHP;
 	}
 
-	if (!m_iLife)
+	if (m_iLife == 0)
 	{
 		Set_Dead();
 	}

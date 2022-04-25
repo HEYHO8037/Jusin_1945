@@ -24,12 +24,14 @@ void CSuicidePlane::Initialize()
 
 	m_fSpeed = 0.3f;
 
+	m_iMaxHP = 1;
+	m_iHP = 1;
+
 }
 
 
 void CSuicidePlane::Render(HDC hDC)
 {
-
 	HBRUSH	brush = CreateSolidBrush(RGB(157, 0, 0));
 	HGDIOBJ h_old_brush = SelectObject(hDC, brush);
 	HPEN pen = CreatePen(PS_SOLID, 2, RGB(104, 0, 0));

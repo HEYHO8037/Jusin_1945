@@ -15,19 +15,21 @@ public:
 	virtual		void	Release(void);
 	virtual		void	CollisionEnter(CObj* _sour);
 
-	static void Create(std::list<CObj*>* ItemList,CObj* _ObjPtr)
+	static void Create(std::list<CObj*>* ItemList, CObj* _ObjPtr)
 	{
-		CItem* Item = new CItem;
-
-		ItemList->push_back(Item);
 
 		srand((unsigned int)time(NULL));
-		Item->iCreate_Per = (rand() % 10) + 1;
-			if (Item->iCreate_Per == 1)
-			{
-				Item->Initialize();
+		if ((rand() % 10) + 1 == 1)
+		{
+			CItem* Item = new CItem;
+			INFO objPosition = _ObjPtr->Get_Info();
+			Item->Set_pos(objPosition.fX, objPosition.fY);
 
-			}
+			ItemList->push_back(Item);
+
+			Item->Initialize();
+
+		}
 	}
 
 
