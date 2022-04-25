@@ -46,7 +46,6 @@ void CMainGame::Initialize(void)
 	m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
 	dynamic_cast<CMonsterHp*>(m_UiList[UI_MONSTERHP].front())->SetObjInfo(bossObj);
 
-	/*테스트용으로 주석
 	CObj* planeObj = CAbstractFactory<CPlane>::Create();
 	CPlane* plane = dynamic_cast<CPlane*>(planeObj);
 	plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
@@ -57,7 +56,6 @@ void CMainGame::Initialize(void)
 	CObj* suicide_plane = CAbstractFactory<CSuicidePlane>::Create();
 	dynamic_cast<CMonster*>(suicide_plane)->BehaviorStart(player, &m_ObjList[OBJ_BULLET], nullptr);
 	m_ObjList[OBJ_MONSTER].push_back(suicide_plane);
-	*/
 
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetObjList(&m_ObjList[OBJ_BULLET]);
 	dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->SetMonsterList(&m_ObjList[OBJ_MONSTER]);
@@ -69,7 +67,7 @@ void CMainGame::Initialize(void)
 	{
 		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp - 40));
 	}
-	//playerHp에 player obj 넣기
+	//playerHp에 player obj 넣기(front 사용 문제)
 	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetObjInfo(player);
 
 	//life 생성
