@@ -159,6 +159,15 @@
     <ClInclude Include="Effect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Tank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane3.h">
+      <Filter>01.Obj\02_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane2.h">
+      <Filter>01.Obj\02_Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -229,6 +238,15 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane3.cpp">
+      <Filter>01.Obj\02_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane2.cpp">
+      <Filter>01.Obj\02_Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

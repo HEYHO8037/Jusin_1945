@@ -146,7 +146,7 @@ void CMonster::Hit() {
 	m_iHP -= 1;
 	RunEffect();
 
-	if (m_iHP <= 0) {
+	if (!m_bDead && m_iHP <= 0) {
 		Die();
 		CommonDie();
 	}

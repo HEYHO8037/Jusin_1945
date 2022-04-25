@@ -153,6 +153,8 @@
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="MonsterHp.h" />
+    <ClInclude Include="Plane2.h" />
+    <ClInclude Include="Plane3.h" />
     <ClInclude Include="PlayerHp.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="AssistantPlayer.h" />
@@ -186,6 +188,8 @@
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="MonsterHp.cpp" />
+    <ClCompile Include="Plane2.cpp" />
+    <ClCompile Include="Plane3.cpp" />
     <ClCompile Include="PlayerHp.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="AssistantPlayer.cpp" />
