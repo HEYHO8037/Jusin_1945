@@ -18,13 +18,16 @@ protected:
 	void BehaviorExit();
 
 private:
+	void RandomPattern();
+
+private:
 	enum State {
 		Create,
-		Pattern1,
-		Pattern2,
-		Pattern2Back,
+		Pattern1,		// 3방향 총알 발사
+		Pattern2,		// 돌진
 		Pattern3,		// 한꺼번에 회전발사
 		Pattern4,		// 시간차 회전발사
+		Return,			// 돌진 복귀
 		Idle,
 		Leave,
 		Destroy
@@ -35,5 +38,7 @@ private:
 	CTimer* bossShotTimer;
 
 	int patternAngle;
+
+	int m_iShotCount;
 };
 
