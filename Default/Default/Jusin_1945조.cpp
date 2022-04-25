@@ -78,13 +78,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				pMainGame->Late_Update();
 				pMainGame->Render();
 				dwOldTime = GetTickCount();
+				
 			}
+
+			GetLastError();
 		}
 	}
 
 
 	Safe_Delete<CMainGame*>(pMainGame);
-
 	return (int)msg.wParam;
 }
 

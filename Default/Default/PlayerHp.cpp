@@ -25,7 +25,7 @@ int CPlayerHp::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 	
-	if (m_pPlayerInfo->fCX < 0)
+	if (m_pPlayerInfo->fCX <= 0)
 	{
 		return OBJ_DEAD;
 	}

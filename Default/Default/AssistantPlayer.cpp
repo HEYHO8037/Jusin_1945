@@ -54,16 +54,16 @@ void CAssistantPlayer::Late_Update(void)
 void CAssistantPlayer::Render(HDC hDC)
 {
 	HBRUSH brush;
-	HPEN pen;
+	HGDIOBJ OldBrush;
 
-	pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
-	brush = CreateSolidBrush(RGB(200, 0, 200));
-	SelectObject(hDC, pen);
+	brush = CreateSolidBrush(RGB(100, 100, 200));
+	OldBrush = SelectObject(hDC, brush);
+
 	SelectObject(hDC, brush);
 
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 
-	DeleteObject(pen);
+	SelectObject(hDC, OldBrush);
 	DeleteObject(brush);
 }
 

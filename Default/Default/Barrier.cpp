@@ -54,16 +54,16 @@ void CBarrier::Late_Update(void)
 void CBarrier::Render(HDC hDC)
 {
 	HBRUSH brush;
-	HPEN pen;
+	HGDIOBJ OldBrush;
 
-	pen = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
-	brush = CreateSolidBrush(RGB(200, 200, 200));
-	SelectObject(hDC, pen);
+	brush = CreateSolidBrush(RGB(200, 0, 200));
+	OldBrush = SelectObject(hDC, brush);
+
 	SelectObject(hDC, brush);
 
 	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 
-	DeleteObject(pen);
+	SelectObject(hDC, OldBrush);
 	DeleteObject(brush);
 }
 
@@ -80,22 +80,20 @@ void CBarrier::CollisionEnter(CObj * _sour)
 		return;
 	}
 
-
 	if (dynamic_cast<CBullet*>(_sour)->GetType() == MONSTER_BULLET)
 	{
 		_sour->Set_Dead();
 	}
-	else if (dynamic_cast<CPlane*>(_sour)->GetHP() == 1)
+	else if (dynamic_cast<CMonster*>(_sour)->GetDead() == false)
 	{
-		_sour->Set_Dead();
-	}
-	else if (dynamic_cast<CSuicidePlane*>(_sour)->GetHP() == 1)
-	{
-		_sour->Set_Dead();
-	}
-	else if (dynamic_cast<CBoss1*>(_sour)->GetHP() != 0)
-	{
-		dynamic_cast<CMonster*>(_sour)->Hit();
+		if (_sour->GetMaxHP() == 1)
+		{
+			_sour->Set_Dead();
+		}
+		else
+		{
+			dynamic_cast<CMonster*>(_sour)->Hit();
+		}
 	}
 }
 

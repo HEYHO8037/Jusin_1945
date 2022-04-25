@@ -210,7 +210,7 @@ void CItem::Item_Render(HDC hDC)
 		Rectangle(hDC, m_tRect.left + 32, m_tRect.top + 37, m_tRect.right + 1, m_tRect.bottom);
 
 		DrawText(hDC, m_szItem_Name, lstrlen(m_szItem_Name), &rc, DT_CENTER);
-
+		DeleteObject(m_pen2);
 
 		/*HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
 		HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200));*/
@@ -237,7 +237,7 @@ void CItem::Item_Render(HDC hDC)
 
 		HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
 		HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200));
-		
+		DeleteObject(m_pen2);
 		
 		
 
@@ -254,6 +254,7 @@ void CItem::Item_Render(HDC hDC)
 
 	DeleteObject(m_pen);
 	DeleteObject(m_brush);
+
 
 }
 
