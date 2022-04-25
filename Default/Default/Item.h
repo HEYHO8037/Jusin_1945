@@ -54,7 +54,8 @@ private:
 	TCHAR		m_szItem_Name[64];
 	HFONT m_Font;
 	POINT m_ItemPoint;
-	HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200)); 
-	HPEN m_pen = CreatePen(PS_SOLID, 5, RGB(153, 153, 153));
+	
+	/*HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200)); 
+	HPEN m_pen = CreatePen(PS_SOLID, 5, RGB(153, 153, 153));*/
 };
 

@@ -38,13 +38,20 @@ int CItem::Update(void)
 
 	if (0 > m_tRect.left || WINCX < m_tRect.right)
 	{
+		++m_iCount; // 튕긴 횟수 증가
 		m_ItemPoint.x *= -1;
 	}
 	if (0 > m_tRect.bottom || WINCY < m_tRect.top)
 	{
+		++m_iCount; // 튕긴 횟수 증가
 		m_ItemPoint.y *= -1;
 	}
 	 
+	if (5<= m_iCount) // 튕긴 횟수 체크
+	{
+		m_bDead = true;
+		return OBJ_DEAD;
+	}
 
 	m_tInfo.fX += (m_ItemPoint.x * m_fSpeed )  * cosf((m_fAngle * PI) / 180.f);
 	m_tInfo.fY += (m_ItemPoint.y * m_fSpeed) * sinf((m_fAngle * PI) / 180.f);
@@ -129,55 +136,58 @@ void CItem::Item_Render(HDC hDC)
 {
 #pragma region Render
 
+	
+	HBRUSH	brush;
+	HGDIOBJ h_old_brush;
+	HPEN pen;
+	HGDIOBJ h_old_pen;
 
-	//MoveToEx(hDC, m_tRect.right, m_tRect.top,nullptr); // ������ �Ӹ�(�ﰢ��)
-	//LineTo(hDC, m_tRect.right + 30, m_tRect.top + 30); 
-	//LineTo(hDC, m_tRect.right, m_tRect.bottom);
-	//
-
-	//Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-
-	// Bomb UI
-	//Ellipse(hDC, m_tRect.right - 30, m_tRect.top, m_tRect.right + 30, m_tRect.bottom); // �ձ� �Ӹ�
-	//Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-	//MoveToEx(hDC, m_tRect.left, m_tRect.top + 10, nullptr);
-	//LineTo(hDC, m_tRect.left - 35, m_tRect.top);
-	//LineTo(hDC, m_tRect.left - 35, m_tRect.bottom);
-	//LineTo(hDC, m_tRect.left - 20, m_tRect.bottom);
-	//LineTo(hDC, m_tRect.left, m_tRect.bottom - 10);
-
-
-	/*MoveToEx(hDC, m_tRect.left, m_tRect.top, nullptr);
-	LineTo(hDC, m_tRect.left - 15, m_tRect.top - 20);
-	LineTo(hDC, m_tRect.left - 60, m_tRect.top - 20);
-	LineTo(hDC, m_tRect.left -45, m_tRect.top);*/
-	//LineTo(hDC, m_tRect.left - 45, m_tRect.bottom); // ���� 1
-#pragma endregion Render
-
-	//Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-	/*lstrcpy(m_szItem_Name, L"S");
-	TextOut(hDC, m_tRect.left + 15, m_tRect.top + 10, m_szItem_Name, lstrlen(m_szItem_Name));*/
-	//DrawText(hDC, m_szItem_Name, lstrlen(m_szItem_Name), &rc, DT_CENTER);
 	
 	switch (m_Item_Id)
 	{
 	case ITEM_POWER:
-		m_pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 051));
-		m_brush = CreateSolidBrush(RGB(255, 255, 051));
+		brush = CreateSolidBrush(RGB(255, 255, 051));
+		pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 051));
+		h_old_brush = SelectObject(hDC, brush);
+		h_old_pen = SelectObject(hDC, pen);
+		
+		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		
+		SelectObject(hDC, h_old_brush);
+		SelectObject(hDC, h_old_pen);
+		DeleteObject(brush);
+		DeleteObject(pen);
 		//lstrcpy(m_szItem_Name, L"P");
 		
 		
 			break;
 	case ITEM_SHIELD:
-		m_pen = CreatePen(PS_SOLID, 1, RGB(051,051,153));
-		m_brush = CreateSolidBrush(RGB(051, 051, 153));
+		brush = CreateSolidBrush(RGB(051, 051, 153));
+		pen = CreatePen(PS_SOLID, 1, RGB(051,051,153));
+		h_old_brush = SelectObject(hDC, brush);
+		h_old_pen = SelectObject(hDC, pen);
+		
+		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		
+		SelectObject(hDC, h_old_brush);
+		SelectObject(hDC, h_old_pen);
+		DeleteObject(brush);
+		DeleteObject(pen);
 		//lstrcpy(m_szItem_Name, L"S");
 		//SetBkColor(hDC, 0x999999);
 		
 		break;
 	case ITEM_BOMB:
-		m_pen = CreatePen(PS_SOLID, 1, RGB(204, 0, 0));
-		m_brush = CreateSolidBrush(RGB(204, 0, 0));
+		brush = CreateSolidBrush(RGB(204, 0, 0));
+		pen = CreatePen(PS_SOLID, 1, RGB(204, 0, 0));
+		h_old_brush = SelectObject(hDC, brush);
+		h_old_pen = SelectObject(hDC, pen);
+		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		
+		SelectObject(hDC, h_old_brush);
+		SelectObject(hDC, h_old_pen);
+		DeleteObject(brush);
+		DeleteObject(pen);
 		//lstrcpy(m_szItem_Name, L"B");
 		
 		break;
@@ -190,13 +200,8 @@ void CItem::Item_Render(HDC hDC)
 	if (false == m_bDead)
 	{
 
-		SelectObject(hDC, m_pen);
-		SelectObject(hDC, m_brush);
-		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-
-		HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
-		HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200));
-		SelectObject(hDC, m_pen2);
+		brush = CreateSolidBrush(RGB(0, 0, 200));
+		h_old_brush = SelectObject(hDC, brush);
 
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right - 37, m_tRect.bottom - 32);
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right - 32, m_tRect.bottom - 37);
@@ -210,7 +215,10 @@ void CItem::Item_Render(HDC hDC)
 		Rectangle(hDC, m_tRect.left + 37, m_tRect.top + 32, m_tRect.right + 1, m_tRect.bottom);
 		Rectangle(hDC, m_tRect.left + 32, m_tRect.top + 37, m_tRect.right + 1, m_tRect.bottom);
 
-		DrawText(hDC, m_szItem_Name, lstrlen(m_szItem_Name), &rc, DT_CENTER);
+		SelectObject(hDC, h_old_brush);
+		DeleteObject(brush);
+
+		//DrawText(hDC, m_szItem_Name, lstrlen(m_szItem_Name), &rc, DT_CENTER);
 
 
 		/*HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
@@ -236,10 +244,11 @@ void CItem::Item_Render(HDC hDC)
 	else
 	{
 
-		HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
-		HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200));
-		
-		
+		// pen = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
+		// brush = CreateSolidBrush(RGB(0, 0, 200));
+		//
+		//DeleteObject(pen);
+		//DeleteObject(brush);
 		
 
 	}
@@ -253,9 +262,8 @@ void CItem::Item_Render(HDC hDC)
 	//	//Line
 	//}
 
-	DeleteObject(m_pen);
-	DeleteObject(m_brush);
-
+	
+	
 }
 
 ITEMID CItem::GetItemID() const
