@@ -23,6 +23,14 @@ public:
 		{
 			CItem* Item = new CItem;
 			INFO objPosition = _ObjPtr->Get_Info();
+			//if(objPosition.fX
+			if ((0 > objPosition.fX || WINCX < objPosition.fX) ||
+				(0 > objPosition.fY || WINCY < objPosition.fY))
+			{
+				return;
+
+			}
+			
 			Item->Set_pos(objPosition.fX, objPosition.fY);
 
 			ItemList->push_back(Item);

@@ -31,7 +31,14 @@ void CPlane::Initialize() {
 void CPlane::Render(HDC hDC) {
 	DisplayInfo(hDC, currentState);
 
+	//jy
+	Ellipse(hDC, m_tRect.left, m_tRect.top + 40, m_tRect.right, m_tRect.bottom + 30);
+	//Ellipse(hDC, m_tRect.left, m_tRect.top + 50, m_tRect.right, m_tRect.bottom + 50);
+	Ellipse(hDC, m_tRect.left - 30, m_tRect.top  , m_tRect.right + 30, m_tRect.bottom - 80);
+	Ellipse(hDC, m_tRect.left - 50, m_tRect.top + 35, m_tRect.right + 50, m_tRect.bottom - 35);
+
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
 };
 
 void CPlane::Release() {

@@ -97,6 +97,7 @@ int CItem::Update(void)
 	rc.top = m_tRect.top + 15;
 	
 	return OBJ_NOEVENT;
+
 }
 
 void CItem::Late_Update(void)
