@@ -16,6 +16,7 @@ CItem::~CItem()
 
 void CItem::Initialize(void)
 {
+
 	//m_Font = CreateFont()
 	Set_pos(400.f, 300.f); 
 	srand((unsigned int)time(NULL));
@@ -23,16 +24,25 @@ void CItem::Initialize(void)
 	m_Item_Id = ITEM_SHIELD;
 	m_tInfo.fCX = (float)PlayerSize - 10;  
 	m_tInfo.fCY = (float)PlayerSize - 10;
-	//m_fSpeed = 5.f;
-	m_fAngle = -90.f;
+	m_fSpeed = 10.f;
+	m_fAngle = -((rand() % 50) + 31);
 	m_ItemPoint.x = 1;
 	m_ItemPoint.y = -1;
-	
+	rc_Dead = m_tRect;
 }
 
 int CItem::Update(void)
 {
-	
+	if (0 > m_tRect.left || WINCX < m_tRect.right)
+	{
+		m_ItemPoint.x *= -1;
+	}
+	if (0 > m_tRect.bottom || WINCY < m_tRect.top)
+	{
+		m_ItemPoint.y *= -1;
+	}
+	 
+
 	m_tInfo.fX += (m_ItemPoint.x * m_fSpeed )  * cosf((m_fAngle * PI) / 180.f);
 	m_tInfo.fY += (m_ItemPoint.y * m_fSpeed) * sinf((m_fAngle * PI) / 180.f);
 	
@@ -76,6 +86,7 @@ int CItem::Update(void)
 	/*m_tInfo.fX -= m_fSpeed * cosf((m_fAngle * PI) / 180.f);
 	m_tInfo.fY += m_fSpeed * sinf((m_fAngle * PI) / 180.f);*/
 
+
 	Update_Rect();
 	rc.bottom = m_tRect.bottom;
 	rc.left = m_tRect.left;
@@ -87,79 +98,8 @@ int CItem::Update(void)
 
 void CItem::Late_Update(void)
 {
-	 
-	if ((0 <= m_tRect.left && WINCX  >= m_tRect.right)
-		&& m_tRect.bottom >= WINCY ) //Down_Wall
-	{
-		m_ItemPoint.y *= -1;
-		if ((m_ItemPoint.x = -1) && m_fAngle == -90.f)
-		{
-			m_fAngle += 45.f;
-
-		}
-		else if(m_fAngle == -90.f)
-		{
-			m_fAngle -= 45.f;
-		}
-		else
-		{
-			if (m_ItemPoint.x = -1)
-			{
-
-			}
-				//m_fAngle -= 90.f;
-			else
-			{
-
-			}
-				//m_fAngle += 90.f;
-		}
-		m_iCount += 1;
-	}
-	if (( 0 <= m_tRect.top && WINCY  >= m_tRect.bottom)
-		&& m_tRect.right >= WINCX ) //Right_Wall
-	{
-		m_fAngle += 45.f;
-		m_iCount += 1;
-
-	}
-
-	if ((0 <= m_tRect.left && WINCX  >= m_tRect.right)
-		&& m_tRect.top <= 0) // Up_Wall
-	{
-		m_ItemPoint.y *= -1;
-		if (m_ItemPoint.x == 1)
-		{
-			m_fAngle -= 90.f;
-			m_iCount += 1;
-
-		}
-			
-		else
-		{
-			m_iCount += 1;
-		}
-	}
-
-	if ((0 <= m_tRect.top && WINCY  >= m_tRect.bottom)
-		&& m_tRect.left <= 0) // Left_Wall
-	{
-		m_ItemPoint.x *= -1;
-		if (m_ItemPoint.x = -1)
-		{
-			m_fAngle -= 90.f;
-			m_iCount += 1;
-
-		}
-		else
-		{
-			
-			m_iCount += 1;
 
 
-		}
-	}
-		
 }
 
 void CItem::Render(HDC hDC)
@@ -170,10 +110,15 @@ void CItem::Render(HDC hDC)
 void CItem::Release(void)
 {
 
+
+
 }
 
 void CItem::CollisionEnter(CObj * _sour)
 {
+	m_bDead = true;
+
+
 }
 
 void CItem::Item_Render(HDC hDC)
@@ -240,28 +185,62 @@ void CItem::Item_Render(HDC hDC)
 
 	/*if (8 > m_iCount)
 	{*/
-		
+	if (false == m_bDead)
+	{
+
 		SelectObject(hDC, m_pen);
 		SelectObject(hDC, m_brush);
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 
-		HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153,153,153));
+		HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
 		HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200));
 		SelectObject(hDC, m_pen2);
 
-		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right - 37, m_tRect.bottom - 32); 
+		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right - 37, m_tRect.bottom - 32);
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right - 32, m_tRect.bottom - 37);
 
-		Rectangle(hDC, m_tRect.left + 37, m_tRect.top, m_tRect.right + 1, m_tRect.bottom - 32); 
+		Rectangle(hDC, m_tRect.left + 37, m_tRect.top, m_tRect.right + 1, m_tRect.bottom - 32);
 		Rectangle(hDC, m_tRect.left + 32, m_tRect.top, m_tRect.right + 1, m_tRect.bottom - 37);
 
-		Rectangle(hDC, m_tRect.left, m_tRect.top + 32, m_tRect.right - 37, m_tRect.bottom); 
+		Rectangle(hDC, m_tRect.left, m_tRect.top + 32, m_tRect.right - 37, m_tRect.bottom);
 		Rectangle(hDC, m_tRect.left, m_tRect.top + 37, m_tRect.right - 32, m_tRect.bottom);
 
-		Rectangle(hDC, m_tRect.left + 37, m_tRect.top + 32, m_tRect.right + 1, m_tRect.bottom); 
+		Rectangle(hDC, m_tRect.left + 37, m_tRect.top + 32, m_tRect.right + 1, m_tRect.bottom);
 		Rectangle(hDC, m_tRect.left + 32, m_tRect.top + 37, m_tRect.right + 1, m_tRect.bottom);
 
 		DrawText(hDC, m_szItem_Name, lstrlen(m_szItem_Name), &rc, DT_CENTER);
+
+
+		/*HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
+		HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200));*/
+
+		/*
+		Delete Item
+		HBRUSH m_brush_temp = CreateSolidBrush(RGB(255, 255, 255));
+		HPEN m_pen_temp = CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
+		SelectObject(hDC, m_brush_temp);
+		SelectObject(hDC, m_pen_temp);
+
+			Ellipse(hDC, rc_Dead.left, rc_Dead.top, rc_Dead.right, rc_Dead.bottom);
+
+			rc_Dead.left -= 2;  rc_Dead.top -= 2;
+			rc_Dead.right += 2, rc_Dead.bottom += 2;
+		
+			DeleteObject(m_brush_temp);
+			DeleteObject(m_pen_temp);*/
+
+		}
+		
+	else
+	{
+
+		HPEN m_pen2 = CreatePen(PS_SOLID, 3, RGB(153, 153, 153));
+		HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200));
+		
+		
+		
+
+	}
 
 
 
@@ -271,6 +250,7 @@ void CItem::Item_Render(HDC hDC)
 	//{
 	//	//Line
 	//}
+
 	DeleteObject(m_pen);
 	DeleteObject(m_brush);
 

@@ -40,6 +40,7 @@ private:
 	int iCreate_Per = 0;
 	ITEMID m_Item_Id;
 	RECT rc;
+	RECT rc_Dead;
 	TCHAR		m_szItem_Name[64];
 	HFONT m_Font;
 	POINT m_ItemPoint;
