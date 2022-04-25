@@ -210,7 +210,9 @@ void CMainGame::Update(void)
 		}
 	}
 
-	m_timer->Update();
+	if (m_ObjList[OBJ_PLAYER].size() > 0) {
+		m_timer->Update();
+	}
 }
 
 void CMainGame::Late_Update(void)

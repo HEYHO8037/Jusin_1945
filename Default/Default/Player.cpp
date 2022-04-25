@@ -31,7 +31,7 @@ CPlayer::~CPlayer()
 void CPlayer::Initialize(void)
 {
 	m_tInfo.fX = 400.f;
-	m_tInfo.fY = 700.f;
+	m_tInfo.fY = WINCY - (float)PlayerSize - 10;
 	m_iHP = 100;
 	m_iMaxHP = 100;
 	m_iLife = 3;
@@ -235,6 +235,8 @@ void CPlayer::PlayerHit()
 	{
 		m_iLife -= 1;
 		m_iHP = m_iMaxHP;
+		m_tInfo.fX = 400.f;
+		m_tInfo.fY = WINCY - (float)PlayerSize - 10;
 	}
 
 	if (m_iLife == 0)

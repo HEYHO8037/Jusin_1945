@@ -53,6 +53,9 @@ void CBoss1::Release() {
 }
 
 void CBoss1::BehaviorEnter() {
+	if (!m_targetObj)
+		return;
+
 	switch (currentState) {
 	case Create:
 		targetPosition.x = appearPosition.x;
