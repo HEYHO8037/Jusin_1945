@@ -29,10 +29,13 @@ void CBoss1::Initialize() {
 };
 
 void CBoss1::Render(HDC hDC) {
-	HBRUSH brush, OldBrush;
+	HBRUSH brush;
+	HGDIOBJ OldBrush;
+
 	EffectRender();
+	
 	brush = CreateSolidBrush(RGB(m_effectCount, 0, 0));
-	OldBrush = (HBRUSH)SelectObject(hDC, brush);
+	OldBrush = SelectObject(hDC, brush);
 
 	SelectObject(hDC, brush);
 	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
@@ -78,8 +81,15 @@ void CBoss1::BehaviorEnter() {
 		break;
 
 	case Pattern2:
-		targetPosition.x = targetObj->Get_Info().fX;
-		targetPosition.y = targetObj->Get_Info().fY;
+		if (m_targetObj) {
+			targetPosition.x = m_targetObj->Get_Info().fX;
+			targetPosition.y = m_targetObj->Get_Info().fY;
+		}
+		else {
+			targetPosition.x = originPosition.x;
+			targetPosition.y = originPosition.y;
+		}
+		
 		break;
 
 	case Return:

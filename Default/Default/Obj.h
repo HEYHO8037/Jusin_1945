@@ -22,6 +22,10 @@ public :
 	const INFO& Get_Info(void) const { return m_tInfo; }
 	const RECT& Get_Rect(void) const { return m_tRect; }
 
+	void SetTarget(CObj* _targetObj) { m_targetObj = _targetObj; }
+	CObj* GetTarget() { return m_targetObj; }
+	void ClearTarget() { m_targetObj = nullptr; }
+
 public:
 	virtual		void	Initialize(void)			PURE;
 	virtual		int		Update(void)				PURE;
@@ -41,5 +45,7 @@ protected:
 	bool		m_bDead;
 	int			m_iMaxHP;
 	int			m_iHP;
+
+	CObj* m_targetObj;
 };
 

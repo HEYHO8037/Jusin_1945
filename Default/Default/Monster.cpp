@@ -40,7 +40,7 @@ void CMonster::CollisionEnter(CObj* _sour) {
 }
 
 void CMonster::BehaviorStart(CObj* _targetObj, std::list<CObj*>* _pBulletList, std::list<CObj*>* _pItemList) {
-	targetObj = _targetObj;
+	m_targetObj = _targetObj;
 	m_bulletList = _pBulletList;
 	m_itemList = _pItemList;
 

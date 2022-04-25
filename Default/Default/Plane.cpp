@@ -29,9 +29,22 @@ void CPlane::Initialize() {
 };
 
 void CPlane::Render(HDC hDC) {
+	HBRUSH brush;
+	HGDIOBJ OldBrush;
+
+	EffectRender();
+
+	brush = CreateSolidBrush(RGB(m_effectCount, 0, 0));
+	OldBrush = SelectObject(hDC, brush);
+
 	DisplayInfo(hDC, currentState);
 
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	SelectObject(hDC, OldBrush);
+	DeleteObject(brush);
+
+	DisplayInfo(hDC, currentState);
 };
 
 void CPlane::Release() {

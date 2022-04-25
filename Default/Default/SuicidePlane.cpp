@@ -69,8 +69,8 @@ void CSuicidePlane::BehaviorEnter()
 
 	case Pattern:
 	
-		m_tDir.fX = fabs(targetObj->Get_Info().fX - targetPosition.x);
-		m_tDir.fY = fabs(targetObj->Get_Info().fY - targetPosition.y);
+		m_tDir.fX = fabs(m_targetObj->Get_Info().fX - targetPosition.x);
+		m_tDir.fY = fabs(m_targetObj->Get_Info().fY - targetPosition.y);
 
 		m_fDiagonal = sqrtf((targetPosition.x *m_tDir.fX) + (targetPosition.y *m_tDir.fY));
 		m_fAngle = atan2(m_tDir.fY, m_tDir.fX);
