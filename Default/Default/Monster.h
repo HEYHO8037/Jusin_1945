@@ -35,6 +35,8 @@ protected:
 
 	virtual void Die();
 
+	void LeaveCheck();
+
 protected:
 	enum Behavior {
 		Enter,

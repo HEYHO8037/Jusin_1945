@@ -112,6 +112,7 @@ void CSuicidePlane::BehaviorExecute()
 		
 		m_tInfo.fX += (m_fDiagonal) * m_fAngle;
 		m_tInfo.fY += (m_fDiagonal)* m_fAngle;
+		LeaveCheck();
 		break;
 
 	}

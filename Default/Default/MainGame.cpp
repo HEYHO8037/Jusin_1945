@@ -107,10 +107,10 @@ void CMainGame::Initialize(void)
 		m_ObjList[OBJ_MONSTER].push_back(monsterObj);
 
 		if (!bBoss && killCount > BOSS_APPEAR_COUNT) {
-			CObj* bossObj = CAbstractFactory<CBoss1>::Create();
+			CObj* bossObj = CAbstractFactory<CBoss1>::Create(WINCX / 2, -100.f);
 			CBoss1* boss = dynamic_cast<CBoss1*>(bossObj);
 			boss->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
-			boss->SetAppearPosition(WINCX / 2, 500);
+			boss->SetAppearPosition(WINCX / 2, 300);
 			m_ObjList[OBJ_MONSTER].push_back(bossObj);
 
 			CUi* newUI = CAbstractFactory<CMonsterHp>::UICreate();

@@ -162,3 +162,9 @@ void CMonster::Die() {
 	m_bDead = true;
 	m_bAIStart = false;
 }
+
+void CMonster::LeaveCheck() {
+	if (m_tRect.left < -100 || m_tRect.right > WINCX + 100 || m_tRect.top < -100 || m_tRect.bottom > WINCY + 100) {
+		m_bDead = true;
+	}
+} // 떠나기 패턴일때 화면밖을 벗어나는지 체크함

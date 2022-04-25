@@ -12,9 +12,6 @@ CBoss1::~CBoss1() {
 }
 
 void CBoss1::Initialize() {
-	m_tInfo.fX = WINCX / 2;
-	m_tInfo.fY = -100.f;
-
 	m_tInfo.fCX = 200;
 	m_tInfo.fCY = 200;
 
