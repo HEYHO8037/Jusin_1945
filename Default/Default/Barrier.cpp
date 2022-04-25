@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Barrier.h"
 #include "Bullet.h"
+#include "Boss1.h"
+#include "Plane.h"
+#include "SuicidePlane.h"
 
 
 CBarrier::CBarrier()
@@ -74,6 +77,18 @@ void CBarrier::CollisionEnter(CObj * _sour)
 	if (dynamic_cast<CBullet*>(_sour)->GetType() == MONSTER_BULLET)
 	{
 		_sour->Set_Dead();
+	}
+	else if (dynamic_cast<CPlane*>(_sour)->GetHP() == 1)
+	{
+		_sour->Set_Dead();
+	}
+	else if (dynamic_cast<CSuicidePlane*>(_sour)->GetHP() == 1)
+	{
+		_sour->Set_Dead();
+	}
+	else if (dynamic_cast<CBoss1*>(_sour)->GetHP() != 0)
+	{
+		dynamic_cast<CMonster*>(_sour)->Hit();
 	}
 }
 

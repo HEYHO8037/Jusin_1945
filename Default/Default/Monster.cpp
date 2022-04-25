@@ -43,6 +43,7 @@ void CMonster::Late_Update() {
 
 
 void CMonster::CollisionEnter(CObj* _sour) {
+	Hit();
 }
 
 void CMonster::BehaviorStart(CObj* _targetObj, std::list<CObj*>* _pBulletList, std::list<CObj*>* _pItemList) {

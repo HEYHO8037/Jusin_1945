@@ -21,7 +21,7 @@ public:
 	void SetMonsterList(list<CObj*>* pMonsterList);
 	void SetGetBarrierItem(); // 베리어 아이템 먹게되면 발동 함수
 	void SetGetPowerItem(); // 파워아이템을 먹게 되면 발동 함수
-	class CBarrier* GetBarrierClass(); // 베리어클래스 포인터를 반환하는 함수
+	class CObj* GetBarrierClass(); // 베리어클래스 포인터를 반환하는 함수
 	int* GetPowerUpItemCount(); //파워업 아이템 먹은 횟수 반환
 	int* GetLife(); //플레이어 목숨 
 	int* GetBombNum(); // 폭탄 개수 반환

@@ -31,6 +31,11 @@ void CItem::Initialize(void)
 
 int CItem::Update(void)
 {
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
 	if (0 > m_tRect.left || WINCX < m_tRect.right)
 	{
 		m_ItemPoint.x *= -1;
@@ -91,7 +96,7 @@ int CItem::Update(void)
 	rc.right = m_tRect.right;
 	rc.top = m_tRect.top + 15;
 	
-	return 0;
+	return OBJ_NOEVENT;
 }
 
 void CItem::Late_Update(void)
