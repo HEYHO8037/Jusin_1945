@@ -19,6 +19,7 @@ public :
 	void Set_Pos(float _fX, float _fY)	{ m_tInfo.fX = _fX; m_tInfo.fY = _fY; }
 	void SetDead(void)					{ m_bDead = true; }
 	void SetObjInfo(CObj* _pObj)		{ m_pObj = _pObj; }
+	CObj* GetObjInfo() { return m_pObj; }
 
 protected:
 	void Update_Rect(void);

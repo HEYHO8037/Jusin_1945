@@ -22,6 +22,7 @@ public:
 
 public:
 	static int killCount;
+	static bool bBoss;
 								
 private:
 	enum monsterType {
@@ -35,9 +36,11 @@ private:
 	list<CUi*> m_UiList[UI_END];
 
 	TCHAR m_szFPS[64];
-	
-	CObj* TestItem;
 
+	// map
 	CTimer* m_timer;
+
+	CObj* m_player;
+	
 };
 
