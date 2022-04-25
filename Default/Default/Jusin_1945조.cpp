@@ -49,7 +49,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 	DWORD		dwOldTime = GetTickCount();
-	g_dwCurrentTime = GetTickCount() * 0.01;
+	g_dwCurrentTime = GetTickCount() * TICKSCALE;
 
 	while (true)
 	{
@@ -70,7 +70,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		{
 			if (dwOldTime + 10 < GetTickCount())
 			{
-				DWORD currentTime = GetTickCount() * TIMESCALE;
+				DWORD currentTime = GetTickCount() * TICKSCALE;
 				g_dwDeltaTime = currentTime - g_dwCurrentTime;
 				g_dwCurrentTime = currentTime;
 

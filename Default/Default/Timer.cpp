@@ -3,7 +3,8 @@
 
 CTimer::CTimer():
 	m_iCurrentTime(0),
-	m_iCurrentCount(0){
+	m_iRepeatRate(0),
+	m_iCurrentCount(0) {
 
 }
 
@@ -12,7 +13,7 @@ CTimer::~CTimer() {
 }
 
 void CTimer::StartTimer(float _repeatRateSecond, std::function<void()> _pCallBack) {
-	m_iRepeatRateSecond = _repeatRateSecond;
+	m_iRepeatRate = _repeatRateSecond;
 	pExcuteCallBack = _pCallBack;
 
 	m_iCurrentTime = g_dwCurrentTime;
@@ -21,10 +22,10 @@ void CTimer::StartTimer(float _repeatRateSecond, std::function<void()> _pCallBac
 }
 
 void CTimer::Update() {
-	if (TIMESCALE <= m_iCurrentTime - g_dwCurrentTime) {
+	if (1 <= g_dwCurrentTime - m_iCurrentTime) {
 		m_iCurrentCount += TIMESCALE;
 
-		if (m_iCurrentCount >= m_iRepeatRateSecond) {
+		if (m_iCurrentCount >= m_iRepeatRate) {
 			m_iCurrentCount = 0;
 			
 			pExcuteCallBack();

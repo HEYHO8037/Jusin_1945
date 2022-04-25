@@ -18,8 +18,7 @@ private:
 	std::function<void()> pExcuteCallBack;
 
 	int m_iCurrentTime;
-	float m_iRepeatRateSecond;
+	float m_iRepeatRate;
 	float m_iCurrentCount;
-	
 };
 

@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "Boss1.h"
+#include <time.h>
 
 CBoss1::CBoss1():
-	currentState(Create) {
+	currentState(Create),
+	m_iShotCount(0) {
 }
 
 CBoss1::~CBoss1() {
@@ -57,14 +59,20 @@ void CBoss1::BehaviorEnter() {
 		break;
 
 	case Pattern1: {
-		RunEffect();
-
 		bossShotTimer = new CTimer;
-		bossShotTimer->StartTimer(1, [&]() {
+
+		m_iShotCount = 3;
+		bossShotTimer->StartTimer(0.5f, [&]() {
+			if (m_iShotCount <= 0) {
+				behaviorState = Exit;
+				return;
+			}
 			int angle = 90;
 			Fire(angle + 45);
 			Fire(angle);
 			Fire(angle - 45);
+
+			--m_iShotCount;
 		});
 	}
 		break;
@@ -74,19 +82,27 @@ void CBoss1::BehaviorEnter() {
 		targetPosition.y = targetObj->Get_Info().fY;
 		break;
 
-	case Pattern2Back:
+	case Return:
 		targetPosition.x = originPosition.x;
 		targetPosition.y = originPosition.y;
 		break;
 
 	case Pattern3:
+		m_iShotCount = 3;
 		bossShotTimer = new CTimer;
 		bossShotTimer->StartTimer(1, [&]() {
+			if (m_iShotCount <= 0) {
+				behaviorState = Exit;
+				return;
+			}
+
 			int angle = 0;
 			while (angle <= 360) {
 				Fire(angle);
 				angle += 10;
 			}
+
+			--m_iShotCount;
 		});
 		break;
 
@@ -104,6 +120,13 @@ void CBoss1::BehaviorEnter() {
 
 		break;
 
+	case Idle:
+		bossShotTimer = new CTimer;
+		bossShotTimer->StartTimer(1, [&]() {
+			behaviorState = Exit;
+		});
+		break;
+
 	case Destroy:
 		m_bDead = true;
 		break;
@@ -115,6 +138,8 @@ void CBoss1::BehaviorEnter() {
 void CBoss1::BehaviorExecute() {
 	switch (currentState) {
 	case Create:
+	case Pattern2:
+	case Return:
 		if (TargetMove()) {
 			behaviorState = Exit;
 			return;
@@ -122,28 +147,9 @@ void CBoss1::BehaviorExecute() {
 		break;
 
 	case Pattern1:
-		bossShotTimer->Update();
-		break;
-
-	case Pattern2:
-		if (TargetMove()) {
-			behaviorState = Exit;
-			return;
-		}
-		break;
-
-	case Pattern2Back:
-		if (TargetMove()) {
-			behaviorState = Exit;
-			return;
-		}
-		break;
-
 	case Pattern3:
-		bossShotTimer->Update();
-		break;
-
 	case Pattern4:
+	case Idle:
 		bossShotTimer->Update();
 		break;
 
@@ -159,22 +165,19 @@ void CBoss1::BehaviorExit() {
 
 	switch (currentState) {
 	case Create:
-		//currentState = Pattern1;
-		currentState = Pattern4;
-		break;
-
 	case Pattern1:
-		//currentState = Pattern2;
+	case Pattern3:
+	case Pattern4:
+	case Return:
+		currentState = Idle;
 		break;
 
 	case Pattern2:
-		currentState = Pattern2Back;
+		currentState = Return;
 		break;
 
-	case Pattern2Back:
-		break;
-
-	case Pattern3:
+	case Idle:
+		RandomPattern();
 		break;
 
 	case Leave:
@@ -182,4 +185,10 @@ void CBoss1::BehaviorExit() {
 	}
 
 	behaviorState = Enter;
+}
+
+void CBoss1::RandomPattern() {
+	srand(unsigned(time(nullptr)));
+
+	currentState = State((rand() % Pattern4) + Pattern1);
 }

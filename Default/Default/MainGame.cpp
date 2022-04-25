@@ -11,6 +11,8 @@
 #include "Bomb.h"
 #include "CollisionMgr.h"
 
+#include "TestObj.h";
+
 CMainGame::CMainGame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -82,6 +84,7 @@ void CMainGame::Initialize(void)
 		m_UiList[UI_CLOUD].push_back(CAbstractFactory<CCloud>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 10.f, float((-rand() % 60 + 1) * 15) - 20));
 	}
 
+	m_ObjList[OBJ_MOUSE].push_back(CAbstractFactory<CTestObj>::Create());
 }
 
 void CMainGame::Update(void)
