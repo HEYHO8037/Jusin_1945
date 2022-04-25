@@ -39,6 +39,12 @@ void CPlane::Render(HDC hDC) {
 
 	DisplayInfo(hDC, currentState);
 
+	//jy
+	Ellipse(hDC, m_tRect.left, m_tRect.top + 40, m_tRect.right, m_tRect.bottom + 30);
+	//Ellipse(hDC, m_tRect.left, m_tRect.top + 50, m_tRect.right, m_tRect.bottom + 50);
+	Ellipse(hDC, m_tRect.left - 30, m_tRect.top  , m_tRect.right + 30, m_tRect.bottom - 80);
+	Ellipse(hDC, m_tRect.left - 50, m_tRect.top + 35, m_tRect.right + 50, m_tRect.bottom - 35);
+
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 
 	SelectObject(hDC, OldBrush);
@@ -78,15 +84,13 @@ void CPlane::BehaviorEnter() {
 	}
 
 	behaviorState = Execute;
-} // 행동 시작
-
+} 
 void CPlane::BehaviorExecute() {
 	switch (currentState) {
 	case Create:
 		if (TargetMove()) {
 			behaviorState = Exit;
 			return;
-			// 원하는 위치까지 이동
 		}
 		break;
 
@@ -102,7 +106,7 @@ void CPlane::BehaviorExecute() {
 		m_tInfo.fY += m_fSpeed;
 		break;
 	}
-} // 행동 중
+} 
 
 void CPlane::BehaviorExit() {
 	switch (currentState) {
@@ -124,4 +128,4 @@ void CPlane::BehaviorExit() {
 	}
 
 	behaviorState = Enter;
-} // 행동 종료
+} 

@@ -66,6 +66,7 @@ void CBullet::CollisionEnter(CObj* _sour) {
 	if (collisionMonster && m_eBulletType == PLAYER_BULLET && !collisionMonster->GetDead()) {
 		collisionMonster->Hit();
 		m_bDead = true;
+
 	}
 }
 

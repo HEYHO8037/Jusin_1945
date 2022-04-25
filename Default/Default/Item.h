@@ -23,6 +23,14 @@ public:
 		{
 			CItem* Item = new CItem;
 			INFO objPosition = _ObjPtr->Get_Info();
+			//if(objPosition.fX
+			if ((0 > objPosition.fX || WINCX < objPosition.fX) ||
+				(0 > objPosition.fY || WINCY < objPosition.fY))
+			{
+				return;
+
+			}
+			
 			Item->Set_pos(objPosition.fX, objPosition.fY);
 
 			ItemList->push_back(Item);
@@ -46,7 +54,8 @@ private:
 	TCHAR		m_szItem_Name[64];
 	HFONT m_Font;
 	POINT m_ItemPoint;
-	HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200)); 
-	HPEN m_pen = CreatePen(PS_SOLID, 5, RGB(153, 153, 153));
+	
+	/*HBRUSH m_brush = CreateSolidBrush(RGB(0, 0, 200)); 
+	HPEN m_pen = CreatePen(PS_SOLID, 5, RGB(153, 153, 153));*/
 };
 
