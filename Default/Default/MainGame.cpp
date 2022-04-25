@@ -12,6 +12,7 @@
 #include "CollisionMgr.h"
 
 int CMainGame::killCount = 0;
+bool CMainGame::bBoss = false;
 
 CMainGame::CMainGame()
 {
@@ -32,7 +33,7 @@ void CMainGame::Initialize(void)
 
 	m_ObjList[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::Create());
 
-	CObj* player = m_ObjList[OBJ_PLAYER].front();
+	m_player = m_ObjList[OBJ_PLAYER].front();
 
 
 
@@ -47,14 +48,14 @@ void CMainGame::Initialize(void)
 		m_UiList[UI_PLAYERHP].push_back(CAbstractFactory<CPlayerHp>::UICreate(fXtemp, fYtemp - 40));
 	}
 	//playerHp에 player obj 넣기(front 사용 문제)
-	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetObjInfo(player);
+	dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetObjInfo(m_player);
 
 	//life 생성
 	m_UiList[UI_LIFE].push_back(CAbstractFactory<CLife>::UICreate((50.f), 930.f));
-	dynamic_cast<CLife*>(m_UiList[UI_LIFE].front())->SetObjInfo(player);
+	dynamic_cast<CLife*>(m_UiList[UI_LIFE].front())->SetObjInfo(m_player);
 	//폭탄 생성
 	m_UiList[UI_BOMB].push_back(CAbstractFactory<CBomb>::UICreate());
-	dynamic_cast<CBomb*>(m_UiList[UI_BOMB].front())->SetObjInfo(player);
+	dynamic_cast<CBomb*>(m_UiList[UI_BOMB].front())->SetObjInfo(m_player);
 	//구름 생성
 	for (int i = 0; i < 4; ++i)
 	{
@@ -75,7 +76,7 @@ void CMainGame::Initialize(void)
 
 			monsterObj = CAbstractFactory<CPlane>::Create(startPosX, posY);
 			CPlane* plane = dynamic_cast<CPlane*>(monsterObj);
-			plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
+			plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
 			plane->SetAppearPosition(posX, posY);
 		}
 			break;
@@ -85,7 +86,7 @@ void CMainGame::Initialize(void)
 			/////////////////////
 			monsterObj = CAbstractFactory<CPlane>::Create();
 			CPlane* plane = dynamic_cast<CPlane*>(monsterObj);
-			plane->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
+			plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
 
 			float posX = rand() % WINCX + 100;
 			float posY = rand() % (WINCY / 2) + 100;
@@ -100,16 +101,18 @@ void CMainGame::Initialize(void)
 		}
 		m_ObjList[OBJ_MONSTER].push_back(monsterObj);
 
-		if (killCount > BOSS_APPEAR_COUNT) {
+		if (!bBoss && killCount > BOSS_APPEAR_COUNT) {
 			CObj* bossObj = CAbstractFactory<CBoss1>::Create();
 			CBoss1* boss = dynamic_cast<CBoss1*>(bossObj);
-			boss->BehaviorStart(player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
+			boss->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
 			boss->SetAppearPosition(WINCX / 2, 500);
 			m_ObjList[OBJ_MONSTER].push_back(bossObj);
 
-			m_UiList[UI_MONSTERHP].push_back(CAbstractFactory<CMonsterHp>::UICreate());
-			dynamic_cast<CMonsterHp*>(m_UiList[UI_MONSTERHP].front())->SetObjInfo(bossObj);
+			CUi* newUI = CAbstractFactory<CMonsterHp>::UICreate();
+			m_UiList[UI_MONSTERHP].push_back(newUI);
+			dynamic_cast<CMonsterHp*>(newUI)->SetObjInfo(bossObj);
 
+			bBoss = true;
 		}
 	});
 }
@@ -119,15 +122,34 @@ void CMainGame::Update(void)
 	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BULLET]);
 	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
 	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
 	CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_MONSTER]);
 	CCollisionMgr::Collision_ObjListRect(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetBarrierClass(), m_ObjList[OBJ_BULLET]);
-
 
 	//플레이어의 실시간 좌표 hp클래스에 넘겨주기
 	if(!m_ObjList[OBJ_PLAYER].empty())
 		dynamic_cast<CPlayerHp*>(m_UiList[UI_PLAYERHP].front())->SetPlayerInfo(dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER].front())->GetPlayerInfo());
 
-	m_timer->Update();
+	for (int i = 0; i < UI_END; ++i)
+	{
+		for (auto& iter = m_UiList[i].begin();
+			iter != m_UiList[i].end(); )
+		{
+			if ((*iter)->GetObjInfo() && (*iter)->GetObjInfo()->GetDead()) {
+				(*iter)->SetDead();
+			}
+
+			int iResult = (*iter)->Update();
+
+			if (OBJ_DEAD == iResult)
+			{
+				Safe_Delete<CUi*>(*iter);
+				iter = m_UiList[i].erase(iter);
+			}
+			else
+				++iter;
+		}
+	}
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
@@ -146,23 +168,7 @@ void CMainGame::Update(void)
 		}
 	}
 
-	for (int i = 0; i < UI_END; ++i)
-	{
-		for (auto& iter = m_UiList[i].begin();
-			iter != m_UiList[i].end(); )
-		{
-			int iResult = (*iter)->Update();
-
-			if (OBJ_DEAD == iResult)
-			{
-				Safe_Delete<CUi*>(*iter);
-				iter = m_UiList[i].erase(iter);
-			}
-			else
-				++iter;
-		}
-	}
-	//TestItem->Update();
+	m_timer->Update();
 }
 
 void CMainGame::Late_Update(void)

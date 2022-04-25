@@ -17,6 +17,8 @@ public :
 	int GetHP() { return m_iHP; }
 	int GetMaxHP() { return m_iMaxHP; }
 
+	bool GetDead() { return m_bDead; }
+
 	const INFO& Get_Info(void) const { return m_tInfo; }
 	const RECT& Get_Rect(void) const { return m_tRect; }
 

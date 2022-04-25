@@ -27,18 +27,8 @@ int CMonster::Update() {
 };
 
 void CMonster::Late_Update() {
-
 	if (!m_bulletList)
 		return;
-
-	RECT rc{};
-	for (auto& target : *m_bulletList) {
-		if (IntersectRect(&rc, &(this->Get_Rect()), &(target->Get_Rect()))) {
-			CBullet* bulletObj = dynamic_cast<CBullet*>(target);
-			if (bulletObj)
-				bulletObj->CollisionEnter(this);
-		}
-	}
 };
 
 
