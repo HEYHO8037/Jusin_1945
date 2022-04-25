@@ -15,8 +15,8 @@ void CPlane::Initialize() {
 	m_tInfo.fX = WINCX + 200;
 	m_tInfo.fY = WINCY / 2;
 
-	m_tInfo.fCX = 30;
-	m_tInfo.fCY = 100;
+	m_tInfo.fCX = 150; //50
+	m_tInfo.fCY = 100; 
 
 	m_fSpeed = 5.f;
 
@@ -40,12 +40,13 @@ void CPlane::Render(HDC hDC) {
 	DisplayInfo(hDC, currentState);
 
 	//jy
-	Ellipse(hDC, m_tRect.left, m_tRect.top + 40, m_tRect.right, m_tRect.bottom + 30);
-	//Ellipse(hDC, m_tRect.left, m_tRect.top + 50, m_tRect.right, m_tRect.bottom + 50);
-	Ellipse(hDC, m_tRect.left - 30, m_tRect.top  , m_tRect.right + 30, m_tRect.bottom - 80);
-	Ellipse(hDC, m_tRect.left - 50, m_tRect.top + 35, m_tRect.right + 50, m_tRect.bottom - 35);
+	Ellipse(hDC, m_tRect.left + 50, m_tRect.top + 45, m_tRect.right - 50, m_tRect.bottom + 35);
+	Ellipse(hDC, m_tRect.left, m_tRect.top + 25, m_tRect.right, m_tRect.bottom - 25); // Wing
 
-	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	Ellipse(hDC, m_tRect.left + 25, m_tRect.top  , m_tRect.right - 25, m_tRect.bottom - 80);
+	//Ellipse(hDC, m_tRect.left , m_tRect.top + 35, m_tRect.right , m_tRect.bottom - 35);
+
+	Rectangle(hDC, m_tRect.left + 50, m_tRect.top, m_tRect.right - 50, m_tRect.bottom);
 
 	SelectObject(hDC, OldBrush);
 	DeleteObject(brush);
@@ -54,6 +55,8 @@ void CPlane::Render(HDC hDC) {
 };
 
 void CPlane::Release() {
+
+	
 };
 
 void CPlane::BehaviorEnter() {
