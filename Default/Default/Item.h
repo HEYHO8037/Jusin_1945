@@ -19,7 +19,7 @@ public:
 	{
 
 		srand((unsigned int)time(NULL));
-		if (/*(rand() % 10) + 1 == */1)
+		if ((rand() % 5) + 1 == 1)
 		{
 			CItem* Item = new CItem;
 			INFO objPosition = _ObjPtr->Get_Info();

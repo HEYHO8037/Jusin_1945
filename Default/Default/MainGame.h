@@ -48,6 +48,8 @@ private:
 	CTimer* m_timer;
 
 	CObj* m_player;
+
+	bool m_debug;
 	
 };
 

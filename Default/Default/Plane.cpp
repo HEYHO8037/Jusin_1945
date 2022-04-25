@@ -20,8 +20,6 @@ void CPlane::Initialize() {
 
 	m_fSpeed = 5.f;
 
-	m_bDisplayInfo = true;
-
 	m_iScore = 100;
 
 	m_iMaxHP = 1;

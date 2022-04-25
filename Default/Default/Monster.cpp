@@ -9,6 +9,7 @@
 CMonster::CMonster():
 	m_bAIStart(false),
 	m_bRunEffect(false),
+	m_bDisplayInfo(false),
 	m_effectCount(0),
 	m_iScore(0) {
 }

@@ -18,8 +18,6 @@ void CBoss1::Initialize() {
 
 	m_fSpeed = 5.f;
 
-	m_bDisplayInfo = true;
-
 	m_iScore = 1000;
 
 	m_iMaxHP = 1000;

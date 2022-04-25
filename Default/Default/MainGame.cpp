@@ -21,7 +21,8 @@ long int CMainGame::Score = 0;
 int CMainGame::Level = 1;
 int CMainGame::PlayTime = 0;
 
-CMainGame::CMainGame()
+CMainGame::CMainGame():
+	m_debug(false)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 }
@@ -220,12 +221,14 @@ void CMainGame::Render(void)
 	SelectObject(backHDC, h_old_brush);
 	DeleteObject(brush);
 	
-	TCHAR szBuff[256] = L"";
-	swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
-	TextOut(backHDC, 200, 200, szBuff, lstrlen(szBuff));
+	if (m_debug) {
+		TCHAR szBuff[256] = L"";
+		swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
+		TextOut(backHDC, 200, 200, szBuff, lstrlen(szBuff));
 
-	swprintf_s(szBuff, L"ÃÑ¾Ë : %d", m_ObjList[OBJ_BULLET].size());
-	TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
+		swprintf_s(szBuff, L"ÃÑ¾Ë : %d", m_ObjList[OBJ_BULLET].size());
+		TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
+	}
 
 	for (auto & iter : m_UiList[UI_TREE])
 		iter->Render(backHDC);
