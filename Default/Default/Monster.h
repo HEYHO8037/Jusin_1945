@@ -15,7 +15,7 @@ public:
 	void SetAppearPosition(const int _x, const int _y) { appearPosition = { _x, _y }; };
 
 	void CollisionEnter(CObj* _sour);
-	void BehaviorStart(CObj*, std::list<CObj*>*, std::list<CObj*>*);
+	void BehaviorStart(CObj*, std::list<CObj*>*, std::list<CObj*>*, std::list<CObj*>*);
 
 	int GetScore() { return m_iScore; }
 
@@ -33,7 +33,10 @@ protected:
 	virtual void BehaviorExecute() PURE;
 	virtual void BehaviorExit() PURE;
 
-	void Die();
+	void CommonDie();
+	virtual void Die();
+
+	void LeaveCheck();
 
 protected:
 	enum Behavior {
@@ -51,6 +54,7 @@ protected:
 
 	std::list<CObj*>* m_bulletList;
 	std::list<CObj*>* m_itemList;
+	std::list<CObj*>* m_effectList;
 	
 	bool m_bAIStart;
 	bool m_bDisplayInfo;

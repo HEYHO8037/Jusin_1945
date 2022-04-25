@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Boss1.h"
+#include "MainGame.h"
 #include <time.h>
 
 CBoss1::CBoss1():
@@ -12,9 +13,6 @@ CBoss1::~CBoss1() {
 }
 
 void CBoss1::Initialize() {
-	m_tInfo.fX = WINCX / 2;
-	m_tInfo.fY = -100.f;
-
 	m_tInfo.fCX = 200;
 	m_tInfo.fCY = 200;
 
@@ -201,4 +199,11 @@ void CBoss1::RandomPattern() {
 	srand(unsigned(time(nullptr)));
 
 	currentState = State((rand() % Pattern4) + Pattern1);
+}
+
+void CBoss1::Die() {
+	CMainGame::Level += 1;
+	CMainGame::BossCount += 10;
+	CMainGame::KillCount = 0;
+	CMainGame::bBoss = false;
 }

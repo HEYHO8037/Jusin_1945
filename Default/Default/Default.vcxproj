@@ -151,6 +151,7 @@
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="CollisionMgr.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="MonsterHp.h" />
     <ClInclude Include="PlayerHp.h" />
     <ClInclude Include="Item.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="MonsterHp.cpp" />
     <ClCompile Include="PlayerHp.cpp" />
     <ClCompile Include="Item.cpp" />

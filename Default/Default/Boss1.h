@@ -13,9 +13,11 @@ public:
 	void Release() override;
 
 protected:
-	void BehaviorEnter();
-	void BehaviorExecute();
-	void BehaviorExit();
+	void BehaviorEnter() override;
+	void BehaviorExecute() override;
+	void BehaviorExit() override;
+
+	void Die() override;
 
 private:
 	void RandomPattern();

@@ -27,6 +27,8 @@ void CSuicidePlane::Initialize()
 	m_iMaxHP = 1;
 	m_iHP = 1;
 
+	m_iScore = 100;
+
 }
 
 
@@ -114,6 +116,7 @@ void CSuicidePlane::BehaviorExecute()
 		
 		m_tInfo.fX += (m_fDiagonal) * m_fAngle;
 		m_tInfo.fY += (m_fDiagonal)* m_fAngle;
+		LeaveCheck();
 		break;
 
 	}

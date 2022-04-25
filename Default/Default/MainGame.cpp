@@ -11,8 +11,15 @@
 #include "Bomb.h"
 #include "CollisionMgr.h"
 #include "Tree.h"
-int CMainGame::killCount = 0;
+
+int CMainGame::TotalKillCount = 0;
+int CMainGame::KillCount = 0;
+int CMainGame::BossCount = BOSS_APPEAR_COUNT;
+
 bool CMainGame::bBoss = false;
+long int CMainGame::Score = 0;
+int CMainGame::Level = 1;
+int CMainGame::PlayTime = 0;
 
 CMainGame::CMainGame()
 {
@@ -69,43 +76,43 @@ void CMainGame::Initialize(void)
 		m_UiList[UI_TREE].push_back(CAbstractFactory<CTree>::UICreate(float((rand() % 50 + 30)*(rand() % 12 + 1)) + 20.f, float((rand() % 60 + 1) * 15) - 5.f));
 	}
 
-	killCount = 0;
-
 	m_timer = new CTimer;
 	m_timer->StartTimer(ENERMY_PER_SECOND, [&]() {
 		if (!m_player) {
 			return;
 		}
 
-		CObj* monsterObj = nullptr;
-		switch(rand() % MonsterEnd) {
-		case Plane: {
-			float posX = rand() % WINCX + 100;
-			float posY = rand() % (WINCY / 2) + 100;
+		if (!bBoss) {
+			CObj* monsterObj = nullptr;
+			switch(rand() % MonsterEnd) {
+			case Plane: {
+				float posX = rand() % WINCX + 100;
+				float posY = rand() % (WINCY / 2) + 100;
 			
-			float startPosX = posX > (WINCX/2) ? WINCX + 100 : -100;
+				float startPosX = posX > (WINCX/2) ? WINCX + 100 : -100;
 
-			monsterObj = CAbstractFactory<CPlane>::Create(startPosX, posY);
-			CPlane* plane = dynamic_cast<CPlane*>(monsterObj);
-			plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
-			plane->SetAppearPosition(posX, posY);
-		}
-			break;
+				monsterObj = CAbstractFactory<CPlane>::Create(startPosX, posY);
+				CPlane* plane = dynamic_cast<CPlane*>(monsterObj);
+				plane->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
+				plane->SetAppearPosition(posX, posY);
+			}
+				break;
 
-		case Suicide: {
-			//돌진형 비행기
-			monsterObj = CAbstractFactory<CSuicidePlane>::Create();
-			dynamic_cast<CMonster*>(monsterObj)->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
+			case Suicide: {
+				//돌진형 비행기
+				monsterObj = CAbstractFactory<CSuicidePlane>::Create();
+				dynamic_cast<CMonster*>(monsterObj)->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
+			}
+				break;
+			}
+			m_ObjList[OBJ_MONSTER].push_back(monsterObj);
 		}
-			break;
-		}
-		m_ObjList[OBJ_MONSTER].push_back(monsterObj);
 
-		if (!bBoss && killCount > BOSS_APPEAR_COUNT) {
-			CObj* bossObj = CAbstractFactory<CBoss1>::Create();
+		if (!bBoss && KillCount >= BossCount) {
+			CObj* bossObj = CAbstractFactory<CBoss1>::Create(WINCX / 2, -100.f);
 			CBoss1* boss = dynamic_cast<CBoss1*>(bossObj);
-			boss->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM]);
-			boss->SetAppearPosition(WINCX / 2, 500);
+			boss->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
+			boss->SetAppearPosition(WINCX / 2, 300);
 			m_ObjList[OBJ_MONSTER].push_back(bossObj);
 
 			CUi* newUI = CAbstractFactory<CMonsterHp>::UICreate();
@@ -119,6 +126,7 @@ void CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
+	PlayTime += g_dwDeltaTime;
 	if (m_ObjList[OBJ_PLAYER].empty()) {
 		m_player = nullptr;
 	}
@@ -232,18 +240,29 @@ void CMainGame::Render(void)
 
 
 	TCHAR	szBuff1[32] = L"";
-	swprintf_s(szBuff1, L"SCORE : %d", 1000);
+	swprintf_s(szBuff1, L"SCORE : %d", Score);
 	TextOut(backHDC, 600, 50, szBuff1, lstrlen(szBuff1));
 
 	TCHAR	szBuff2[32] = L"";
-	swprintf_s(szBuff2, L"KILL : %d", 30);
+	swprintf_s(szBuff2, L"KILL : %d", TotalKillCount);
 	TextOut(backHDC, 650, 950, szBuff2, lstrlen(szBuff2));
 
 	TCHAR	szBuff3[32] = L"";
 	//PLAYER level
-	swprintf_s(szBuff3, L"LEVEL %d", 1);
-	TextOut(backHDC, 350, 950, szBuff3, lstrlen(szBuff3));
-	//TestItem->Render(m_hDC);
+	swprintf_s(szBuff3, L"LEVEL %d", Level);
+	TextOutW(backHDC, 350, 950, szBuff3, lstrlen(szBuff3));
+
+	int currentPlayTime = PlayTime;
+	int microsecond = currentPlayTime % 10;
+	currentPlayTime /= 10;
+
+	int second = currentPlayTime % 60;
+	currentPlayTime /= 60;
+
+	int minute = currentPlayTime % 60;
+
+	swprintf_s(szBuff3, L"PlayTime: %02d:%02d", minute, second);
+	TextOut(backHDC, 300, 50, szBuff3, lstrlen(szBuff3));
 	
 
 	for (int i = UI_LIFE; i < UI_END; ++i)

@@ -3,6 +3,7 @@
 #include "AbstractFactory.h"
 #include "Bullet.h"
 #include "Item.h"
+#include "Effect.h"
 #include "MainGame.h"
 
 CMonster::CMonster():
@@ -39,10 +40,16 @@ void CMonster::CollisionEnter(CObj* _sour) {
 	}
 }
 
-void CMonster::BehaviorStart(CObj* _targetObj, std::list<CObj*>* _pBulletList, std::list<CObj*>* _pItemList) {
+void CMonster::BehaviorStart(
+	CObj* _targetObj, 
+	std::list<CObj*>* _pBulletList, 
+	std::list<CObj*>* _pItemList,
+	std::list<CObj*>* _pEffectList
+) {
 	m_targetObj = _targetObj;
 	m_bulletList = _pBulletList;
 	m_itemList = _pItemList;
+	m_effectList = _pEffectList;
 
 	m_bAIStart = true;
 	behaviorState = Enter;
@@ -138,15 +145,32 @@ void CMonster::Hit() {
 	m_iHP -= 1;
 	RunEffect();
 
- 	if (m_iHP <= 0)
+	if (m_iHP <= 0) {
 		Die();
+		CommonDie();
+	}
 }
 
-void CMonster::Die() {
+void CMonster::CommonDie() {
 	CItem::Create(m_itemList, this);
 
-	CMainGame::killCount += 1;
+	CMainGame::KillCount += 1;
+	CMainGame::TotalKillCount += 1;
+	CMainGame::Score += (m_iScore * CMainGame::Level);
+
+	CObj* newEffect = CAbstractFactory<CEffect>::Create(m_tInfo.fX, m_tInfo.fY);
+	dynamic_cast<CEffect*>(newEffect)->SetEndSize(m_tInfo.fCX, m_tInfo.fCY);
+	m_effectList->push_back(newEffect);
 
 	m_bDead = true;
 	m_bAIStart = false;
 }
+
+void CMonster::Die() {
+}
+
+void CMonster::LeaveCheck() {
+	if (m_tRect.left < -100 || m_tRect.right > WINCX + 100 || m_tRect.top < -100 || m_tRect.bottom > WINCY + 100) {
+		m_bDead = true;
+	}
+} // 떠나기 패턴일때 화면밖을 벗어나는지 체크함

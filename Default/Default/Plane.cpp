@@ -104,6 +104,7 @@ void CPlane::BehaviorExecute() {
 
 	case Leave:
 		m_tInfo.fY += m_fSpeed;
+		LeaveCheck();
 		break;
 	}
 } 

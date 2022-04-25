@@ -23,8 +23,13 @@ public:
 	void	RemovedToTargetClear(CObj*);
 
 public:
-	static int killCount;
+	static int TotalKillCount;
+	static int KillCount;
+	static int BossCount;
 	static bool bBoss;
+	static long Score;
+	static int Level;
+	static int PlayTime;
 								
 private:
 	enum monsterType {
