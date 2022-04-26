@@ -87,10 +87,6 @@ void CSuicidePlane::BehaviorEnter()
 		m_fSpeed = 8.f;
 	}
 		break;
-
-	case Destroy :
-		m_bDead = true;
-		break;
 	}
 
 	behaviorState = Execute;
