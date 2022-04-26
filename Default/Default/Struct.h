@@ -8,3 +8,9 @@ typedef	struct tagInfo
 	float	fCY;
 
 }INFO;
+
+struct Vector2D
+{
+	float x;
+	float y;
+};

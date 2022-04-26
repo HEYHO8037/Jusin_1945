@@ -87,10 +87,10 @@ void CMainGame::Initialize(void)
 
 		if (!bBoss) {
 			CObj* monsterObj = nullptr;
-			float posX = rand() % (WINCX - 200) + 200;
-			float posY = rand() % (WINCY / 2) + 100;
+			float posX = rand() % (WINCX - 200) + 200.f;
+			float posY = rand() % (WINCY / 2) + 100.f;
 
-			float startPosX = posX > (WINCX / 2) ? WINCX + 100 : -100;
+			float startPosX = posX > (WINCX / 2) ? WINCX + 100.f : -100.f;
 
 			switch(rand() % MonsterEnd) {
 			case Plane1: {
@@ -102,8 +102,8 @@ void CMainGame::Initialize(void)
 				break;
 
 			case Plane2: {
-				posX = rand() % 2 == 1 ? 100 : WINCX - 100;
-				startPosX = posX > (WINCX / 2) ? WINCX + 100 : -100;
+				posX = rand() % 2 == 1 ? 100.f : WINCX - 100.f;
+				startPosX = posX > (WINCX * 0.5f) ? WINCX + 100.f : -100.f;
 				monsterObj = CAbstractFactory<CPlane2>::Create(startPosX, posY);
 				CMonster* plane = dynamic_cast<CMonster*>(monsterObj);
 				plane->SetAppearPosition(posX, posY);
@@ -112,8 +112,8 @@ void CMainGame::Initialize(void)
 				break;
 
 			case Plane3: {
-				posX = rand() % 2 == 1 ? 100 : WINCX - 100;
-				startPosX = posX > (WINCX / 2) ? WINCX + 100 : -100;
+				posX = rand() % 2 == 1 ? 100.f : WINCX - 100.f;
+				startPosX = posX > (WINCX * 0.5f) ? WINCX + 100.f : -100.f;
 				monsterObj = CAbstractFactory<CPlane3>::Create(startPosX, posY);
 				CMonster* plane = dynamic_cast<CMonster*>(monsterObj);
 				plane->SetAppearPosition(posX, posY);
@@ -123,7 +123,7 @@ void CMainGame::Initialize(void)
 
 			case Suicide: {
 				//µ¹ÁøÇü ºñÇà±â
-				monsterObj = CAbstractFactory<CSuicidePlane>::Create(startPosX, rand() % 100 + 20);
+				monsterObj = CAbstractFactory<CSuicidePlane>::Create(startPosX, rand() % 100 + 20.f);
 				CMonster* monster = dynamic_cast<CMonster*>(monsterObj);
 				monster->SetAppearPosition(posX, 80);
 				monster->BehaviorStart(m_player, &m_ObjList[OBJ_BULLET], &m_ObjList[OBJ_ITEM], &m_ObjList[OBJ_EFFECT]);
@@ -249,10 +249,10 @@ void CMainGame::Render(void)
 	
 	if (m_debug) {
 		TCHAR szBuff[256] = L"";
-		swprintf_s(szBuff, L"Monster : %d", m_ObjList[OBJ_MONSTER].size());
+		swprintf_s(szBuff, L"Monster : %zd", m_ObjList[OBJ_MONSTER].size());
 		TextOut(backHDC, 200, 200, szBuff, lstrlen(szBuff));
 
-		swprintf_s(szBuff, L"ÃÑ¾Ë : %d", m_ObjList[OBJ_BULLET].size());
+		swprintf_s(szBuff, L"ÃÑ¾Ë : %zd", m_ObjList[OBJ_BULLET].size());
 		TextOut(backHDC, 200, 180, szBuff, lstrlen(szBuff));
 	}
 
@@ -302,8 +302,8 @@ void CMainGame::Render(void)
 	
 	if (m_ObjList[OBJ_PLAYER].empty())
 	{
-		swprintf_s(szBuff3, L"GAME OVER", minute, second);
-		TextOut(backHDC, WINCX * 0.5 -50, WINCY * 0.5, szBuff3, lstrlen(szBuff3));
+		swprintf_s(szBuff3, L"GAME OVER");
+		TextOut(backHDC, static_cast<int>(WINCX * 0.5f) - 50, static_cast<int>(WINCY * 0.5f), szBuff3, lstrlen(szBuff3));
 
 	}
 

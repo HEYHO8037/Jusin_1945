@@ -61,7 +61,7 @@ void CPlane3::BehaviorEnter() {
 
 	case Pattern1: {
 		shotTimer = new CTimer;
-		m_tDir.fX = appearPosition.x > (WINCX * 0.5f) ? -1 : 1;
+		m_tDir.fX = appearPosition.x > (WINCX * 0.5f) ? -1.f : 1.f;
 		m_tDir.fY = 0;
 
 		shotTimer->StartTimer(0.5f, [&]() {

@@ -61,7 +61,7 @@ void CPlane2::BehaviorEnter() {
 
 	case Pattern1: {
 		shotTimer = new CTimer;
-		float dirAngle = appearPosition.x > (WINCX * 0.5f) ? 80 : -80;
+		float dirAngle = appearPosition.x > (WINCX * 0.5f) ? 80.f : -80.f;
 		m_tDir.fX = cosf((90 + dirAngle) * RADIAN);
 		m_tDir.fY = 0.2f;
 

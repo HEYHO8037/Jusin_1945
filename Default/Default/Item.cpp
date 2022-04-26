@@ -23,7 +23,7 @@ void CItem::Initialize(void)
 	m_tInfo.fCX = (float)PlayerSize - 10;  
 	m_tInfo.fCY = (float)PlayerSize - 10;
 	m_fSpeed = 5.f;
-	m_fAngle = -((rand() % 50) + 31);
+	m_fAngle = -((rand() % 50) + 31.f);
 	m_ItemPoint.x = 1;
 	m_ItemPoint.y = -1;
 	rc_Dead = m_tRect;
