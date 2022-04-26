@@ -27,8 +27,7 @@ private:
 	{
 		Create,
 		Pattern, // 플레이어 돌격 (플레이어 좌표 얻어와서)
-		Leave, // 퇴장
-		Destroy
+		Leave // 퇴장
 	};
 
 	State currentState;

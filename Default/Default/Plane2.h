@@ -6,7 +6,7 @@ class CPlane2 : public CMonster
 {
 public:
 	CPlane2();
-	~CPlane2();
+	virtual ~CPlane2();
 
 public:
 	void Initialize() override;
