@@ -38,11 +38,6 @@ void CBullet::Late_Update() {
 	}
 }
 
-//
-//void CBullet::Hit() {
-//	m_bDead = true;
-//}
-
 void CBullet::Render(HDC hdc) {
 	HBRUSH brush;
 	HPEN pen;

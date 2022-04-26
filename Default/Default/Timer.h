@@ -8,7 +8,7 @@ public:
 	CTimer();
 	~CTimer();
 
-	void StartTimer(float, std::function<void()>);
+	void StartTimer(const float, std::function<void()>);
 
 	void StopTimer() { m_bRunTimer = false; }
 	void Update();

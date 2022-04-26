@@ -6,7 +6,7 @@ class CBoss1 : public CMonster
 {
 public:
 	CBoss1();
-	~CBoss1();
+	virtual ~CBoss1();
 
 	void Initialize() override;
 	void Render(HDC hDC) override;
@@ -30,9 +30,7 @@ private:
 		Pattern3,		// 한꺼번에 회전발사
 		Pattern4,		// 시간차 회전발사
 		Return,			// 돌진 복귀
-		Idle,
-		Leave,
-		Destroy
+		Idle
 	};
 
 	State currentState;
@@ -42,5 +40,6 @@ private:
 	int patternAngle;
 
 	int m_iShotCount;
+
 };
 

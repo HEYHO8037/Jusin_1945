@@ -3,6 +3,7 @@
 
 
 CPlane::CPlane():
+	shotInterval(5.f),
 	residenceTimer(nullptr) {
 }
 
@@ -15,7 +16,7 @@ void CPlane::Initialize() {
 	m_tInfo.fX = WINCX + 200;
 	m_tInfo.fY = WINCY / 2;
 
-	m_tInfo.fCX = 150; //50
+	m_tInfo.fCX = 150;
 	m_tInfo.fCY = 100; 
 
 	m_fSpeed = 5.f;
@@ -24,6 +25,8 @@ void CPlane::Initialize() {
 
 	m_iMaxHP = 1;
 	m_iHP = 1;
+
+	residenceTimer = new CTimer;
 };
 
 void CPlane::Render(HDC hDC) {
@@ -51,7 +54,6 @@ void CPlane::Render(HDC hDC) {
 };
 
 void CPlane::Release() {
-
 	if (residenceTimer)
 		Safe_Delete<CTimer*>(residenceTimer);
 };
@@ -67,13 +69,12 @@ void CPlane::BehaviorEnter() {
 		break;
 
 	case Pattern1: {
-		Fire(90);
+		Fire(baseShotAngle);
 	}
 	break;
 
 	case Idle:
-		residenceTimer = new CTimer;
-		residenceTimer->StartTimer(5, [&]() {
+		residenceTimer->StartTimer(shotInterval, [&]() {
 			behaviorState = Exit;
 		});
 		break;
@@ -121,7 +122,6 @@ void CPlane::BehaviorExit() {
 
 	case Idle:
 		currentState = Leave;
-		Safe_Delete<CTimer*>(residenceTimer);
 		break;
 
 	case Leave:

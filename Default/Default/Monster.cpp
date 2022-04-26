@@ -7,11 +7,13 @@
 #include "MainGame.h"
 
 CMonster::CMonster():
+	baseShotAngle(90),
 	m_bAIStart(false),
 	m_bRunEffect(false),
 	m_bDisplayInfo(false),
 	m_effectCount(0),
-	m_iScore(0) {
+	m_iScore(0),
+	effectDecreasePoint(15){
 }
 
 CMonster::~CMonster() {
@@ -92,7 +94,7 @@ bool CMonster::TargetMove() {
 	return false;
 }
 
-void CMonster::Fire(int degree) {
+void CMonster::Fire(const int _degree) {
 	if (!m_bulletList)
 		return;
 	
@@ -100,11 +102,11 @@ void CMonster::Fire(int degree) {
 
 	CBullet* BulletObj = dynamic_cast<CBullet*>(newBullet);
 	BulletObj->SetType(MONSTER_BULLET);
-	BulletObj->SetDirection(cosf(degree * PI / 180.f), sinf(degree * PI / 180.f));
+	BulletObj->SetDirection(cosf(_degree * RADIAN), sinf(_degree * RADIAN));
 	m_bulletList->push_back(newBullet);
 }
 
-void CMonster::DisplayInfo(HDC hDC, int _displayState) {
+void CMonster::DisplayInfo(HDC hDC, const int _displayState) {
 	if (!m_bDisplayInfo)
 		return;
 
@@ -135,7 +137,7 @@ void CMonster::EffectRender() {
 	if (!m_bRunEffect)
 		return;
 
-	m_effectCount -= 15;
+	m_effectCount -= effectDecreasePoint;
 
 	if (m_effectCount <= 0) {
 		m_effectCount = 0;

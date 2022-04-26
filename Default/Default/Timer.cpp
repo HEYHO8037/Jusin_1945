@@ -12,8 +12,8 @@ CTimer::~CTimer() {
 
 }
 
-void CTimer::StartTimer(float _repeatRateSecond, std::function<void()> _pCallBack) {
-	m_iRepeatRate = _repeatRateSecond;
+void CTimer::StartTimer(const float _repeatRateSecond, std::function<void()> _pCallBack) {
+  	m_iRepeatRate = _repeatRateSecond;
 	pExcuteCallBack = _pCallBack;
 
 	m_iCurrentTime = g_dwCurrentTime;

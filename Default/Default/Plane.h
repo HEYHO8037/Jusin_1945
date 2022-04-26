@@ -6,7 +6,7 @@ class CPlane : public CMonster
 {
 public:
 	CPlane();
-	~CPlane();
+	virtual ~CPlane();
 
 public:
 	void Initialize() override;
@@ -34,6 +34,7 @@ private:
 	// Leave 퇴장(아래로 쭉 이동함)
 	// Destroy 삭제
 
+	const float shotInterval;
 
 	State currentState;
 

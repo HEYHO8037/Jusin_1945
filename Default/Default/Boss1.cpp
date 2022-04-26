@@ -22,6 +22,8 @@ void CBoss1::Initialize() {
 
 	m_iMaxHP = 500;
 	m_iHP = 500;
+
+	bossShotTimer = new CTimer;
 };
 
 void CBoss1::Render(HDC hDC) {
@@ -66,7 +68,6 @@ void CBoss1::BehaviorEnter() {
 		break;
 
 	case Pattern1: {
-		bossShotTimer = new CTimer;
 
 		m_iShotCount = 3;
 		bossShotTimer->StartTimer(0.5f, [&]() {
@@ -74,14 +75,12 @@ void CBoss1::BehaviorEnter() {
 				behaviorState = Exit;
 				return;
 			}
-			int angle = 90;
-			Fire(angle + 25);
-			Fire(angle + 45);
-			Fire(angle + 65);
-			Fire(angle);
-			Fire(angle - 25);
-			Fire(angle - 45);
-			Fire(angle - 65);
+
+			int shotAngle = 60;
+			for (int i = 0; i < 7; ++i) {
+				Fire(baseShotAngle + shotAngle);
+				shotAngle -= 20;
+			}
 
 			--m_iShotCount;
 		});
@@ -107,7 +106,6 @@ void CBoss1::BehaviorEnter() {
 
 	case Pattern3:
 		m_iShotCount = 3;
-		bossShotTimer = new CTimer;
 		bossShotTimer->StartTimer(1, [&]() {
 			if (m_iShotCount <= 0) {
 				behaviorState = Exit;
@@ -126,7 +124,6 @@ void CBoss1::BehaviorEnter() {
 
 	case Pattern4:
 		patternAngle = 0;
-		bossShotTimer = new CTimer;
 		bossShotTimer->StartTimer(0.01f, [&]() {
 			if (patternAngle >= 360) {
 				behaviorState = Exit;
@@ -139,14 +136,9 @@ void CBoss1::BehaviorEnter() {
 		break;
 
 	case Idle:
-		bossShotTimer = new CTimer;
 		bossShotTimer->StartTimer(1, [&]() {
 			behaviorState = Exit;
 		});
-		break;
-
-	case Destroy:
-		m_bDead = true;
 		break;
 	}
 
@@ -170,17 +162,10 @@ void CBoss1::BehaviorExecute() {
 	case Idle:
 		bossShotTimer->Update();
 		break;
-
-	case Leave:
-		m_tInfo.fY += m_fSpeed;
-		break;
 	}
 }
 
 void CBoss1::BehaviorExit() {
-	if (bossShotTimer)
-		Safe_Delete<CTimer*>(bossShotTimer);
-
 	switch (currentState) {
 	case Create:
 	case Pattern1:
@@ -196,9 +181,6 @@ void CBoss1::BehaviorExit() {
 
 	case Idle:
 		RandomPattern();
-		break;
-
-	case Leave:
 		break;
 	}
 

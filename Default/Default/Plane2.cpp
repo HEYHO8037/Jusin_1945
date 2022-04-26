@@ -3,6 +3,7 @@
 
 
 CPlane2::CPlane2():
+	shotInterval(0.5f),
 	shotTimer(nullptr) {
 }
 
@@ -12,7 +13,7 @@ CPlane2::~CPlane2() {
 }
 
 void CPlane2::Initialize() {
-	m_tInfo.fCX = 130; //50
+	m_tInfo.fCX = 130;
 	m_tInfo.fCY = 80; 
 
 	m_fSpeed = 5.f;
@@ -21,6 +22,8 @@ void CPlane2::Initialize() {
 
 	m_iMaxHP = 1;
 	m_iHP = 1;
+
+	shotTimer = new CTimer;
 };
 
 void CPlane2::Render(HDC hDC) {
@@ -60,13 +63,12 @@ void CPlane2::BehaviorEnter() {
 		break;
 
 	case Pattern1: {
-		shotTimer = new CTimer;
 		float dirAngle = appearPosition.x > (WINCX * 0.5f) ? 80.f : -80.f;
-		m_tDir.fX = cosf((90 + dirAngle) * RADIAN);
+		m_tDir.fX = cosf((baseShotAngle + dirAngle) * RADIAN);
 		m_tDir.fY = 0.2f;
 
-		shotTimer->StartTimer(0.5f, [&]() {
-			Fire(90);
+		shotTimer->StartTimer(shotInterval, [&]() {
+			Fire(baseShotAngle);
 		});
 	}
 	break;

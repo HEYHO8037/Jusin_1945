@@ -22,6 +22,12 @@ public:
 
 	void	RemovedToTargetClear(CObj*);
 
+private:
+	void UIInit();
+	void UIRender(HDC);
+	void DebugRender(HDC);
+	void RespawnMonster();
+
 public:
 	static int TotalKillCount;
 	static int KillCount;
@@ -39,6 +45,10 @@ private:
 		Suicide,
 		MonsterEnd
 	};
+
+	const int cloudCount;
+	const int treeCount;
+
 	HDC		m_hDC;
 	
 	list<CObj*> m_ObjList[OBJ_END];

@@ -6,7 +6,7 @@ class CPlane3 : public CMonster
 {
 public:
 	CPlane3();
-	~CPlane3();
+	virtual ~CPlane3();
 
 public:
 	void Initialize() override;
@@ -23,6 +23,8 @@ private:
 		Create, // »ý¼º
 		Pattern1
 	};
+
+	const float shotInterval;
 
 	State currentState;
 	CTimer* shotTimer;

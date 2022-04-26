@@ -23,11 +23,11 @@ private:
 		Create, // 생성
 		Pattern1
 	};
-
 	// Pattern1 대각선으로 이동하며 총알 발사
-	State currentState;
 
-	const int residenceSecond = 3;
+	const float shotInterval;
+
+	State currentState;
 	CTimer* shotTimer;
 
 	INFO m_tDir;

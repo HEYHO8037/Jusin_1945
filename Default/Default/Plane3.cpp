@@ -3,6 +3,7 @@
 
 
 CPlane3::CPlane3():
+	shotInterval(0.5f),
 	shotTimer(nullptr) {
 }
 
@@ -12,7 +13,7 @@ CPlane3::~CPlane3() {
 }
 
 void CPlane3::Initialize() {
-	m_tInfo.fCX = 140; //50
+	m_tInfo.fCX = 140;
 	m_tInfo.fCY = 90; 
 
 	m_fSpeed = 5.f;
@@ -21,6 +22,8 @@ void CPlane3::Initialize() {
 
 	m_iMaxHP = 1;
 	m_iHP = 1;
+
+	shotTimer = new CTimer;
 };
 
 void CPlane3::Render(HDC hDC) {
@@ -60,12 +63,11 @@ void CPlane3::BehaviorEnter() {
 		break;
 
 	case Pattern1: {
-		shotTimer = new CTimer;
 		m_tDir.fX = appearPosition.x > (WINCX * 0.5f) ? -1.f : 1.f;
 		m_tDir.fY = 0;
 
-		shotTimer->StartTimer(0.5f, [&]() {
-			Fire(90);
+		shotTimer->StartTimer(shotInterval, [&]() {
+			Fire(baseShotAngle);
 		});
 	}
 		break;

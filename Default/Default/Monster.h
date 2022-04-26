@@ -6,7 +6,7 @@ class CMonster : public CObj
 
 public:
 	CMonster();
-	~CMonster();
+	virtual ~CMonster();
 	
 	int Update() override;
 	void Late_Update() override;
@@ -22,9 +22,11 @@ public:
 	void Hit(); // 공격당함
 
 protected:
+	const int baseShotAngle;
+
 	bool TargetMove(); 
-	void Fire(int); 
-	void DisplayInfo(HDC, int);
+	void Fire(const int); 
+	void DisplayInfo(HDC, const int);
 	void RunEffect();
 	void EffectRender();
 
@@ -66,5 +68,6 @@ protected:
 private:
 	bool m_bRunEffect;
 
+	int effectDecreasePoint;
 };
 
