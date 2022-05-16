@@ -46,6 +46,7 @@ void CMonsterHp::Render(HDC hDC)
 	HGDIOBJ h_old_brush;
 
 	Update_Rect();
+
 	m_barRight = m_tRect.left + (m_tInfo.fCX * ((float)m_pObj->GetHP() / m_pObj->GetMaxHP()));
 
 	brush = (HBRUSH)GetStockObject(NULL_BRUSH);
